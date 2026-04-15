@@ -36,7 +36,6 @@ main{flex:1;padding:1.25rem;max-width:900px;width:100%;margin:0 auto}
 .mc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--rs);padding:.8rem 1rem}
 .ml{font-size:11px;color:var(--t2);margin-bottom:3px}
 .mv{font-family:var(--fs);font-size:1.3rem;font-weight:800}
-.ms{font-size:10px;color:var(--t3);margin-top:2px}
 .lb{display:flex;flex-direction:column;gap:7px}
 .pc{display:flex;align-items:center;gap:11px;background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);padding:.85rem 1.1rem;transition:border-color .18s,transform .15s}
 .pc:hover{border-color:var(--b2);transform:translateX(3px)}
@@ -91,9 +90,6 @@ select option{background:var(--bg3)}
 .btn-r{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
 .btn-gr{background:linear-gradient(135deg,#059669,#065f46);color:#fff}
 .btn-sm{font-size:11px;padding:5px 11px;border-radius:50px}
-.cfg-box{background:rgba(240,192,64,.05);border:1px solid rgba(240,192,64,.18);border-radius:var(--r);padding:1rem;margin-bottom:1.2rem}
-.cfg-box h3{font-family:var(--fs);font-weight:800;color:var(--gold2);margin-bottom:.4rem;font-size:.9rem}
-.cfg-box p{font-size:11px;color:var(--t2);margin-bottom:.6rem;line-height:1.6}
 .agr{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
 @media(max-width:560px){.agr{grid-template-columns:1fr}}
 .acd{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);padding:1rem}
@@ -129,59 +125,48 @@ label:first-of-type{margin-top:0}
 #toast.ok{border-color:rgba(52,211,153,.38);color:var(--gr)}
 #toast.er{border-color:rgba(248,113,113,.38);color:var(--rd)}
 .ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;gap:.65rem}
-.sp2{width:30px;height:30px;border:3px solid var(--b2);border-top-color:var(--pu);border-radius:50%;animation:spin .7s linear infinite}
+.sp{width:30px;height:30px;border:3px solid var(--b2);border-top-color:var(--pu);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ld span{font-size:12px;color:var(--t2)}
 </style>
 </head>
 <body>
 <div id="app">
-
 <header>
-  <div class="logo">
-    <div class="logo-i">🏦</div>
-    Vosso<em>Banque</em>
-  </div>
+  <div class="logo"><div class="logo-i">🏦</div>Vosso<em>Banque</em></div>
   <nav>
     <button class="nb on" onclick="sw('lb',this)">🏆 Classement</button>
     <button class="nb" onclick="sw('shop',this)">🛍️ Boutique</button>
     <button class="nb adm" onclick="sw('adm',this)">⚙️ Admin</button>
   </nav>
 </header>
-
 <main>
 
   <div id="sec-lb" class="sec on">
     <div class="ph">Classement 🏆</div>
-    <div class="ps">Soldes UpCoins — base Animations · temps réel</div>
+    <div class="ps">Soldes UpCoins en temps réel</div>
     <div class="metrics">
       <div class="mc"><div class="ml">Joueurs</div><div class="mv" id="s-n">—</div></div>
       <div class="mc"><div class="ml">Total UpCoins</div><div class="mv" id="s-t" style="color:var(--gold)">—</div></div>
       <div class="mc"><div class="ml">Leader</div><div class="mv" id="s-l" style="font-size:1rem">—</div></div>
     </div>
-    <div class="lb" id="lb"></div>
+    <div class="lb" id="lb"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
   </div>
 
   <div id="sec-shop" class="sec">
     <div class="ph">Boutique 🛍️</div>
-    <div class="ps">Achète avec tes UpCoins · Up = missions avec gain si validées · Déco = achat direct</div>
+    <div class="ps">Achète avec tes UpCoins · Up = missions avec gain si validées</div>
     <div class="filt">
       <button class="fb on" onclick="fs('all',this)">Tout</button>
-      <button class="fb" onclick="fs('Up',this)">⚡ Missions Up</button>
+      <button class="fb" onclick="fs('Up',this)">⚡ Missions</button>
       <button class="fb" onclick="fs('Décoration',this)">🎨 Déco</button>
       <button class="fb" onclick="fs('CASH',this)">💸 Cash</button>
       <button class="fb" onclick="fs('wellness',this)">🌱 Wellness</button>
     </div>
-    <div class="sg" id="shop"></div>
+    <div class="sg" id="shop"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
   </div>
 
   <div id="sec-adm" class="sec">
-    <div class="cfg-box" id="cfg">
-      <h3>⚙️ Clé API Airtable</h3>
-      <p>Entre ta clé API une seule fois — sauvegardée dans ton navigateur.</p>
-      <input type="text" id="cfg-k" placeholder="pat…" style="margin-bottom:7px"/>
-      <button class="btn btn-g" onclick="saveCfg()" style="width:100%">Sauvegarder</button>
-    </div>
     <div id="adm-lock">
       <div class="alck">
         <div class="ic">🔐</div>
@@ -191,17 +176,17 @@ label:first-of-type{margin-top:0}
           <input type="password" id="pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')unlock()"/>
           <button class="btn" onclick="unlock()">Entrer</button>
         </div>
-        <p id="pwd-err" style="color:var(--rd);font-size:12px;margin-top:9px;display:none">Mot de passe incorrect.</p>
+        <p id="pwd-err" style="color:var(--rd);font-size:12px;margin-top:9px;display:none">Incorrect.</p>
       </div>
     </div>
     <div id="adm-panel" style="display:none">
       <div class="ph">Admin ⚙️</div>
-      <div class="ps" style="margin-bottom:1.4rem">Gestion UpCoins + validation des missions</div>
+      <div class="ps" style="margin-bottom:1.4rem">Gestion UpCoins + validation missions</div>
       <div class="agr" style="margin-bottom:1rem">
         <div class="acd">
           <h3>➕ Ajouter des UpCoins</h3>
           <label>Agent</label><select id="a-ag"></select>
-          <label>Montant UC</label><input type="number" id="a-am" placeholder="ex: 4000" min="0" step="500"/>
+          <label>Montant</label><input type="number" id="a-am" placeholder="ex: 4000" min="0" step="500"/>
           <label>Motif</label><input type="text" id="a-mo" placeholder="ex: 4 points ce soir"/>
           <button class="btn" style="width:100%;margin-top:11px" onclick="doAdd()">Ajouter</button>
           <div class="rm" id="a-msg"></div>
@@ -209,13 +194,13 @@ label:first-of-type{margin-top:0}
         <div class="acd">
           <h3>➖ Retirer des UpCoins</h3>
           <label>Agent</label><select id="r-ag"></select>
-          <label>Montant UC</label><input type="number" id="r-am" placeholder="ex: 2000" min="0" step="500"/>
+          <label>Montant</label><input type="number" id="r-am" placeholder="ex: 2000" min="0" step="500"/>
           <button class="btn btn-r" style="width:100%;margin-top:11px" onclick="doRem()">Retirer</button>
           <div class="rm" id="r-msg"></div>
         </div>
         <div class="acd" style="grid-column:1/-1">
-          <h3>⚡ Attribution rapide — Points du jour</h3>
-          <p style="font-size:11px;color:var(--t2);margin-bottom:.8rem">1 point = <strong style="color:var(--gold)" id="pt-r">2 000</strong> UpCoins</p>
+          <h3>⚡ Points du jour → UpCoins</h3>
+          <p style="font-size:11px;color:var(--t2);margin-bottom:.8rem">1 point = <strong style="color:var(--gold)">2 000</strong> UpCoins</p>
           <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end">
             <div><label>Agent</label><select id="q-ag"></select></div>
             <div><label>Points scorés</label><input type="number" id="q-pt" placeholder="ex: 6" min="0" step=".5"/></div>
@@ -225,8 +210,8 @@ label:first-of-type{margin-top:0}
         </div>
       </div>
       <div class="ph" style="font-size:1.1rem;margin-bottom:.3rem">🎯 Missions en attente</div>
-      <div class="ps" style="margin-bottom:.8rem">Articles "Up" achetés — ✅ valider si réussie (crédite le gain) · ❌ rejeter si échouée</div>
-      <div id="mis-wrap"><div class="ld"><div class="sp2"></div><span>Chargement…</span></div></div>
+      <div class="ps" style="margin-bottom:.8rem">Articles "Up" — ✅ valider si réussie · ❌ rejeter si échouée</div>
+      <div id="mis-wrap"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
       <button onclick="doLogout()" style="margin-top:1.5rem;font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
     </div>
   </div>
@@ -252,203 +237,139 @@ label:first-of-type{margin-top:0}
 <div id="toast">—</div>
 
 <script>
-/* ══════════ CONFIG ══════════ */
+/* ════════ CONFIG ════════ */
 const ADMIN_PWD = 'vosso2024';
 const PT_UC     = 2000;
+const PROXY     = 'https://vossobanque-proxy.small-snowflake-c6c9.workers.dev';
+const BASE      = 'app2mJ7oSODZd9OoU';
+const T_PLR     = 'tbl0Kl91e57KCdkiy';
+const T_SHOP    = 'tblELehPqsb0ATygV';
+const T_TRX     = 'tblfooPjqvLZ3YSsD';
 
-/* BASE Animations */
-const BASE   = 'app2mJ7oSODZd9OoU';
+/* Champs Joueurs — noms réels vérifiés */
+const P_NM = 'Nom du joueur';
+const P_BK = 'Solde en banque';
+const P_CD = 'Code';
 
-/* TABLE DES JOUEURS — IDs vérifiés */
-const T_PLR  = 'tbl0Kl91e57KCdkiy';
-const P_NM   = 'fldj63VB2omDb3k5L';  // Nom du joueur
-const P_BK   = 'fldH20mY6pJEJaXUA';  // Solde en banque (currency)
-const P_CD   = 'fld0VgreDsvD7931Q';  // Code
+/* Champs Boutique */
+const S_NM = "Nom de l'article";
+const S_DS = 'Description';
+const S_PR = 'Prix';
+const S_ST = 'Stock disponible';
+const S_CT = 'Catégorie';
+const S_IM = "Image de l'objet";
+const S_GN = 'Gain UC';
 
-/* BOUTIQUE — IDs vérifiés */
-const T_SHOP = 'tblELehPqsb0ATygV';
-const S_NM   = 'fldGcw1fYjAI5UM6q';  // Nom de l'article
-const S_DS   = 'fldKui2kVVpD0Qgof';  // Description
-const S_PR   = 'fldYxeEBNDYze6OPR';  // Prix (currency)
-const S_ST   = 'fldFO979kDrfGyWCn';  // Stock disponible
-const S_CT   = 'fldGd086FFywN1nKA';  // Catégorie
-const S_IM   = 'fldBeGjvXujte9fHV';  // Image de l'objet
-const S_GN   = 'fld88HWNS5jk3BiT9';  // Gain UC ✅ ID vérifié
+/* Champs Transactions */
+const TR_BY = "Prénom de L'acheteur";
+const TR_AR = 'Article';
+const TR_AM = 'Montant';
+const TR_ST = 'Erreur';
+const TR_GN = 'Date';
 
-/* TRANSACTIONS — IDs vérifiés */
-const T_TRX  = 'tblfooPjqvLZ3YSsD';
-const TR_BY  = 'fldd9s39ZYZhCbzcz';  // Prénom de L'acheteur
-const TR_AR  = 'fldf9zRqjYWJDCmuw';  // Article
-const TR_AM  = 'fldAoYG01C9c0qE80';  // Montant
-const TR_ST  = 'flduJZSrIrglzLvvp';  // Erreur (on réutilise ce champ pour le statut)
-const TR_GN  = 'fldGLc3RMIdrsI8FQ';  // Date (on réutilise pour stocker le gain)
+/* ════════ STATE ════════ */
+let players=[], shop=[], pending=[], cur=null, curF='all';
 
-/* ══════════ STATE ══════════ */
-let key='', players=[], shop=[], pending=[], cur=null, curF='all';
-
-/* ══════════ INIT ══════════ */
-(function(){
-  try{
-    const raw = localStorage.getItem('vossobanque_key');
-    if(raw) key = raw;
-  }catch(e){}
-  if(key) document.getElementById('cfg').style.display='none';
-  document.getElementById('pt-r').textContent = PT_UC.toLocaleString('fr-FR');
-  loadAll();
-})();
-
-function saveCfg(){
-  key = document.getElementById('cfg-k').value.trim();
-  localStorage.setItem('vossobanque_key', key);
-  document.getElementById('cfg').style.display='none';
-  toast('✅ Clé API sauvegardée','ok');
-  loadAll();
-}
-
-/* ══════════ API ══════════ */
-async function atGet(tbl, flds=[], formula=''){
-  if(!key) return null;
+/* ════════ API via PROXY ════════ */
+async function atGet(tbl, fields=[], formula=''){
   const p = new URLSearchParams();
-  flds.forEach(f=>p.append('fields[]',f));
+  fields.forEach(f => p.append('fields[]', f));
   if(formula) p.set('filterByFormula', formula);
   p.set('pageSize','100');
-  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${tbl}?${p}`,
-    {headers:{Authorization:`Bearer ${key}`}});
-  if(!r.ok){
-    const err = await r.text();
-    throw new Error(err);
-  }
+  const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}?${p}`);
+  if(!r.ok) throw new Error(await r.text());
   return (await r.json()).records;
 }
 
-async function atPatch(tbl,id,flds){
-  if(!key) throw new Error('Pas de clé API');
-  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${tbl}/${id}`,{
-    method:'PATCH',
-    headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json'},
-    body:JSON.stringify({fields:flds})
+async function atPatch(tbl, id, fields){
+  const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}/${id}`, {
+    method: 'PATCH',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({fields})
   });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
 
-async function atPost(tbl,flds){
-  if(!key) throw new Error('Pas de clé API');
-  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${tbl}`,{
-    method:'POST',
-    headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json'},
-    body:JSON.stringify({fields:flds})
+async function atPost(tbl, fields){
+  const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({fields})
   });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
 
-/* ══════════ LOAD ══════════ */
+/* ════════ LOAD ════════ */
 async function loadAll(){ await Promise.all([loadPlayers(), loadShop()]); }
 
 async function loadPlayers(){
-  document.getElementById('lb').innerHTML='<div class="ld"><div class="sp2"></div><span>Chargement…</span></div>';
-  if(!key){
-    document.getElementById('lb').innerHTML='<p style="color:var(--t2);font-size:13px;padding:1rem;text-align:center">Entre ta clé API dans Admin pour charger les données.</p>';
-    document.getElementById('s-n').textContent='—';
-    document.getElementById('s-t').textContent='—';
-    document.getElementById('s-l').textContent='—';
-    return;
-  }
+  document.getElementById('lb').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
   try{
     const recs = await atGet(T_PLR,[P_NM,P_BK,P_CD]);
-    if(!recs || recs.length===0){
-      document.getElementById('lb').innerHTML='<p style="color:var(--t2);font-size:13px;padding:1rem;text-align:center">Aucun joueur trouvé.</p>';
-      return;
-    }
     players = recs.map(r=>({
       id:   r.id,
       name: r.fields[P_NM] || '?',
       bank: r.fields[P_BK] || 0,
       code: r.fields[P_CD] || ''
     })).sort((a,b)=>b.bank-a.bank);
-    renderLB();
-    fillSels();
+    renderLB(); fillSels();
   }catch(e){
-    console.error('Erreur loadPlayers:', e);
-    document.getElementById('lb').innerHTML=`<p style="color:var(--rd);font-size:13px;padding:1rem;text-align:center">Erreur : ${e.message}</p>`;
+    document.getElementById('lb').innerHTML=`<p style="color:var(--rd);padding:1rem;font-size:13px">Erreur : ${e.message}</p>`;
   }
 }
 
 async function loadShop(){
-  document.getElementById('shop').innerHTML='<div class="ld"><div class="sp2"></div><span>Chargement boutique…</span></div>';
-  if(!key){
-    document.getElementById('shop').innerHTML='<p style="color:var(--t2);font-size:13px;padding:1rem;text-align:center">Entre ta clé API dans Admin pour charger la boutique.</p>';
-    return;
-  }
+  document.getElementById('shop').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement boutique…</span></div>';
   try{
     const recs = await atGet(T_SHOP,[S_NM,S_DS,S_PR,S_ST,S_CT,S_IM,S_GN]);
-    if(recs && recs.length>0){
-      shop = recs.map(r=>({
-        id:    r.id,
-        name:  r.fields[S_NM] || '?',
-        desc:  r.fields[S_DS] || '',
-        price: r.fields[S_PR] || 0,
-        stock: r.fields[S_ST] || 0,
-        cat:   r.fields[S_CT]?.name || '',
-        img:   r.fields[S_IM]?.[0]?.thumbnails?.large?.url || null,
-        gain:  Number(r.fields[S_GN]) || 0,
-        ok:    (r.fields[S_ST]||0) > 0,
-      })).sort((a,b)=>a.price-b.price);
-    }
-  }catch(e){
-    console.error('Erreur loadShop:', e);
-    shop=[];
-  }
+    shop = recs.map(r=>({
+      id:    r.id,
+      name:  r.fields[S_NM] || '?',
+      desc:  r.fields[S_DS] || '',
+      price: r.fields[S_PR] || 0,
+      stock: r.fields[S_ST] || 0,
+      cat:   r.fields[S_CT]?.name || '',
+      img:   r.fields[S_IM]?.[0]?.thumbnails?.large?.url || null,
+      gain:  Number(r.fields[S_GN]) || 0,
+      ok:    (r.fields[S_ST]||0) > 0,
+    })).sort((a,b)=>a.price-b.price);
+  }catch(e){ shop=[]; }
   renderShop(curF);
 }
 
 async function loadMissions(){
   const w=document.getElementById('mis-wrap');
-  w.innerHTML='<div class="ld"><div class="sp2"></div><span>Chargement…</span></div>';
+  w.innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
   try{
-    const recs = await atGet(T_TRX,[TR_BY,TR_AR,TR_AM,TR_ST,TR_GN],
-      `{${TR_ST}}="En attente mission"`);
-    pending = recs||[];
+    const recs = await atGet(T_TRX,[TR_BY,TR_AR,TR_AM,TR_ST,TR_GN],`{${TR_ST}}="En attente mission"`);
+    pending=recs||[];
     renderMissions();
-  }catch(e){
-    w.innerHTML=`<p class="emp" style="color:var(--rd)">Erreur : ${e.message}</p>`;
-  }
+  }catch(e){ w.innerHTML=`<p class="emp" style="color:var(--rd)">Erreur : ${e.message}</p>`; }
 }
 
-/* ══════════ RENDER LB ══════════ */
-const AC=[
-  ['#8b5cf6','#2d1f5e'],['#1D9E75','#0d3d2e'],['#D85A30','#4a1f10'],
-  ['#3D8EF0','#0d2e5e'],['#d97706','#4a2f05'],['#ec4899','#4a1230'],['#0ea5e9','#053450']
-];
-
+/* ════════ RENDER LB ════════ */
+const AC=[['#8b5cf6','#2d1f5e'],['#1D9E75','#0d3d2e'],['#D85A30','#4a1f10'],['#3D8EF0','#0d2e5e'],['#d97706','#4a2f05'],['#ec4899','#4a1230'],['#0ea5e9','#053450']];
 function renderLB(){
-  const max = players[0]?.bank || 1;
-  const tot = players.reduce((s,p)=>s+p.bank, 0);
-  document.getElementById('s-n').textContent = players.length;
-  document.getElementById('s-t').textContent = fu(tot);
-  document.getElementById('s-l').textContent = players[0]?.name || '—';
-  const em=['🥇','🥈','🥉'], rc=['r1','r2','r3'];
-  document.getElementById('lb').innerHTML = players.map((p,i)=>{
-    const pct = Math.round(p.bank/max*100);
-    const [fg,bg] = AC[i%AC.length];
+  const max=players[0]?.bank||1, tot=players.reduce((s,p)=>s+p.bank,0);
+  document.getElementById('s-n').textContent=players.length;
+  document.getElementById('s-t').textContent=fu(tot);
+  document.getElementById('s-l').textContent=players[0]?.name||'—';
+  const em=['🥇','🥈','🥉'],rc=['r1','r2','r3'];
+  document.getElementById('lb').innerHTML=players.map((p,i)=>{
+    const pct=Math.round(p.bank/max*100),[fg,bg]=AC[i%AC.length];
     return `<div class="pc ${i===0?'g1':''}">
       <div class="rk ${i<3?rc[i]:''}">${i<3?em[i]:i+1}</div>
       <div class="av" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
-      <div class="pi">
-        <div class="pn">${p.name}</div>
-        <div class="pc2">Code : ${p.code}</div>
-      </div>
+      <div class="pi"><div class="pn">${p.name}</div><div class="pc2">Code : ${p.code}</div></div>
       <div class="bw"><div class="bb"><div class="bf" style="width:${pct}%"></div></div></div>
-      <div class="bk">
-        <div class="ba">${fu(p.bank)}</div>
-        <div class="bl">UpCoins</div>
-      </div>
+      <div class="bk"><div class="ba">${fu(p.bank)}</div><div class="bl">UpCoins</div></div>
     </div>`;
   }).join('');
 }
 
-/* ══════════ RENDER SHOP ══════════ */
+/* ════════ RENDER SHOP ════════ */
 const IC={Up:'⚡',Décoration:'🎨',CASH:'💸',wellness:'🌱',default:'📦'};
 function fs(f,btn){
   curF=f;
@@ -458,17 +379,12 @@ function fs(f,btn){
 }
 function renderShop(f){
   const el=document.getElementById('shop');
-  const items = f==='all' ? shop : shop.filter(i=>i.cat===f);
-  if(!items.length){
-    el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article.</p>';
-    return;
-  }
-  el.innerHTML = items.map(item=>{
-    const ri = shop.indexOf(item);
-    const icon = IC[item.cat]||IC.default;
-    const imgH = item.img ? `<img src="${item.img}" alt=""/>` : `<span>${icon}</span>`;
-    const gainH = item.gain ? `<div class="sgn">🎯 Gain si mission : +${fu(item.gain)} UC</div>` : '';
-    const catCls = 't'+(item.cat||'').replace(/[^a-zA-Z]/g,'');
+  const items=f==='all'?shop:shop.filter(i=>i.cat===f);
+  if(!items.length){el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article.</p>';return;}
+  el.innerHTML=items.map(item=>{
+    const ri=shop.indexOf(item),icon=IC[item.cat]||IC.default;
+    const imgH=item.img?`<img src="${item.img}" alt=""/>`:`<span>${icon}</span>`;
+    const catCls='t'+(item.cat||'').replace(/[^a-zA-Z]/g,'');
     return `<div class="sc">
       <div class="si">${imgH}${item.cat?`<span class="stg ${catCls}">${item.cat}</span>`:''}</div>
       <div class="sb">
@@ -477,8 +393,8 @@ function renderShop(f){
         <div class="sf">
           <div>
             <div class="sp">${fu(item.price)} UC</div>
-            ${gainH}
-            <div class="sst">${item.ok ? item.stock+' en stock' : '❌ Rupture'}</div>
+            ${item.gain?`<div class="sgn">🎯 +${fu(item.gain)} UC si mission</div>`:''}
+            <div class="sst">${item.ok?item.stock+' en stock':'❌ Rupture'}</div>
           </div>
           <button class="bbt" ${!item.ok?'disabled':''} onclick="openMo(${ri})">Acheter</button>
         </div>
@@ -487,22 +403,16 @@ function renderShop(f){
   }).join('');
 }
 
-/* ══════════ RENDER MISSIONS ══════════ */
+/* ════════ RENDER MISSIONS ════════ */
 function renderMissions(){
   const w=document.getElementById('mis-wrap');
-  if(!pending.length){
-    w.innerHTML='<div class="emp">✅ Aucune mission en attente</div>';
-    return;
-  }
+  if(!pending.length){w.innerHTML='<div class="emp">✅ Aucune mission en attente</div>';return;}
   w.innerHTML=`<div class="mtb">
     <div class="mh"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
     ${pending.map(m=>{
-      const gain = Number(m.fields[TR_GN]||0);
-      const buyer = m.fields[TR_BY]||'?';
-      const art = m.fields[TR_AR]||'?';
+      const gain=Number(m.fields[TR_GN]||0),buyer=m.fields[TR_BY]||'?',art=m.fields[TR_AR]||'?';
       return `<div class="mr">
-        <span class="mi">${art}</span>
-        <span class="mb2">${buyer}</span>
+        <span class="mi">${art}</span><span class="mb2">${buyer}</span>
         <span class="mg">${gain?'+'+fu(gain)+' UC':'—'}</span>
         <div class="mact">
           <button class="btn btn-gr btn-sm" onclick="valMis('${m.id}','${buyer}',${gain})">✅ Valider</button>
@@ -513,61 +423,48 @@ function renderMissions(){
   </div>`;
 }
 
-/* ══════════ BUY ══════════ */
+/* ════════ BUY ════════ */
 function openMo(idx){
   cur=shop[idx];
   document.getElementById('mo-n').textContent=cur.name;
   document.getElementById('mo-d').textContent=cur.desc;
   document.getElementById('mo-p').textContent=fu(cur.price)+' UpCoins';
   const ge=document.getElementById('mo-g');
-  if(cur.gain){ge.textContent='🎯 Gain si mission validée : +'+fu(cur.gain)+' UC';ge.style.display='block';}
+  if(cur.gain){ge.textContent='🎯 Gain si validée : +'+fu(cur.gain)+' UC';ge.style.display='block';}
   else ge.style.display='none';
-  document.getElementById('mo-buy').innerHTML=
-    players.map(p=>`<option value="${p.id}|${p.code}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
+  document.getElementById('mo-buy').innerHTML=players.map(p=>`<option value="${p.id}|${p.code}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
   document.getElementById('modal').classList.add('on');
 }
 function closeMo(){document.getElementById('modal').classList.remove('on');cur=null;}
 
 async function confirmBuy(){
-  if(!cur) return;
+  if(!cur)return;
   const [aid,acode]=document.getElementById('mo-buy').value.split('|');
   const ag=players.find(p=>p.id===aid);
-  if(!ag) return;
+  if(!ag)return;
   if(ag.bank<cur.price){toast('❌ Solde insuffisant','er');closeMo();return;}
-  const nb=ag.bank-cur.price;
-  const isMis=cur.cat==='Up';
+  const nb=ag.bank-cur.price, isMis=cur.cat==='Up';
   try{
     await atPatch(T_PLR,aid,{[P_BK]:nb});
     await atPatch(T_SHOP,cur.id,{[S_ST]:cur.stock-1});
-    await atPost(T_TRX,{
-      [TR_BY]:  acode,
-      [TR_AR]:  cur.name,
-      [TR_AM]:  cur.price,
-      [TR_ST]:  isMis ? 'En attente mission' : 'Validé',
-      [TR_GN]:  cur.gain ? String(cur.gain) : '0',
-    });
+    await atPost(T_TRX,{[TR_BY]:acode,[TR_AR]:cur.name,[TR_AM]:cur.price,[TR_ST]:isMis?'En attente mission':'Validé',[TR_GN]:String(cur.gain||0)});
     ag.bank=nb; cur.stock-=1; if(cur.stock<=0)cur.ok=false;
     renderLB(); fillSels(); renderShop(curF); closeMo();
     toast(isMis?`✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC`:`✅ Achat OK ! Solde : ${fu(nb)} UC`,'ok');
   }catch(e){toast('❌ '+e.message,'er');}
 }
 
-/* ══════════ MISSIONS ══════════ */
+/* ════════ MISSIONS ════════ */
 async function valMis(id,buyer,gain){
   const ag=players.find(p=>p.code===buyer.trim());
   try{
     await atPatch(T_TRX,id,{[TR_ST]:'Mission réussie ✅'});
-    if(ag&&gain>0){
-      const nb=ag.bank+gain;
-      await atPatch(T_PLR,ag.id,{[P_BK]:nb});
-      ag.bank=nb;
-    }
+    if(ag&&gain>0){const nb=ag.bank+gain;await atPatch(T_PLR,ag.id,{[P_BK]:nb});ag.bank=nb;}
     pending=pending.filter(m=>m.id!==id);
     renderMissions(); renderLB(); fillSels();
     toast(`✅ Mission validée !${ag&&gain>0?' +'+fu(gain)+' UC → '+ag.name:''}`, 'ok');
   }catch(e){toast('❌ '+e.message,'er');}
 }
-
 async function rejMis(id){
   try{
     await atPatch(T_TRX,id,{[TR_ST]:'Mission échouée ❌'});
@@ -577,7 +474,7 @@ async function rejMis(id){
   }catch(e){toast('❌ '+e.message,'er');}
 }
 
-/* ══════════ ADMIN ══════════ */
+/* ════════ ADMIN ════════ */
 function unlock(){
   if(document.getElementById('pwd').value===ADMIN_PWD){
     document.getElementById('adm-lock').style.display='none';
@@ -624,7 +521,7 @@ async function doQuick(){
   const pts=parseFloat(document.getElementById('q-pt').value);
   const msg=document.getElementById('q-msg');
   if(!ag||isNaN(pts)||pts<=0){showMsg(msg,'Valeur invalide',false);return;}
-  const uc=Math.round(pts*PT_UC), nb=ag.bank+uc;
+  const uc=Math.round(pts*PT_UC),nb=ag.bank+uc;
   try{
     await atPatch(T_PLR,ag.id,{[P_BK]:nb});
     ag.bank=nb; renderLB(); fillSels();
@@ -633,38 +530,16 @@ async function doQuick(){
   }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
 
-/* ══════════ UTILS ══════════ */
-function fu(n){
-  n = Number(n)||0;
-  if(n>=1000000) return (n/1000000).toFixed(1).replace('.0','')+'M';
-  if(n>=1000) return Math.round(n/1000)+'K';
-  return n.toLocaleString('fr-FR');
-}
-function fillSels(){
-  ['a-ag','r-ag','q-ag'].forEach(id=>{
-    const el=document.getElementById(id); if(!el) return;
-    el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
-  });
-}
-function showMsg(el,txt,ok){
-  el.className='rm '+(ok?'ok':'er');
-  el.textContent=txt;
-  setTimeout(()=>el.className='rm',5000);
-}
+/* ════════ UTILS ════════ */
+function fu(n){n=Number(n)||0;if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M';if(n>=1000)return Math.round(n/1000)+'K';return n.toLocaleString('fr-FR');}
+function fillSels(){['a-ag','r-ag','q-ag'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fu(p.bank)} UC</option>`).join('');});}
+function showMsg(el,txt,ok){el.className='rm '+(ok?'ok':'er');el.textContent=txt;setTimeout(()=>el.className='rm',5000);}
 let tt;
-function toast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className='on '+type;
-  clearTimeout(tt); tt=setTimeout(()=>t.className='',3500);
-}
-function sw(id,btn){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-  document.getElementById('sec-'+id).classList.add('on');
-  btn.classList.add('on');
-  if(id==='adm' && document.getElementById('adm-panel').style.display!=='none') loadMissions();
-}
+function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='on '+type;clearTimeout(tt);tt=setTimeout(()=>t.className='',3500);}
+function sw(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('sec-'+id).classList.add('on');btn.classList.add('on');if(id==='adm'&&document.getElementById('adm-panel').style.display!=='none')loadMissions();}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeMo();});
+
+loadAll();
 </script>
 </body>
 </html>
