@@ -10,16 +10,43 @@
 :root{
   --bg:#09090f;--bg2:#111119;--bg3:#17171f;--bg4:#1f1f28;
   --b1:rgba(255,255,255,.06);--b2:rgba(255,255,255,.11);--b3:rgba(255,255,255,.18);
-  --gold:#f0c040;--gold2:#ffd770;--pu:#8b5cf6;--pu2:#a78bfa;
-  --gr:#34d399;--rd:#f87171;--t1:#eeeef8;--t2:#8080a0;--t3:#46465a;
-  --r:12px;--rs:8px;--rl:16px;--fs:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+  --gold:#f0c040;--gold2:#ffd770;
+  --pu:#8b5cf6;--pu2:#a78bfa;
+  --gr:#34d399;--rd:#f87171;
+  --t1:#eeeef8;--t2:#8080a0;--t3:#46465a;
+  --r:12px;--rs:8px;--rl:16px;
+  --fs:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
 }
 html,body{min-height:100%;background:var(--bg);color:var(--t1);font-family:var(--fb);overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% -5%,rgba(139,92,246,.09) 0%,transparent 65%),radial-gradient(ellipse 50% 35% at 88% 98%,rgba(240,192,64,.06) 0%,transparent 60%);pointer-events:none;z-index:0}
 #app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
 header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:1px solid var(--b1);background:rgba(9,9,15,.88);backdrop-filter:blur(14px);position:sticky;top:0;z-index:100}
-.logo{   display:flex;   align-items:center;   gap:10px;   font-family:var(--fs);   font-size:1.28rem;   font-weight:800;   letter-spacing:-.02em;   color:var(--t1); }
-.logo-i{   width:36px;   height:36px;   border-radius:11px;   background:linear-gradient(135deg,var(--pu),#6d28d9);   display:flex;   align-items:center;   justify-content:center;   font-size:17px;   flex-shrink:0;   box-shadow:0 0 18px rgba(139,92,246,.28); }
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--fs);
+  font-size:1.28rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+  color:var(--t1);
+}
+
+
+.logo-i{
+  width:36px;
+  height:36px;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--pu),#6d28d9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+  flex-shrink:0;
+  box-shadow:0 0 18px rgba(139,92,246,.28);
+}
+
 .logo em{color:var(--pu2);font-style:normal}
 nav{display:flex;gap:2px;background:var(--bg3);border-radius:50px;padding:3px;border:1px solid var(--b1)}
 .nb{font-family:var(--fb);font-size:12px;font-weight:500;padding:5px 14px;border-radius:50px;border:none;background:transparent;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap}
@@ -53,8 +80,25 @@ main{flex:1;padding:1.25rem;max-width:900px;width:100%;margin:0 auto}
 .fb{font-size:12px;padding:5px 12px;border-radius:50px;border:1px solid var(--b2);background:transparent;color:var(--t2);cursor:pointer;transition:all .18s;font-family:var(--fb)}
 .fb.on,.fb:hover{background:var(--pu);color:#fff;border-color:var(--pu)}
 .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:9px}
-.sc{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));   border:1px solid var(--b1);   border-radius:var(--r);   overflow:hidden;   display:flex;   flex-direction:column;   transition:border-color .18s,transform .18s,box-shadow .18s;   box-shadow:0 8px 24px rgba(0,0,0,.18); } .sc:hover{   border-color:var(--b2);   transform:translateY(-3px);   box-shadow:0 14px 30px rgba(0,0,0,.28); }
-.sc:hover{border-color:var(--b2);transform:translateY(-2px)}
+
+.sc{
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+  border:1px solid var(--b1);
+  border-radius:var(--r);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:border-color .18s,transform .18s,box-shadow .18s;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+}
+
+
+.sc:hover{
+  border-color:var(--b2);
+  transform:translateY(-3px);
+  box-shadow:0 14px 30px rgba(0,0,0,.28);
+}
+
 .si{height:115px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:2.6rem}
 .si img{width:100%;height:100%;object-fit:contain;padding:10px}
 .stg{position:absolute;top:7px;right:7px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px}
@@ -66,7 +110,14 @@ main{flex:1;padding:1.25rem;max-width:900px;width:100%;margin:0 auto}
 .sn{font-family:var(--fs);font-size:.82rem;font-weight:700;margin-bottom:3px;line-height:1.3;color:var(--t1)}
 .sd{font-size:10px;color:var(--t2);line-height:1.45;margin-bottom:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .sf{display:flex;align-items:flex-end;justify-content:space-between;margin-top:.55rem;gap:5px}
-.price{font-family:var(--fs);font-size:.9rem;font-weight:800;color:var(--gold)}
+
+.price{
+  font-family:var(--fs);
+  font-size:.9rem;
+  font-weight:800;
+  color:var(--gold);
+}
+
 .sgn{font-size:10px;color:var(--gr);margin-top:1px}
 .sst{font-size:10px;color:var(--t3);margin-top:1px}
 .bbt{font-size:11px;font-weight:500;padding:5px 11px;border:1px solid var(--pu);border-radius:50px;background:transparent;color:var(--pu2);cursor:pointer;transition:all .18s;font-family:var(--fb);flex-shrink:0}
@@ -81,7 +132,8 @@ input,select{background:var(--bg3);border:1px solid var(--b2);border-radius:var(
 input:focus,select:focus{border-color:var(--pu)}
 select option{background:var(--bg3)}
 .btn{font-family:var(--fs);font-size:13px;font-weight:700;padding:9px 20px;background:linear-gradient(135deg,var(--pu),#6d28d9);color:#fff;border:none;border-radius:var(--rs);cursor:pointer;transition:opacity .18s,transform .15s;white-space:nowrap}
-.btn:hover{opacity:.87;transform:scale(1.02)}.btn:active{transform:scale(.97)}
+.btn:hover{opacity:.87;transform:scale(1.02)}
+.btn:active{transform:scale(.97)}
 .btn-g{background:linear-gradient(135deg,var(--gold),#d97706);color:#000}
 .btn-r{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
 .btn-gr{background:linear-gradient(135deg,#059669,#065f46);color:#fff}
@@ -98,9 +150,12 @@ label:first-of-type{margin-top:0}
 .mtb{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden}
 .mh{display:grid;grid-template-columns:1fr 100px 110px 130px;gap:8px;padding:.55rem 1rem;background:var(--bg3);border-bottom:1px solid var(--b1);font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.05em}
 .mr{display:grid;grid-template-columns:1fr 100px 110px 130px;gap:8px;padding:.7rem 1rem;border-bottom:1px solid var(--b1);align-items:center;transition:background .15s}
-.mr:last-child{border-bottom:none}.mr:hover{background:var(--bg3)}
-.mi{font-size:12px;font-weight:500;color:var(--t1)}.mb2{font-size:12px;color:var(--t2)}
-.mg{font-size:12px;font-weight:700;color:var(--gr)}.mact{display:flex;gap:4px}
+.mr:last-child{border-bottom:none}
+.mr:hover{background:var(--bg3)}
+.mi{font-size:12px;font-weight:500;color:var(--t1)}
+.mb2{font-size:12px;color:var(--t2)}
+.mg{font-size:12px;font-weight:700;color:var(--gr)}
+.mact{display:flex;gap:4px}
 .emp{text-align:center;padding:2rem;color:var(--t2);font-size:13px}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .18s}
 .ov.on{opacity:1;pointer-events:all}
@@ -118,7 +173,16 @@ label:first-of-type{margin-top:0}
 #toast.ok{border-color:rgba(52,211,153,.38);color:var(--gr)}
 #toast.er{border-color:rgba(248,113,113,.38);color:var(--rd)}
 .ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;gap:.65rem}
-.spinner{width:30px;height:30px;border:3px solid var(--b2);border-top-color:var(--pu);border-radius:50%;animation:spin .7s linear infinite}
+
+.spinner{
+  width:30px;
+  height:30px;
+  border:3px solid var(--b2);
+  border-top-color:var(--pu);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+
 @keyframes spin{to{transform:rotate(360deg)}}
 .ld span{font-size:12px;color:var(--t2)}
 </style>
@@ -126,7 +190,13 @@ label:first-of-type{margin-top:0}
 <body>
 <div id="app">
 <header>
-  <div class="logo"><div class="logo-i">🏦</div>Vosso<em>Banque</em></div>
+  
+<div class="logo">
+  <div class="logo-i">🏦</div>
+  Vosso<em>Banque</em>
+  <span id="whoami" style="margin-left:10px;font-family:var(--fb);font-size:12px;color:var(--pu2)"></span>
+  <button id="logout-btn" onclick="logoutAgent()" style="margin-left:10px;font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline;display:none">Déconnexion</button>
+</div>
   <nav>
     <button class="nb on" onclick="sw('lb',this)">🏆 Classement</button>
     <button class="nb" onclick="sw('shop',this)">🛍️ Boutique</button>
@@ -203,11 +273,25 @@ label:first-of-type{margin-top:0}
         </div>
       </div>
       <div class="ph" style="font-size:1.1rem;margin-bottom:.3rem">🎯 Missions en attente</div>
-      <div class="ps" style="margin-bottom:.8rem">Articles "Up" achetés — ✅ valider si réussie · ❌ rejeter si échouée</div>
+      <div class="ps" style="margin-bottom:.8rem">Articles "Up" — ✅ valider si réussie · ❌ rejeter si échouée</div>
       <div id="mis-wrap"><div class="ld"><div class="spinner"></div><span>Chargement…</span></div></div>
       <button onclick="doLogout()" style="margin-top:1.5rem;font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
     </div>
   </div>
+
+
+<div class="ov on" id="login-ov" style="z-index:700">
+  <div class="mo">
+    <h3>Connexion agent</h3>
+    <div class="mo-d">Entre ton code personnel pour accéder à ton solde et acheter dans la boutique.</div>
+    <label>Code agent</label>
+    <input type="text" id="login-code" placeholder="Ex : SUJIN01" onkeydown="if(event.key==='Enter')loginAgent()" style="margin-bottom:10px"/>
+    <div id="login-err" style="display:none;color:var(--rd);font-size:12px;margin-top:6px">Code introuvable.</div>
+    <div class="ma">
+      <button class="btn btn-g" onclick="loginAgent()">Se connecter</button>
+    </div>
+  </div>
+</div>
 
 </main>
 </div>
@@ -218,17 +302,19 @@ label:first-of-type{margin-top:0}
     <div class="mo-d" id="mo-d"></div>
     <div class="mo-p" id="mo-p">0 UC</div>
     <div class="mo-g" id="mo-g" style="display:none"></div>
-    <label>Qui achète ?</label>
-    <select id="mo-buy" style="margin-bottom:0"></select>
+    <label>Compte utilisé</label>
+    <select id="mo-buy" disabled style="margin-bottom:0"></select>
     <div class="ma">
       <button class="btn-c" onclick="closeMo()">Annuler</button>
       <button class="btn btn-g" onclick="confirmBuy()">Confirmer l'achat</button>
     </div>
   </div>
 </div>
+
 <div id="toast">—</div>
 
 <script>
+/* ════════ CONFIG ════════ */
 const ADMIN_PWD = 'vosso2024';
 const PT_UC     = 2000;
 const PROXY     = 'https://vossobanque-proxy.small-snowflake-c6c9.workers.dev';
@@ -237,8 +323,32 @@ const T_PLR     = 'tbl0Kl91e57KCdkiy';
 const T_SHOP    = 'tblELehPqsb0ATygV';
 const T_TRX     = 'tblfooPjqvLZ3YSsD';
 
-let players=[], shop=[], pending=[], cur=null, curF='all';
+/* Champs Joueurs — noms réels vérifiés */
+const P_NM = 'fldj63VB2omDb3k5L';
+const P_BK = 'fldH20mY6pJEJaXUA';
+const P_CD = 'fld0VgreDsvD7931Q';
 
+/* Champs Boutique */
+const S_NM = "Nom de l'article";
+const S_DS = 'Description';
+const S_PR = 'Prix';
+const S_ST = 'Stock disponible';
+const S_CT = 'Catégorie';
+const S_IM = "Image de l'objet";
+const S_GN = 'Gain UC';
+
+/* Champs Transactions */
+const TR_BY = "Prénom de L'acheteur";
+const TR_AR = 'Article';
+const TR_AM = 'Montant';
+const TR_ST = 'Erreur';
+// Champ du gain de mission en UpCoins. Ce champ doit exister dans Airtable
+const TR_GN = 'Gain UC';
+
+/* ════════ STATE ════════ */
+let players=[], shop=[], pending=[], cur=null, curF='all', currentUser=null;
+
+/* ════════ API via PROXY ════════ */
 async function atGet(tbl, fields=[], formula=''){
   const p = new URLSearchParams();
   fields.forEach(f => p.append('fields[]', f));
@@ -246,15 +356,14 @@ async function atGet(tbl, fields=[], formula=''){
   p.set('pageSize','100');
   const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}?${p}`);
   if(!r.ok) throw new Error(await r.text());
-  const data = await r.json();
-  return data.records;
+  return (await r.json()).records;
 }
 
 async function atPatch(tbl, id, fields){
   const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}/${id}`, {
-    method:'PATCH',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({fields})
+    method: 'PATCH',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({fields})
   });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
@@ -262,68 +371,63 @@ async function atPatch(tbl, id, fields){
 
 async function atPost(tbl, fields){
   const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}`, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({fields})
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({fields})
   });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
 
-async function loadAll(){
-  await Promise.all([loadPlayers(), loadShop()]);
-}
+/* ════════ LOAD ════════ */
+async function loadAll(){ await Promise.all([loadPlayers(), loadShop()]); }
 
 async function loadPlayers(){
   document.getElementById('lb').innerHTML='<div class="ld"><div class="spinner"></div><span>Chargement…</span></div>';
   try{
+    // Récupération sans filtrer les champs pour garantir que nous avons les noms réels.
     const recs = await atGet(T_PLR);
     players = recs.map(r=>{
-      const f = r.fields;
-      const name = f['Nom du joueur'] || '?';
-      const bank = f['Solde en banque'] || 0;
-      const code = f['Code'] || '';
-      return { id:r.id, name, bank:Number(bank)||0, code };
+      const f = r.fields || {};
+      // Nom : on privilégie le nom lisible, puis l'identifiant interne. En dernier recours, on prend le premier champ.
+      const name = f['Nom du joueur'] || f[P_NM] || Object.values(f)[0] || '?';
+      // Solde : lecture par libellé puis par l'identifiant interne.
+      const bank = f['Solde en banque'] || f[P_BK] || 0;
+      // Code : lecture par libellé puis par l'identifiant interne.
+      const code = f['Code'] || f[P_CD] || '';
+      return {
+        id: r.id,
+        name: String(name),
+        bank: Number(bank) || 0,
+        code: String(code).trim()
+      };
     }).sort((a,b)=>b.bank-a.bank);
     renderLB();
     fillSels();
+    restoreSession();
   }catch(e){
     document.getElementById('lb').innerHTML=`<p style="color:var(--rd);padding:1rem;font-size:13px">Erreur : ${e.message}</p>`;
-    console.error('loadPlayers error:', e);
   }
 }
 
 async function loadShop(){
   document.getElementById('shop').innerHTML='<div class="ld"><div class="spinner"></div><span>Chargement boutique…</span></div>';
   try{
-    const recs = await atGet(T_SHOP);
-    shop = recs.map(r=>{
-      const f = r.fields;
-      const name  = f["Nom de l'article"] || '?';
-      const desc  = f['Description'] || '';
-      const price = f['Prix'] || 0;
-      const stock = f['Stock disponible'] || 0;
-      const catRaw = f['Catégorie'] || '';
-      const cat   = typeof catRaw === 'object' ? (catRaw?.name || '') : catRaw;
-      const imgs  = f["Image de l'objet"] || [];
-      const img   = Array.isArray(imgs) ? (imgs[0]?.thumbnails?.large?.url || imgs[0]?.url || null) : null;
-      const gain  = Number(f['Gain UC'] || 0);
-      return {
-        id:r.id,
-        name,
-        desc,
-        price:Number(price)||0,
-        stock:Number(stock)||0,
-        cat,
-        img,
-        gain,
-        ok:(Number(stock)||0)>0
-      };
-    }).sort((a,b)=>a.price-b.price);
-  }catch(e){
-    console.error('loadShop error:', e);
-    shop=[];
-  }
+    const recs = await atGet(T_SHOP,[S_NM,S_DS,S_PR,S_ST,S_CT,S_IM,S_GN]);
+    shop = recs.map(r=>({
+      id:    r.id,
+      name:  r.fields[S_NM] || '?',
+      desc:  r.fields[S_DS] || '',
+      price: r.fields[S_PR] || 0,
+      stock: r.fields[S_ST] || 0,
+      // Gestion de la catégorie : selon le proxy, un single select peut être renvoyé
+      // comme une chaîne ou un objet {name:...}. On traite les deux cas.
+      cat:   typeof r.fields[S_CT] === 'string' ? r.fields[S_CT] : (r.fields[S_CT]?.name || ''),
+      img:   r.fields[S_IM]?.[0]?.thumbnails?.large?.url || r.fields[S_IM]?.[0]?.url || null,
+      gain:  Number(r.fields[S_GN]) || 0,
+      ok:    (r.fields[S_ST]||0) > 0,
+    })).sort((a,b)=>a.price-b.price);
+  }catch(e){ shop=[]; }
   renderShop(curF);
 }
 
@@ -331,72 +435,48 @@ async function loadMissions(){
   const w=document.getElementById('mis-wrap');
   w.innerHTML='<div class="ld"><div class="spinner"></div><span>Chargement…</span></div>';
   try{
-    const recs = await atGet(T_TRX, [], "AND({Erreur}='En attente mission')");
-    pending = recs || [];
+    const recs = await atGet(T_TRX,[TR_BY,TR_AR,TR_AM,TR_ST,TR_GN],`{${TR_ST}}="En attente mission"`);
+    pending=recs||[];
     renderMissions();
-  }catch(e){
-    w.innerHTML=`<p class="emp" style="color:var(--rd)">Erreur : ${e.message}</p>`;
-  }
+  }catch(e){ w.innerHTML=`<p class="emp" style="color:var(--rd)">Erreur : ${e.message}</p>`; }
 }
 
-const AC=[
-  ['#8b5cf6','#2d1f5e'],
-  ['#1D9E75','#0d3d2e'],
-  ['#D85A30','#4a1f10'],
-  ['#3D8EF0','#0d2e5e'],
-  ['#d97706','#4a2f05'],
-  ['#ec4899','#4a1230'],
-  ['#0ea5e9','#053450']
-];
-
+/* ════════ RENDER LB ════════ */
+const AC=[['#8b5cf6','#2d1f5e'],['#1D9E75','#0d3d2e'],['#D85A30','#4a1f10'],['#3D8EF0','#0d2e5e'],['#d97706','#4a2f05'],['#ec4899','#4a1230'],['#0ea5e9','#053450']];
 function renderLB(){
-  const max=players[0]?.bank||1;
-  const tot=players.reduce((s,p)=>s+p.bank,0);
+  const max=players[0]?.bank||1, tot=players.reduce((s,p)=>s+p.bank,0);
   document.getElementById('s-n').textContent=players.length;
   document.getElementById('s-t').textContent=fu(tot);
   document.getElementById('s-l').textContent=players[0]?.name||'—';
-  const em=['🥇','🥈','🥉'], rc=['r1','r2','r3'];
-
+  const em=['🥇','🥈','🥉'],rc=['r1','r2','r3'];
   document.getElementById('lb').innerHTML=players.map((p,i)=>{
-    const pct=Math.round(p.bank/max*100);
-    const [fg,bg]=AC[i%AC.length];
+    const pct=Math.round(p.bank/max*100),[fg,bg]=AC[i%AC.length];
     return `<div class="pc ${i===0?'g1':''}">
       <div class="rk ${i<3?rc[i]:''}">${i<3?em[i]:i+1}</div>
-      <div class="av" style="background:${bg};color:${fg}">${(p.name||'?')[0].toUpperCase()}</div>
-      <div class="pi">
-        <div class="pn">${p.name}</div>
-        <div class="pc2">Code : ${p.code}</div>
-      </div>
+      <div class="av" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
+      <div class="pi"><div class="pn">${p.name}</div><div class="pc2">Code : ${p.code}</div></div>
       <div class="bw"><div class="bb"><div class="bf" style="width:${pct}%"></div></div></div>
       <div class="bk"><div class="ba">${fu(p.bank)}</div><div class="bl">UpCoins</div></div>
     </div>`;
   }).join('');
 }
 
+/* ════════ RENDER SHOP ════════ */
 const IC={Up:'⚡',Décoration:'🎨',CASH:'💸',wellness:'🌱',default:'📦'};
-
 function fs(f,btn){
   curF=f;
   document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   renderShop(f);
 }
-
 function renderShop(f){
   const el=document.getElementById('shop');
   const items=f==='all'?shop:shop.filter(i=>i.cat===f);
-
-  if(!items.length){
-    el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article dans cette catégorie.</p>';
-    return;
-  }
-
+  if(!items.length){el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article.</p>';return;}
   el.innerHTML=items.map(item=>{
-    const ri=shop.indexOf(item);
-    const icon=IC[item.cat]||IC.default;
+    const ri=shop.indexOf(item),icon=IC[item.cat]||IC.default;
     const imgH=item.img?`<img src="${item.img}" alt=""/>`:`<span>${icon}</span>`;
     const catCls='t'+(item.cat||'').replace(/[^a-zA-Z]/g,'');
-
     return `<div class="sc">
       <div class="si">${imgH}${item.cat?`<span class="stg ${catCls}">${item.cat}</span>`:''}</div>
       <div class="sb">
@@ -415,24 +495,16 @@ function renderShop(f){
   }).join('');
 }
 
+/* ════════ RENDER MISSIONS ════════ */
 function renderMissions(){
   const w=document.getElementById('mis-wrap');
-  if(!pending.length){
-    w.innerHTML='<div class="emp">✅ Aucune mission en attente</div>';
-    return;
-  }
-
+  if(!pending.length){w.innerHTML='<div class="emp">✅ Aucune mission en attente</div>';return;}
   w.innerHTML=`<div class="mtb">
     <div class="mh"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
     ${pending.map(m=>{
-      const f=m.fields;
-      const gain=Number(f['Gain UC']||0);
-      const buyer=f["Prénom de L'acheteur"]||'?';
-      const art=f['Article']||'?';
-
+      const gain=Number(m.fields[TR_GN]||0),buyer=m.fields[TR_BY]||'?',art=m.fields[TR_AR]||'?';
       return `<div class="mr">
-        <span class="mi">${art}</span>
-        <span class="mb2">${buyer}</span>
+        <span class="mi">${art}</span><span class="mb2">${buyer}</span>
         <span class="mg">${gain?'+'+fu(gain)+' UC':'—'}</span>
         <div class="mact">
           <button class="btn btn-gr btn-sm" onclick="valMis('${m.id}','${buyer}',${gain})">✅ Valider</button>
@@ -443,7 +515,14 @@ function renderMissions(){
   </div>`;
 }
 
+/* ════════ BUY ════════ */
+
 function openMo(idx){
+  if(!currentUser){
+    document.getElementById('login-ov').classList.add('on');
+    toast('Connecte-toi avec ton code', 'er');
+    return;
+  }
   cur=shop[idx];
   document.getElementById('mo-n').textContent=cur.name;
   document.getElementById('mo-d').textContent=cur.desc;
@@ -455,55 +534,48 @@ function openMo(idx){
   } else {
     ge.style.display='none';
   }
-  document.getElementById('mo-buy').innerHTML=players.map(p=>`<option value="${p.id}|${p.code}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
+  document.getElementById('mo-buy').innerHTML =
+    `<option value="${currentUser.id}|${currentUser.code}">${currentUser.name} — ${fu(currentUser.bank)} UC</option>`;
   document.getElementById('modal').classList.add('on');
 }
 
-function closeMo(){
-  document.getElementById('modal').classList.remove('on');
-  cur=null;
-}
+function closeMo(){document.getElementById('modal').classList.remove('on');cur=null;}
+
 
 async function confirmBuy(){
-  if(!cur)return;
-
-  const [aid,acode]=document.getElementById('mo-buy').value.split('|');
-  const ag=players.find(p=>p.id===aid);
-  if(!ag)return;
-
-  if(ag.bank<cur.price){
+  if(!cur || !currentUser) return;
+  const ag = players.find(p => p.id === currentUser.id);
+  if(!ag) return;
+  if(ag.bank < cur.price){
     toast('❌ Solde insuffisant','er');
     closeMo();
     return;
   }
-
-  const nb=ag.bank-cur.price;
-  const isMis=cur.cat==='Up';
-
+  const nb = ag.bank - cur.price;
+  const isMis = cur.cat === 'Up';
   try{
-    await atPatch(T_PLR, aid, {'Solde en banque': nb});
-    await atPatch(T_SHOP, cur.id, {'Stock disponible': cur.stock-1});
+    await atPatch(T_PLR, ag.id, { [P_BK]: nb });
+    await atPatch(T_SHOP, cur.id, { [S_ST]: cur.stock - 1 });
     await atPost(T_TRX, {
-      "Prénom de L'acheteur": acode,
-      "Article": cur.name,
-      "Montant": cur.price,
-      "Erreur": isMis ? 'En attente mission' : 'Validé',
-      "Gain UC": cur.gain || 0
+      [TR_BY]: ag.code,
+      [TR_AR]: cur.name,
+      [TR_AM]: cur.price,
+      [TR_ST]: isMis ? 'En attente mission' : 'Validé',
+      [TR_GN]: String(cur.gain || 0)
     });
-
-    ag.bank=nb;
-    cur.stock-=1;
-    if(cur.stock<=0)cur.ok=false;
-
-    renderLB();
-    fillSels();
-    renderShop(curF);
+    ag.bank = nb;
+    currentUser.bank = nb;
+    cur.stock -= 1;
+    if(cur.stock <= 0) cur.ok = false;
+    renderLB(); fillSels(); renderShop(curF);
     closeMo();
-
+    document.getElementById('whoami').textContent = `• ${ag.name}`;
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn) logoutBtn.style.display = 'inline';
     toast(
-      isMis
-        ? `✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC`
-        : `✅ Achat OK ! Solde : ${fu(nb)} UC`,
+      isMis ?
+        `✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC` :
+        `✅ Achat OK ! Solde : ${fu(nb)} UC`,
       'ok'
     );
   }catch(e){
@@ -511,46 +583,40 @@ async function confirmBuy(){
   }
 }
 
+/*
+ * Ce bloc redondant a été supprimé. Les opérations d'achat et
+ * la mise à jour de l'interface sont gérées dans la fonction
+ * confirmBuy() ci-dessus.  
+ */
+
+/* ════════ MISSIONS ════════ */
 async function valMis(id,buyer,gain){
   const ag=players.find(p=>p.code===buyer.trim());
   try{
-    await atPatch(T_TRX, id, {'Erreur':'Mission réussie ✅'});
-    if(ag&&gain>0){
-      const nb=ag.bank+gain;
-      await atPatch(T_PLR, ag.id, {'Solde en banque':nb});
-      ag.bank=nb;
-    }
+    await atPatch(T_TRX,id,{[TR_ST]:'Mission réussie ✅'});
+    if(ag&&gain>0){const nb=ag.bank+gain;await atPatch(T_PLR,ag.id,{[P_BK]:nb});ag.bank=nb;}
     pending=pending.filter(m=>m.id!==id);
-    renderMissions();
-    renderLB();
-    fillSels();
+    renderMissions(); renderLB(); fillSels(); restoreSession();
     toast(`✅ Mission validée !${ag&&gain>0?' +'+fu(gain)+' UC → '+ag.name:''}`, 'ok');
-  }catch(e){
-    toast('❌ '+e.message,'er');
-  }
+  }catch(e){toast('❌ '+e.message,'er');}
 }
-
 async function rejMis(id){
   try{
-    await atPatch(T_TRX, id, {'Erreur':'Mission échouée ❌'});
+    await atPatch(T_TRX,id,{[TR_ST]:'Mission échouée ❌'});
     pending=pending.filter(m=>m.id!==id);
     renderMissions();
     toast('Mission rejetée','er');
-  }catch(e){
-    toast('❌ '+e.message,'er');
-  }
+  }catch(e){toast('❌ '+e.message,'er');}
 }
 
+/* ════════ ADMIN ════════ */
 function unlock(){
   if(document.getElementById('pwd').value===ADMIN_PWD){
     document.getElementById('adm-lock').style.display='none';
     document.getElementById('adm-panel').style.display='block';
     loadMissions();
-  } else {
-    document.getElementById('pwd-err').style.display='block';
-  }
+  } else document.getElementById('pwd-err').style.display='block';
 }
-
 function doLogout(){
   document.getElementById('adm-lock').style.display='block';
   document.getElementById('adm-panel').style.display='none';
@@ -564,15 +630,11 @@ async function doAdd(){
   if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
   const nb=ag.bank+amt;
   try{
-    await atPatch(T_PLR, ag.id, {'Solde en banque':nb});
-    ag.bank=nb;
-    renderLB();
-    fillSels();
+    await atPatch(T_PLR,ag.id,{[P_BK]:nb});
+    ag.bank=nb; renderLB(); fillSels(); restoreSession();
     showMsg(msg,`✅ +${fu(amt)} UC à ${ag.name} → ${fu(nb)} UC`,true);
     document.getElementById('a-am').value='';
-  }catch(e){
-    showMsg(msg,'❌ '+e.message,false);
-  }
+  }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
 
 async function doRem(){
@@ -582,15 +644,11 @@ async function doRem(){
   if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
   const nb=Math.max(0,ag.bank-amt);
   try{
-    await atPatch(T_PLR, ag.id, {'Solde en banque':nb});
-    ag.bank=nb;
-    renderLB();
-    fillSels();
+    await atPatch(T_PLR,ag.id,{[P_BK]:nb});
+    ag.bank=nb; renderLB(); fillSels(); restoreSession();
     showMsg(msg,`✅ -${fu(amt)} UC à ${ag.name} → ${fu(nb)} UC`,true);
     document.getElementById('r-am').value='';
-  }catch(e){
-    showMsg(msg,'❌ '+e.message,false);
-  }
+  }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
 
 async function doQuick(){
@@ -600,58 +658,65 @@ async function doQuick(){
   if(!ag||isNaN(pts)||pts<=0){showMsg(msg,'Valeur invalide',false);return;}
   const uc=Math.round(pts*PT_UC),nb=ag.bank+uc;
   try{
-    await atPatch(T_PLR, ag.id, {'Solde en banque':nb});
-    ag.bank=nb;
-    renderLB();
-    fillSels();
+    await atPatch(T_PLR,ag.id,{[P_BK]:nb});
+    ag.bank=nb; renderLB(); fillSels(); restoreSession();
     showMsg(msg,`✅ ${pts} pts = +${fu(uc)} UC pour ${ag.name} → ${fu(nb)} UC`,true);
     document.getElementById('q-pt').value='';
-  }catch(e){
-    showMsg(msg,'❌ '+e.message,false);
-  }
+  }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
 
-function fu(n){
-  n=Number(n)||0;
-  if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M';
-  if(n>=1000)return Math.round(n/1000)+'K';
-  return n.toLocaleString('fr-FR');
-}
-
-function fillSels(){
-  ['a-ag','r-ag','q-ag'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(!el)return;
-    el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
-  });
-}
-
-function showMsg(el,txt,ok){
-  el.className='rm '+(ok?'ok':'er');
-  el.textContent=txt;
-  setTimeout(()=>el.className='rm',5000);
-}
-
+/* ════════ UTILS ════════ */
+function fu(n){n=Number(n)||0;if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M';if(n>=1000)return Math.round(n/1000)+'K';return n.toLocaleString('fr-FR');}
+function fillSels(){['a-ag','r-ag','q-ag'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fu(p.bank)} UC</option>`).join('');});}
+function showMsg(el,txt,ok){el.className='rm '+(ok?'ok':'er');el.textContent=txt;setTimeout(()=>el.className='rm',5000);}
 let tt;
-function toast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='on '+type;
-  clearTimeout(tt);
-  tt=setTimeout(()=>t.className='',3500);
-}
+function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='on '+type;clearTimeout(tt);tt=setTimeout(()=>t.className='',3500);}
+function sw(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('sec-'+id).classList.add('on');btn.classList.add('on');if(id==='adm'&&document.getElementById('adm-panel').style.display!=='none')loadMissions();}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeMo();});
 
-function sw(id,btn){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-  document.getElementById('sec-'+id).classList.add('on');
-  btn.classList.add('on');
-  if(id==='adm'&&document.getElementById('adm-panel').style.display!=='none')loadMissions();
+/* ════════ AUTH ════════ */
+function normalizeCode(v){
+  return String(v || '').trim().toUpperCase();
 }
-
-document.getElementById('modal').addEventListener('click',function(e){
-  if(e.target===this)closeMo();
-});
+function restoreSession(){
+  const saved = normalizeCode(localStorage.getItem('vossobanque_code'));
+  if(!saved) return false;
+  const me = players.find(p => normalizeCode(p.code) === saved);
+  if(!me) return false;
+  currentUser = me;
+  document.getElementById('login-ov').classList.remove('on');
+  document.getElementById('whoami').textContent = `• ${me.name}`;
+  const logoutBtn = document.getElementById('logout-btn');
+  if(logoutBtn) logoutBtn.style.display = 'inline';
+  return true;
+}
+function loginAgent(){
+  const input = document.getElementById('login-code');
+  const err = document.getElementById('login-err');
+  const code = normalizeCode(input.value);
+  const me = players.find(p => normalizeCode(p.code) === code);
+  if(!me){
+    err.style.display='block';
+    return;
+  }
+  err.style.display='none';
+  currentUser = me;
+  localStorage.setItem('vossobanque_code', code);
+  document.getElementById('login-ov').classList.remove('on');
+  document.getElementById('whoami').textContent = `• ${me.name}`;
+  const logoutBtn = document.getElementById('logout-btn');
+  if(logoutBtn) logoutBtn.style.display = 'inline';
+  toast(`Connecté : ${me.name}`,'ok');
+}
+function logoutAgent(){
+  currentUser = null;
+  localStorage.removeItem('vossobanque_code');
+  document.getElementById('login-code').value='';
+  document.getElementById('login-ov').classList.add('on');
+  document.getElementById('whoami').textContent = '';
+  const logoutBtn = document.getElementById('logout-btn');
+  if(logoutBtn) logoutBtn.style.display = 'none';
+}
 
 loadAll();
 </script>
