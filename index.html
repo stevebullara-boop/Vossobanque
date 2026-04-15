@@ -10,12 +10,9 @@
 :root{
   --bg:#09090f;--bg2:#111119;--bg3:#17171f;--bg4:#1f1f28;
   --b1:rgba(255,255,255,.06);--b2:rgba(255,255,255,.11);--b3:rgba(255,255,255,.18);
-  --gold:#f0c040;--gold2:#ffd770;
-  --pu:#8b5cf6;--pu2:#a78bfa;
-  --gr:#34d399;--rd:#f87171;
-  --t1:#eeeef8;--t2:#8080a0;--t3:#46465a;
-  --r:12px;--rs:8px;--rl:16px;
-  --fs:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+  --gold:#f0c040;--gold2:#ffd770;--pu:#8b5cf6;--pu2:#a78bfa;
+  --gr:#34d399;--rd:#f87171;--t1:#eeeef8;--t2:#8080a0;--t3:#46465a;
+  --r:12px;--rs:8px;--rl:16px;--fs:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
 }
 html,body{min-height:100%;background:var(--bg);color:var(--t1);font-family:var(--fb);overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% -5%,rgba(139,92,246,.09) 0%,transparent 65%),radial-gradient(ellipse 50% 35% at 88% 98%,rgba(240,192,64,.06) 0%,transparent 60%);pointer-events:none;z-index:0}
@@ -84,8 +81,7 @@ input,select{background:var(--bg3);border:1px solid var(--b2);border-radius:var(
 input:focus,select:focus{border-color:var(--pu)}
 select option{background:var(--bg3)}
 .btn{font-family:var(--fs);font-size:13px;font-weight:700;padding:9px 20px;background:linear-gradient(135deg,var(--pu),#6d28d9);color:#fff;border:none;border-radius:var(--rs);cursor:pointer;transition:opacity .18s,transform .15s;white-space:nowrap}
-.btn:hover{opacity:.87;transform:scale(1.02)}
-.btn:active{transform:scale(.97)}
+.btn:hover{opacity:.87;transform:scale(1.02)}.btn:active{transform:scale(.97)}
 .btn-g{background:linear-gradient(135deg,var(--gold),#d97706);color:#000}
 .btn-r{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
 .btn-gr{background:linear-gradient(135deg,#059669,#065f46);color:#fff}
@@ -102,12 +98,9 @@ label:first-of-type{margin-top:0}
 .mtb{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden}
 .mh{display:grid;grid-template-columns:1fr 100px 110px 130px;gap:8px;padding:.55rem 1rem;background:var(--bg3);border-bottom:1px solid var(--b1);font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.05em}
 .mr{display:grid;grid-template-columns:1fr 100px 110px 130px;gap:8px;padding:.7rem 1rem;border-bottom:1px solid var(--b1);align-items:center;transition:background .15s}
-.mr:last-child{border-bottom:none}
-.mr:hover{background:var(--bg3)}
-.mi{font-size:12px;font-weight:500;color:var(--t1)}
-.mb2{font-size:12px;color:var(--t2)}
-.mg{font-size:12px;font-weight:700;color:var(--gr)}
-.mact{display:flex;gap:4px}
+.mr:last-child{border-bottom:none}.mr:hover{background:var(--bg3)}
+.mi{font-size:12px;font-weight:500;color:var(--t1)}.mb2{font-size:12px;color:var(--t2)}
+.mg{font-size:12px;font-weight:700;color:var(--gr)}.mact{display:flex;gap:4px}
 .emp{text-align:center;padding:2rem;color:var(--t2);font-size:13px}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .18s}
 .ov.on{opacity:1;pointer-events:all}
@@ -210,7 +203,7 @@ label:first-of-type{margin-top:0}
         </div>
       </div>
       <div class="ph" style="font-size:1.1rem;margin-bottom:.3rem">🎯 Missions en attente</div>
-      <div class="ps" style="margin-bottom:.8rem">Articles "Up" — ✅ valider si réussie · ❌ rejeter si échouée</div>
+      <div class="ps" style="margin-bottom:.8rem">Articles "Up" achetés — ✅ valider si réussie · ❌ rejeter si échouée</div>
       <div id="mis-wrap"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
       <button onclick="doLogout()" style="margin-top:1.5rem;font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
     </div>
@@ -246,31 +239,31 @@ const T_PLR     = 'tbl0Kl91e57KCdkiy';
 const T_SHOP    = 'tblELehPqsb0ATygV';
 const T_TRX     = 'tblfooPjqvLZ3YSsD';
 
-/* Champs Joueurs — noms réels vérifiés */
+/* Joueurs — IDs vérifiés live */
 const P_NM = 'fldj63VB2omDb3k5L';
 const P_BK = 'fldH20mY6pJEJaXUA';
 const P_CD = 'fld0VgreDsvD7931Q';
 
-/* Champs Boutique */
-const S_NM = "Nom de l'article";
-const S_DS = 'Description';
-const S_PR = 'Prix';
-const S_ST = 'Stock disponible';
-const S_CT = 'Catégorie';
-const S_IM = "Image de l'objet";
-const S_GN = 'Gain UC';
+/* Boutique — IDs vérifiés live */
+const S_NM = 'fldGcw1fYjAI5UM6q';
+const S_DS = 'fldKui2kVVpD0Qgof';
+const S_PR = 'fldYxeEBNDYze6OPR';
+const S_ST = 'fldFO979kDrfGyWCn';
+const S_CT = 'fldGd086FFywN1nKA';
+const S_IM = 'fldBeGjvXujte9fHV';
+const S_GN = 'fld88HWNS5jk3BiT9';
 
-/* Champs Transactions */
-const TR_BY = "Prénom de L'acheteur";
-const TR_AR = 'Article';
-const TR_AM = 'Montant';
-const TR_ST = 'Erreur';
-const TR_GN = 'Date';
+/* Transactions — IDs vérifiés live */
+const TR_BY = 'fldd9s39ZYZhCbzcz';
+const TR_AR = 'fldf9zRqjYWJDCmuw';
+const TR_AM = 'fldAoYG01C9c0qE80';
+const TR_ST = 'flduJZSrIrglzLvvp';
+const TR_GN = 'fldGLc3RMIdrsI8FQ';
 
 /* ════════ STATE ════════ */
 let players=[], shop=[], pending=[], cur=null, curF='all';
 
-/* ════════ API via PROXY ════════ */
+/* ════════ API ════════ */
 async function atGet(tbl, fields=[], formula=''){
   const p = new URLSearchParams();
   fields.forEach(f => p.append('fields[]', f));
@@ -280,22 +273,18 @@ async function atGet(tbl, fields=[], formula=''){
   if(!r.ok) throw new Error(await r.text());
   return (await r.json()).records;
 }
-
 async function atPatch(tbl, id, fields){
   const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}/${id}`, {
-    method: 'PATCH',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({fields})
+    method:'PATCH', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({fields})
   });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
-
 async function atPost(tbl, fields){
   const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}`, {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({fields})
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({fields})
   });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
@@ -309,10 +298,7 @@ async function loadPlayers(){
   try{
     const recs = await atGet(T_PLR,[P_NM,P_BK,P_CD]);
     players = recs.map(r=>({
-      id:   r.id,
-      name: r.fields[P_NM] || '?',
-      bank: r.fields[P_BK] || 0,
-      code: r.fields[P_CD] || ''
+      id:r.id, name:r.fields[P_NM]||'?', bank:r.fields[P_BK]||0, code:r.fields[P_CD]||''
     })).sort((a,b)=>b.bank-a.bank);
     renderLB(); fillSels();
   }catch(e){
@@ -325,15 +311,15 @@ async function loadShop(){
   try{
     const recs = await atGet(T_SHOP,[S_NM,S_DS,S_PR,S_ST,S_CT,S_IM,S_GN]);
     shop = recs.map(r=>({
-      id:    r.id,
-      name:  r.fields[S_NM] || '?',
-      desc:  r.fields[S_DS] || '',
-      price: r.fields[S_PR] || 0,
-      stock: r.fields[S_ST] || 0,
-      cat:   r.fields[S_CT]?.name || '',
-      img:   r.fields[S_IM]?.[0]?.thumbnails?.large?.url || null,
-      gain:  Number(r.fields[S_GN]) || 0,
-      ok:    (r.fields[S_ST]||0) > 0,
+      id:r.id,
+      name: r.fields[S_NM]||'?',
+      desc: r.fields[S_DS]||'',
+      price:r.fields[S_PR]||0,
+      stock:r.fields[S_ST]||0,
+      cat:  r.fields[S_CT]?.name||'',
+      img:  r.fields[S_IM]?.[0]?.thumbnails?.large?.url||null,
+      gain: Number(r.fields[S_GN])||0,
+      ok:   (r.fields[S_ST]||0)>0,
     })).sort((a,b)=>a.price-b.price);
   }catch(e){ shop=[]; }
   renderShop(curF);
@@ -344,13 +330,13 @@ async function loadMissions(){
   w.innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
   try{
     const recs = await atGet(T_TRX,[TR_BY,TR_AR,TR_AM,TR_ST,TR_GN],`{${TR_ST}}="En attente mission"`);
-    pending=recs||[];
-    renderMissions();
+    pending=recs||[]; renderMissions();
   }catch(e){ w.innerHTML=`<p class="emp" style="color:var(--rd)">Erreur : ${e.message}</p>`; }
 }
 
 /* ════════ RENDER LB ════════ */
-const AC=[['#8b5cf6','#2d1f5e'],['#1D9E75','#0d3d2e'],['#D85A30','#4a1f10'],['#3D8EF0','#0d2e5e'],['#d97706','#4a2f05'],['#ec4899','#4a1230'],['#0ea5e9','#053450']];
+const AC=[['#8b5cf6','#2d1f5e'],['#1D9E75','#0d3d2e'],['#D85A30','#4a1f10'],
+          ['#3D8EF0','#0d2e5e'],['#d97706','#4a2f05'],['#ec4899','#4a1230'],['#0ea5e9','#053450']];
 function renderLB(){
   const max=players[0]?.bank||1, tot=players.reduce((s,p)=>s+p.bank,0);
   document.getElementById('s-n').textContent=players.length;
@@ -380,9 +366,12 @@ function fs(f,btn){
 function renderShop(f){
   const el=document.getElementById('shop');
   const items=f==='all'?shop:shop.filter(i=>i.cat===f);
-  if(!items.length){el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article.</p>';return;}
+  if(!items.length){
+    el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article dans cette catégorie.</p>';
+    return;
+  }
   el.innerHTML=items.map(item=>{
-    const ri=shop.indexOf(item),icon=IC[item.cat]||IC.default;
+    const ri=shop.indexOf(item), icon=IC[item.cat]||IC.default;
     const imgH=item.img?`<img src="${item.img}" alt=""/>`:`<span>${icon}</span>`;
     const catCls='t'+(item.cat||'').replace(/[^a-zA-Z]/g,'');
     return `<div class="sc">
@@ -447,7 +436,8 @@ async function confirmBuy(){
   try{
     await atPatch(T_PLR,aid,{[P_BK]:nb});
     await atPatch(T_SHOP,cur.id,{[S_ST]:cur.stock-1});
-    await atPost(T_TRX,{[TR_BY]:acode,[TR_AR]:cur.name,[TR_AM]:cur.price,[TR_ST]:isMis?'En attente mission':'Validé',[TR_GN]:String(cur.gain||0)});
+    await atPost(T_TRX,{[TR_BY]:acode,[TR_AR]:cur.name,[TR_AM]:cur.price,
+      [TR_ST]:isMis?'En attente mission':'Validé',[TR_GN]:String(cur.gain||0)});
     ag.bank=nb; cur.stock-=1; if(cur.stock<=0)cur.ok=false;
     renderLB(); fillSels(); renderShop(curF); closeMo();
     toast(isMis?`✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC`:`✅ Achat OK ! Solde : ${fu(nb)} UC`,'ok');
@@ -487,7 +477,6 @@ function doLogout(){
   document.getElementById('adm-panel').style.display='none';
   document.getElementById('pwd').value='';
 }
-
 async function doAdd(){
   const ag=players.find(p=>p.id===document.getElementById('a-ag').value);
   const amt=parseInt(document.getElementById('a-am').value);
@@ -501,7 +490,6 @@ async function doAdd(){
     document.getElementById('a-am').value='';
   }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
-
 async function doRem(){
   const ag=players.find(p=>p.id===document.getElementById('r-ag').value);
   const amt=parseInt(document.getElementById('r-am').value);
@@ -515,7 +503,6 @@ async function doRem(){
     document.getElementById('r-am').value='';
   }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
-
 async function doQuick(){
   const ag=players.find(p=>p.id===document.getElementById('q-ag').value);
   const pts=parseFloat(document.getElementById('q-pt').value);
