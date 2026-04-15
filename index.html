@@ -2,531 +2,193 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VossoBanque</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#09090f;--bg2:#111119;--bg3:#17171f;--bg4:#1f1f28;
-  --b1:rgba(255,255,255,.06);--b2:rgba(255,255,255,.11);--b3:rgba(255,255,255,.18);
-  --gold:#f0c040;--gold2:#ffd770;--pu:#8b5cf6;--pu2:#a78bfa;
-  --gr:#34d399;--rd:#f87171;--t1:#eeeef8;--t2:#8080a0;--t3:#46465a;
-  --r:12px;--rs:8px;--rl:16px;--fs:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+body {
+  background:#0e0e16;
+  color:white;
+  font-family:sans-serif;
+  text-align:center;
 }
-html,body{min-height:100%;background:var(--bg);color:var(--t1);font-family:var(--fb);overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% -5%,rgba(139,92,246,.09) 0%,transparent 65%),radial-gradient(ellipse 50% 35% at 88% 98%,rgba(240,192,64,.06) 0%,transparent 60%);pointer-events:none;z-index:0}
-#app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:1px solid var(--b1);background:rgba(9,9,15,.88);backdrop-filter:blur(14px);position:sticky;top:0;z-index:100}
-.logo{display:flex;align-items:center;gap:9px;font-family:var(--fs);font-size:1.25rem;font-weight:800;letter-spacing:-.02em;color:var(--t1)}
-.logo-i{width:33px;height:33px;border-radius:9px;background:linear-gradient(135deg,var(--pu),var(--gold));display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.logo em{color:var(--gold);font-style:normal}
-nav{display:flex;gap:2px;background:var(--bg3);border-radius:50px;padding:3px;border:1px solid var(--b1)}
-.nb{font-family:var(--fb);font-size:12px;font-weight:500;padding:5px 14px;border-radius:50px;border:none;background:transparent;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap}
-.nb.on{background:var(--bg4);color:var(--t1)}
-.nb.adm{color:var(--gold)}.nb.adm.on{background:rgba(240,192,64,.13);color:var(--gold2)}
-main{flex:1;padding:1.25rem;max-width:900px;width:100%;margin:0 auto}
-.sec{display:none}.sec.on{display:block}
-.ph{font-family:var(--fs);font-size:1.45rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.2rem}
-.ps{font-size:12px;color:var(--t2);margin-bottom:1.2rem}
-.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1.2rem}
-.mc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--rs);padding:.8rem 1rem}
-.ml{font-size:11px;color:var(--t2);margin-bottom:3px}
-.mv{font-family:var(--fs);font-size:1.3rem;font-weight:800}
-.lb{display:flex;flex-direction:column;gap:7px}
-.pc{display:flex;align-items:center;gap:11px;background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);padding:.85rem 1.1rem;transition:border-color .18s,transform .15s}
-.pc:hover{border-color:var(--b2);transform:translateX(3px)}
-.pc.g1{border-color:rgba(240,192,64,.28);background:rgba(240,192,64,.03)}
-.rk{font-family:var(--fs);font-weight:800;min-width:26px;text-align:center;color:var(--t3);font-size:.95rem}
-.rk.r1{font-size:1.25rem;color:var(--gold)}.rk.r2{color:#b0b0c8}.rk.r3{color:#cd7f32}
-.av{width:46px;height:46px;border-radius:50%;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-family:var(--fs);font-size:16px;font-weight:800;flex-shrink:0}
-.pi{flex:1;min-width:0}
-.pn{font-family:var(--fs);font-size:.95rem;font-weight:700;color:var(--t1)}
-.pc2{font-size:11px;color:var(--t2);margin-top:1px}
-.bw{flex:1;display:flex;flex-direction:column;gap:4px}
-.bb{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden}
-.bf{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--pu),var(--gold))}
-.bk{text-align:right;flex-shrink:0}
-.ba{font-family:var(--fs);font-size:1rem;font-weight:800;color:var(--gold)}
-.bl{font-size:10px;color:var(--t3);margin-top:1px}
-.filt{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1rem}
-.fb{font-size:12px;padding:5px 12px;border-radius:50px;border:1px solid var(--b2);background:transparent;color:var(--t2);cursor:pointer;transition:all .18s;font-family:var(--fb)}
-.fb.on,.fb:hover{background:var(--pu);color:#fff;border-color:var(--pu)}
-.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:9px}
-.sc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s,transform .18s}
-.sc:hover{border-color:var(--b2);transform:translateY(-2px)}
-.si{height:115px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:2.6rem}
-.si img{width:100%;height:100%;object-fit:contain;padding:10px}
-.stg{position:absolute;top:7px;right:7px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px}
-.tUp{background:rgba(139,92,246,.8);color:#fff}
-.tDecoration{background:rgba(240,192,64,.82);color:#000}
-.tCASH{background:rgba(244,114,182,.82);color:#fff}
-.twellness{background:rgba(52,211,153,.82);color:#000}
-.sb{padding:.7rem .85rem;flex:1;display:flex;flex-direction:column}
-.sn{font-family:var(--fs);font-size:.82rem;font-weight:700;margin-bottom:3px;line-height:1.3;color:var(--t1)}
-.sd{font-size:10px;color:var(--t2);line-height:1.45;margin-bottom:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.sf{display:flex;align-items:flex-end;justify-content:space-between;margin-top:.55rem;gap:5px}
-.sp{font-family:var(--fs);font-size:.9rem;font-weight:800;color:var(--gold)}
-.sgn{font-size:10px;color:var(--gr);margin-top:1px}
-.sst{font-size:10px;color:var(--t3);margin-top:1px}
-.bbt{font-size:11px;font-weight:500;padding:5px 11px;border:1px solid var(--pu);border-radius:50px;background:transparent;color:var(--pu2);cursor:pointer;transition:all .18s;font-family:var(--fb);flex-shrink:0}
-.bbt:hover{background:var(--pu);color:#fff}
-.bbt:disabled{opacity:.3;cursor:not-allowed;border-color:var(--b2);color:var(--t3)}
-.alck{max-width:340px;margin:3rem auto;text-align:center}
-.alck .ic{font-size:2.8rem;margin-bottom:.9rem}
-.alck h2{font-family:var(--fs);font-size:1.3rem;font-weight:800;margin-bottom:.35rem}
-.alck p{color:var(--t2);font-size:13px;margin-bottom:1.1rem}
-.row{display:flex;gap:7px}
-input,select{background:var(--bg3);border:1px solid var(--b2);border-radius:var(--rs);color:var(--t1);font-family:var(--fb);font-size:13px;padding:9px 12px;outline:none;transition:border-color .18s;width:100%}
-input:focus,select:focus{border-color:var(--pu)}
-select option{background:var(--bg3)}
-.btn{font-family:var(--fs);font-size:13px;font-weight:700;padding:9px 20px;background:linear-gradient(135deg,var(--pu),#6d28d9);color:#fff;border:none;border-radius:var(--rs);cursor:pointer;transition:opacity .18s,transform .15s;white-space:nowrap}
-.btn:hover{opacity:.87;transform:scale(1.02)}.btn:active{transform:scale(.97)}
-.btn-g{background:linear-gradient(135deg,var(--gold),#d97706);color:#000}
-.btn-r{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
-.btn-gr{background:linear-gradient(135deg,#059669,#065f46);color:#fff}
-.btn-sm{font-size:11px;padding:5px 11px;border-radius:50px}
-.agr{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-@media(max-width:560px){.agr{grid-template-columns:1fr}}
-.acd{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);padding:1rem}
-.acd h3{font-family:var(--fs);font-size:.88rem;font-weight:800;color:var(--gold2);margin-bottom:.8rem}
-label{display:block;font-size:10px;color:var(--t2);margin-bottom:3px;margin-top:9px;text-transform:uppercase;letter-spacing:.05em}
-label:first-of-type{margin-top:0}
-.rm{margin-top:7px;font-size:12px;padding:7px 10px;border-radius:var(--rs);display:none}
-.rm.ok{background:rgba(52,211,153,.1);color:var(--gr);display:block}
-.rm.er{background:rgba(248,113,113,.1);color:var(--rd);display:block}
-.mtb{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden}
-.mh{display:grid;grid-template-columns:1fr 100px 110px 130px;gap:8px;padding:.55rem 1rem;background:var(--bg3);border-bottom:1px solid var(--b1);font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.05em}
-.mr{display:grid;grid-template-columns:1fr 100px 110px 130px;gap:8px;padding:.7rem 1rem;border-bottom:1px solid var(--b1);align-items:center;transition:background .15s}
-.mr:last-child{border-bottom:none}.mr:hover{background:var(--bg3)}
-.mi{font-size:12px;font-weight:500;color:var(--t1)}.mb2{font-size:12px;color:var(--t2)}
-.mg{font-size:12px;font-weight:700;color:var(--gr)}.mact{display:flex;gap:4px}
-.emp{text-align:center;padding:2rem;color:var(--t2);font-size:13px}
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .18s}
-.ov.on{opacity:1;pointer-events:all}
-.mo{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rl);padding:1.5rem;max-width:390px;width:92%;transform:scale(.95);transition:transform .18s}
-.ov.on .mo{transform:scale(1)}
-.mo h3{font-family:var(--fs);font-size:1.05rem;font-weight:800;margin-bottom:.35rem;color:var(--t1)}
-.mo-d{font-size:12px;color:var(--t2);margin-bottom:.85rem;line-height:1.55}
-.mo-p{font-family:var(--fs);font-size:1.35rem;font-weight:800;color:var(--gold);margin-bottom:.25rem}
-.mo-g{font-size:12px;color:var(--gr);margin-bottom:.85rem}
-.ma{display:flex;gap:7px;justify-content:flex-end;margin-top:.9rem}
-.btn-c{font-family:var(--fb);font-size:12px;padding:8px 15px;border:1px solid var(--b2);border-radius:var(--rs);background:transparent;color:var(--t2);cursor:pointer}
-.btn-c:hover{color:var(--t1);border-color:var(--b3)}
-#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(60px);background:var(--bg3);border:1px solid var(--b2);border-radius:50px;padding:8px 16px;font-size:12px;color:var(--t1);z-index:999;transition:transform .28s ease;white-space:nowrap}
-#toast.on{transform:translateX(-50%) translateY(0)}
-#toast.ok{border-color:rgba(52,211,153,.38);color:var(--gr)}
-#toast.er{border-color:rgba(248,113,113,.38);color:var(--rd)}
-.ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;gap:.65rem}
-.sp{width:30px;height:30px;border:3px solid var(--b2);border-top-color:var(--pu);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.ld span{font-size:12px;color:var(--t2)}
+.card{
+  background:#1c1c2b;
+  padding:15px;
+  margin:10px;
+  border-radius:10px;
+}
+button{
+  padding:8px 15px;
+  border:none;
+  border-radius:6px;
+  background:#7c5cff;
+  color:white;
+  cursor:pointer;
+}
 </style>
 </head>
+
 <body>
-<div id="app">
-<header>
-  <div class="logo"><div class="logo-i">🏦</div>Vosso<em>Banque</em></div>
-  <nav>
-    <button class="nb on" onclick="sw('lb',this)">🏆 Classement</button>
-    <button class="nb" onclick="sw('shop',this)">🛍️ Boutique</button>
-    <button class="nb adm" onclick="sw('adm',this)">⚙️ Admin</button>
-  </nav>
-</header>
-<main>
 
-  <div id="sec-lb" class="sec on">
-    <div class="ph">Classement 🏆</div>
-    <div class="ps">Soldes UpCoins en temps réel</div>
-    <div class="metrics">
-      <div class="mc"><div class="ml">Joueurs</div><div class="mv" id="s-n">—</div></div>
-      <div class="mc"><div class="ml">Total UpCoins</div><div class="mv" id="s-t" style="color:var(--gold)">—</div></div>
-      <div class="mc"><div class="ml">Leader</div><div class="mv" id="s-l" style="font-size:1rem">—</div></div>
-    </div>
-    <div class="lb" id="lb"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
-  </div>
+<h1>🏦 VossoBanque</h1>
 
-  <div id="sec-shop" class="sec">
-    <div class="ph">Boutique 🛍️</div>
-    <div class="ps">Achète avec tes UpCoins · Up = missions avec gain si validées</div>
-    <div class="filt">
-      <button class="fb on" onclick="fs('all',this)">Tout</button>
-      <button class="fb" onclick="fs('Up',this)">⚡ Missions</button>
-      <button class="fb" onclick="fs('Décoration',this)">🎨 Déco</button>
-      <button class="fb" onclick="fs('CASH',this)">💸 Cash</button>
-      <button class="fb" onclick="fs('wellness',this)">🌱 Wellness</button>
-    </div>
-    <div class="sg" id="shop"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
-  </div>
+<h2>Classement</h2>
+<div id="players"></div>
 
-  <div id="sec-adm" class="sec">
-    <div id="adm-lock">
-      <div class="alck">
-        <div class="ic">🔐</div>
-        <h2>Accès Admin</h2>
-        <p>Entre le mot de passe pour gérer les UpCoins et valider les missions.</p>
-        <div class="row">
-          <input type="password" id="pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')unlock()"/>
-          <button class="btn" onclick="unlock()">Entrer</button>
-        </div>
-        <p id="pwd-err" style="color:var(--rd);font-size:12px;margin-top:9px;display:none">Incorrect.</p>
-      </div>
-    </div>
-    <div id="adm-panel" style="display:none">
-      <div class="ph">Admin ⚙️</div>
-      <div class="ps" style="margin-bottom:1.4rem">Gestion UpCoins + validation missions</div>
-      <div class="agr" style="margin-bottom:1rem">
-        <div class="acd">
-          <h3>➕ Ajouter des UpCoins</h3>
-          <label>Agent</label><select id="a-ag"></select>
-          <label>Montant</label><input type="number" id="a-am" placeholder="ex: 4000" min="0" step="500"/>
-          <label>Motif</label><input type="text" id="a-mo" placeholder="ex: 4 points ce soir"/>
-          <button class="btn" style="width:100%;margin-top:11px" onclick="doAdd()">Ajouter</button>
-          <div class="rm" id="a-msg"></div>
-        </div>
-        <div class="acd">
-          <h3>➖ Retirer des UpCoins</h3>
-          <label>Agent</label><select id="r-ag"></select>
-          <label>Montant</label><input type="number" id="r-am" placeholder="ex: 2000" min="0" step="500"/>
-          <button class="btn btn-r" style="width:100%;margin-top:11px" onclick="doRem()">Retirer</button>
-          <div class="rm" id="r-msg"></div>
-        </div>
-        <div class="acd" style="grid-column:1/-1">
-          <h3>⚡ Points du jour → UpCoins</h3>
-          <p style="font-size:11px;color:var(--t2);margin-bottom:.8rem">1 point = <strong style="color:var(--gold)">2 000</strong> UpCoins</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end">
-            <div><label>Agent</label><select id="q-ag"></select></div>
-            <div><label>Points scorés</label><input type="number" id="q-pt" placeholder="ex: 6" min="0" step=".5"/></div>
-            <button class="btn btn-g" onclick="doQuick()" style="padding:9px 16px;align-self:end">Attribuer</button>
-          </div>
-          <div class="rm" id="q-msg"></div>
-        </div>
-      </div>
-      <div class="ph" style="font-size:1.1rem;margin-bottom:.3rem">🎯 Missions en attente</div>
-      <div class="ps" style="margin-bottom:.8rem">Articles "Up" achetés — ✅ valider si réussie · ❌ rejeter si échouée</div>
-      <div id="mis-wrap"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
-      <button onclick="doLogout()" style="margin-top:1.5rem;font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
-    </div>
-  </div>
-
-</main>
-</div>
-
-<div class="ov" id="modal">
-  <div class="mo">
-    <h3 id="mo-n">Article</h3>
-    <div class="mo-d" id="mo-d"></div>
-    <div class="mo-p" id="mo-p">0 UC</div>
-    <div class="mo-g" id="mo-g" style="display:none"></div>
-    <label>Qui achète ?</label>
-    <select id="mo-buy" style="margin-bottom:0"></select>
-    <div class="ma">
-      <button class="btn-c" onclick="closeMo()">Annuler</button>
-      <button class="btn btn-g" onclick="confirmBuy()">Confirmer l'achat</button>
-    </div>
-  </div>
-</div>
-
-<div id="toast">—</div>
+<h2>Boutique</h2>
+<div id="shop"></div>
 
 <script>
-/* ════════ CONFIG ════════ */
-const ADMIN_PWD = 'vosso2024';
-const PT_UC     = 2000;
-const PROXY     = 'https://vossobanque-proxy.small-snowflake-c6c9.workers.dev';
-const BASE      = 'app2mJ7oSODZd9OoU';
-const T_PLR     = 'tbl0Kl91e57KCdkiy';
-const T_SHOP    = 'tblELehPqsb0ATygV';
-const T_TRX     = 'tblfooPjqvLZ3YSsD';
 
-/* Joueurs — IDs vérifiés live */
-const P_NM = 'fldj63VB2omDb3k5L';
-const P_BK = 'fldH20mY6pJEJaXUA';
-const P_CD = 'fld0VgreDsvD7931Q';
+/* CONFIG */
+const PROXY = 'https://vossobanque-proxy.small-snowflake-c6c9.workers.dev';
+const BASE  = 'app2mJ7oSODZd9OoU';
 
-/* Boutique — IDs vérifiés live */
-const S_NM = 'fldGcw1fYjAI5UM6q';
-const S_DS = 'fldKui2kVVpD0Qgof';
-const S_PR = 'fldYxeEBNDYze6OPR';
-const S_ST = 'fldFO979kDrfGyWCn';
-const S_CT = 'fldGd086FFywN1nKA';
-const S_IM = 'fldBeGjvXujte9fHV';
-const S_GN = 'fld88HWNS5jk3BiT9';
+const T_PLR  = 'tbl0Kl91e57KCdkiy';
+const T_SHOP = 'tblELehPqsb0ATygV';
+const T_TRX  = 'tblfooPjqvLZ3YSsD';
 
-/* Transactions — IDs vérifiés live */
-const TR_BY = 'fldd9s39ZYZhCbzcz';
-const TR_AR = 'fldf9zRqjYWJDCmuw';
-const TR_AM = 'fldAoYG01C9c0qE80';
-const TR_ST = 'flduJZSrIrglzLvvp';
-const TR_GN = 'fldGLc3RMIdrsI8FQ';
+/* CHAMPS */
+const P_NM='fldj63VB2omDb3k5L';
+const P_BK='fldH20mY6pJEJaXUA';
+const P_CD='fld0VgreDsvD7931Q';
 
-/* ════════ STATE ════════ */
-let players=[], shop=[], pending=[], cur=null, curF='all';
+const S_NM="Nom de l'article";
+const S_DS='Description';
+const S_PR='Prix';
+const S_ST='Stock disponible';
+const S_CT='Catégorie';
+const S_IM="Image de l'objet";
+const S_GN='Gain UC';
 
-/* ════════ API ════════ */
-async function atGet(tbl, fields=[], formula=''){
-  const p = new URLSearchParams();
-  fields.forEach(f => p.append('fields[]', f));
-  if(formula) p.set('filterByFormula', formula);
+const TR_BY="Prénom de L'acheteur";
+const TR_AR='Article';
+const TR_AM='Montant';
+const TR_ST='Erreur';
+const TR_GN='Gain UC';
+
+/* STATE */
+let players=[],shop=[];
+
+/* API */
+async function atGet(tbl, fields=[]){
+  const p=new URLSearchParams();
+  fields.forEach(f=>p.append('fields[]',f));
   p.set('pageSize','100');
-  const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}?${p}`);
-  if(!r.ok) throw new Error(await r.text());
+
+  const r=await fetch(`${PROXY}/v0/${BASE}/${tbl}?${p}`);
   return (await r.json()).records;
 }
-async function atPatch(tbl, id, fields){
-  const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}/${id}`, {
-    method:'PATCH', headers:{'Content-Type':'application/json'},
+
+async function atPatch(tbl,id,fields){
+  await fetch(`${PROXY}/v0/${BASE}/${tbl}/${id}`,{
+    method:'PATCH',
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify({fields})
   });
-  if(!r.ok) throw new Error(await r.text());
-  return r.json();
 }
-async function atPost(tbl, fields){
-  const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}`, {
-    method:'POST', headers:{'Content-Type':'application/json'},
+
+async function atPost(tbl,fields){
+  await fetch(`${PROXY}/v0/${BASE}/${tbl}`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify({fields})
   });
-  if(!r.ok) throw new Error(await r.text());
-  return r.json();
 }
 
-/* ════════ LOAD ════════ */
-async function loadAll(){ await Promise.all([loadPlayers(), loadShop()]); }
-
+/* LOAD PLAYERS */
 async function loadPlayers(){
-  document.getElementById('lb').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
-  try{
-    const recs = await atGet(T_PLR,[P_NM,P_BK,P_CD]);
-    players = recs.map(r=>({
-      id:r.id, name:r.fields[P_NM]||'?', bank:r.fields[P_BK]||0, code:r.fields[P_CD]||''
-    })).sort((a,b)=>b.bank-a.bank);
-    renderLB(); fillSels();
-  }catch(e){
-    document.getElementById('lb').innerHTML=`<p style="color:var(--rd);padding:1rem;font-size:13px">Erreur : ${e.message}</p>`;
-  }
+
+  const recs=await atGet(T_PLR,[P_NM,P_BK,P_CD]);
+
+  players=recs.map(r=>({
+    id:r.id,
+    name:r.fields[P_NM],
+    bank:r.fields[P_BK]||0,
+    code:r.fields[P_CD]
+  })).sort((a,b)=>b.bank-a.bank);
+
+  document.getElementById('players').innerHTML=
+    players.map(p=>`
+      <div class="card">
+        <b>${p.name}</b><br>
+        💰 ${p.bank} UC
+      </div>
+    `).join('');
 }
 
+/* LOAD SHOP */
 async function loadShop(){
-  document.getElementById('shop').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement boutique…</span></div>';
-  try{
-    const recs = await atGet(T_SHOP,[S_NM,S_DS,S_PR,S_ST,S_CT,S_IM,S_GN]);
-    shop = recs.map(r=>({
-      id:r.id,
-      name: r.fields[S_NM]||'?',
-      desc: r.fields[S_DS]||'',
-      price:r.fields[S_PR]||0,
-      stock:r.fields[S_ST]||0,
-      cat:  r.fields[S_CT]?.name||'',
-      img:  r.fields[S_IM]?.[0]?.thumbnails?.large?.url||null,
-      gain: Number(r.fields[S_GN])||0,
-      ok:   (r.fields[S_ST]||0)>0,
-    })).sort((a,b)=>a.price-b.price);
-  }catch(e){ shop=[]; }
-  renderShop(curF);
+
+  const recs=await atGet(T_SHOP,[S_NM,S_DS,S_PR,S_ST,S_CT,S_IM,S_GN]);
+
+  shop=recs.map(r=>({
+
+    id:r.id,
+    name:r.fields[S_NM],
+    desc:r.fields[S_DS],
+    price:r.fields[S_PR],
+    stock:r.fields[S_ST],
+    gain:r.fields[S_GN]||0,
+
+    cat: typeof r.fields[S_CT]==='string'
+      ? r.fields[S_CT]
+      : (r.fields[S_CT]?.name || ''),
+
+    img:r.fields[S_IM]?.[0]?.url || ''
+
+  }));
+
+  document.getElementById('shop').innerHTML=
+    shop.map((s,i)=>`
+      <div class="card">
+        <b>${s.name}</b><br>
+        💰 ${s.price} UC<br>
+        🎯 Gain: ${s.gain}<br><br>
+        <button onclick="buy(${i})">Acheter</button>
+      </div>
+    `).join('');
 }
 
-async function loadMissions(){
-  const w=document.getElementById('mis-wrap');
-  w.innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
-  try{
-    const recs = await atGet(T_TRX,[TR_BY,TR_AR,TR_AM,TR_ST,TR_GN],`{${TR_ST}}="En attente mission"`);
-    pending=recs||[]; renderMissions();
-  }catch(e){ w.innerHTML=`<p class="emp" style="color:var(--rd)">Erreur : ${e.message}</p>`; }
-}
+/* BUY */
+async function buy(i){
 
-/* ════════ RENDER LB ════════ */
-const AC=[['#8b5cf6','#2d1f5e'],['#1D9E75','#0d3d2e'],['#D85A30','#4a1f10'],
-          ['#3D8EF0','#0d2e5e'],['#d97706','#4a2f05'],['#ec4899','#4a1230'],['#0ea5e9','#053450']];
-function renderLB(){
-  const max=players[0]?.bank||1, tot=players.reduce((s,p)=>s+p.bank,0);
-  document.getElementById('s-n').textContent=players.length;
-  document.getElementById('s-t').textContent=fu(tot);
-  document.getElementById('s-l').textContent=players[0]?.name||'—';
-  const em=['🥇','🥈','🥉'],rc=['r1','r2','r3'];
-  document.getElementById('lb').innerHTML=players.map((p,i)=>{
-    const pct=Math.round(p.bank/max*100),[fg,bg]=AC[i%AC.length];
-    return `<div class="pc ${i===0?'g1':''}">
-      <div class="rk ${i<3?rc[i]:''}">${i<3?em[i]:i+1}</div>
-      <div class="av" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
-      <div class="pi"><div class="pn">${p.name}</div><div class="pc2">Code : ${p.code}</div></div>
-      <div class="bw"><div class="bb"><div class="bf" style="width:${pct}%"></div></div></div>
-      <div class="bk"><div class="ba">${fu(p.bank)}</div><div class="bl">UpCoins</div></div>
-    </div>`;
-  }).join('');
-}
+  const item=shop[i];
 
-/* ════════ RENDER SHOP ════════ */
-const IC={Up:'⚡',Décoration:'🎨',CASH:'💸',wellness:'🌱',default:'📦'};
-function fs(f,btn){
-  curF=f;
-  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  renderShop(f);
-}
-function renderShop(f){
-  const el=document.getElementById('shop');
-  const items=f==='all'?shop:shop.filter(i=>i.cat===f);
-  if(!items.length){
-    el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article dans cette catégorie.</p>';
+  const player=players[0]; // simplifié
+
+  if(player.bank<item.price){
+    alert("Pas assez de coins");
     return;
   }
-  el.innerHTML=items.map(item=>{
-    const ri=shop.indexOf(item), icon=IC[item.cat]||IC.default;
-    const imgH=item.img?`<img src="${item.img}" alt=""/>`:`<span>${icon}</span>`;
-    const catCls='t'+(item.cat||'').replace(/[^a-zA-Z]/g,'');
-    return `<div class="sc">
-      <div class="si">${imgH}${item.cat?`<span class="stg ${catCls}">${item.cat}</span>`:''}</div>
-      <div class="sb">
-        <div class="sn">${item.name}</div>
-        <div class="sd">${item.desc}</div>
-        <div class="sf">
-          <div>
-            <div class="sp">${fu(item.price)} UC</div>
-            ${item.gain?`<div class="sgn">🎯 +${fu(item.gain)} UC si mission</div>`:''}
-            <div class="sst">${item.ok?item.stock+' en stock':'❌ Rupture'}</div>
-          </div>
-          <button class="bbt" ${!item.ok?'disabled':''} onclick="openMo(${ri})">Acheter</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+
+  const newBank=player.bank-item.price;
+
+  await atPatch(T_PLR,player.id,{[P_BK]:newBank});
+
+  await atPatch(T_SHOP,item.id,{[S_ST]:item.stock-1});
+
+  await atPost(T_TRX,{
+    [TR_BY]:player.code,
+    [TR_AR]:item.name,
+    [TR_AM]:item.price,
+    [TR_ST]: item.cat==="Up"
+      ? "En attente mission"
+      : "Validé",
+    [TR_GN]:item.gain
+  });
+
+  alert("Achat OK");
+
+  loadPlayers();
 }
 
-/* ════════ RENDER MISSIONS ════════ */
-function renderMissions(){
-  const w=document.getElementById('mis-wrap');
-  if(!pending.length){w.innerHTML='<div class="emp">✅ Aucune mission en attente</div>';return;}
-  w.innerHTML=`<div class="mtb">
-    <div class="mh"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
-    ${pending.map(m=>{
-      const gain=Number(m.fields[TR_GN]||0),buyer=m.fields[TR_BY]||'?',art=m.fields[TR_AR]||'?';
-      return `<div class="mr">
-        <span class="mi">${art}</span><span class="mb2">${buyer}</span>
-        <span class="mg">${gain?'+'+fu(gain)+' UC':'—'}</span>
-        <div class="mact">
-          <button class="btn btn-gr btn-sm" onclick="valMis('${m.id}','${buyer}',${gain})">✅ Valider</button>
-          <button class="btn btn-r btn-sm" onclick="rejMis('${m.id}')">❌</button>
-        </div>
-      </div>`;
-    }).join('')}
-  </div>`;
-}
+/* INIT */
+loadPlayers();
+loadShop();
 
-/* ════════ BUY ════════ */
-function openMo(idx){
-  cur=shop[idx];
-  document.getElementById('mo-n').textContent=cur.name;
-  document.getElementById('mo-d').textContent=cur.desc;
-  document.getElementById('mo-p').textContent=fu(cur.price)+' UpCoins';
-  const ge=document.getElementById('mo-g');
-  if(cur.gain){ge.textContent='🎯 Gain si validée : +'+fu(cur.gain)+' UC';ge.style.display='block';}
-  else ge.style.display='none';
-  document.getElementById('mo-buy').innerHTML=players.map(p=>`<option value="${p.id}|${p.code}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
-  document.getElementById('modal').classList.add('on');
-}
-function closeMo(){document.getElementById('modal').classList.remove('on');cur=null;}
-
-async function confirmBuy(){
-  if(!cur)return;
-  const [aid,acode]=document.getElementById('mo-buy').value.split('|');
-  const ag=players.find(p=>p.id===aid);
-  if(!ag)return;
-  if(ag.bank<cur.price){toast('❌ Solde insuffisant','er');closeMo();return;}
-  const nb=ag.bank-cur.price, isMis=cur.cat==='Up';
-  try{
-    await atPatch(T_PLR,aid,{[P_BK]:nb});
-    await atPatch(T_SHOP,cur.id,{[S_ST]:cur.stock-1});
-    await atPost(T_TRX,{[TR_BY]:acode,[TR_AR]:cur.name,[TR_AM]:cur.price,
-      [TR_ST]:isMis?'En attente mission':'Validé',[TR_GN]:String(cur.gain||0)});
-    ag.bank=nb; cur.stock-=1; if(cur.stock<=0)cur.ok=false;
-    renderLB(); fillSels(); renderShop(curF); closeMo();
-    toast(isMis?`✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC`:`✅ Achat OK ! Solde : ${fu(nb)} UC`,'ok');
-  }catch(e){toast('❌ '+e.message,'er');}
-}
-
-/* ════════ MISSIONS ════════ */
-async function valMis(id,buyer,gain){
-  const ag=players.find(p=>p.code===buyer.trim());
-  try{
-    await atPatch(T_TRX,id,{[TR_ST]:'Mission réussie ✅'});
-    if(ag&&gain>0){const nb=ag.bank+gain;await atPatch(T_PLR,ag.id,{[P_BK]:nb});ag.bank=nb;}
-    pending=pending.filter(m=>m.id!==id);
-    renderMissions(); renderLB(); fillSels();
-    toast(`✅ Mission validée !${ag&&gain>0?' +'+fu(gain)+' UC → '+ag.name:''}`, 'ok');
-  }catch(e){toast('❌ '+e.message,'er');}
-}
-async function rejMis(id){
-  try{
-    await atPatch(T_TRX,id,{[TR_ST]:'Mission échouée ❌'});
-    pending=pending.filter(m=>m.id!==id);
-    renderMissions();
-    toast('Mission rejetée','er');
-  }catch(e){toast('❌ '+e.message,'er');}
-}
-
-/* ════════ ADMIN ════════ */
-function unlock(){
-  if(document.getElementById('pwd').value===ADMIN_PWD){
-    document.getElementById('adm-lock').style.display='none';
-    document.getElementById('adm-panel').style.display='block';
-    loadMissions();
-  } else document.getElementById('pwd-err').style.display='block';
-}
-function doLogout(){
-  document.getElementById('adm-lock').style.display='block';
-  document.getElementById('adm-panel').style.display='none';
-  document.getElementById('pwd').value='';
-}
-async function doAdd(){
-  const ag=players.find(p=>p.id===document.getElementById('a-ag').value);
-  const amt=parseInt(document.getElementById('a-am').value);
-  const msg=document.getElementById('a-msg');
-  if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
-  const nb=ag.bank+amt;
-  try{
-    await atPatch(T_PLR,ag.id,{[P_BK]:nb});
-    ag.bank=nb; renderLB(); fillSels();
-    showMsg(msg,`✅ +${fu(amt)} UC à ${ag.name} → ${fu(nb)} UC`,true);
-    document.getElementById('a-am').value='';
-  }catch(e){showMsg(msg,'❌ '+e.message,false);}
-}
-async function doRem(){
-  const ag=players.find(p=>p.id===document.getElementById('r-ag').value);
-  const amt=parseInt(document.getElementById('r-am').value);
-  const msg=document.getElementById('r-msg');
-  if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
-  const nb=Math.max(0,ag.bank-amt);
-  try{
-    await atPatch(T_PLR,ag.id,{[P_BK]:nb});
-    ag.bank=nb; renderLB(); fillSels();
-    showMsg(msg,`✅ -${fu(amt)} UC à ${ag.name} → ${fu(nb)} UC`,true);
-    document.getElementById('r-am').value='';
-  }catch(e){showMsg(msg,'❌ '+e.message,false);}
-}
-async function doQuick(){
-  const ag=players.find(p=>p.id===document.getElementById('q-ag').value);
-  const pts=parseFloat(document.getElementById('q-pt').value);
-  const msg=document.getElementById('q-msg');
-  if(!ag||isNaN(pts)||pts<=0){showMsg(msg,'Valeur invalide',false);return;}
-  const uc=Math.round(pts*PT_UC),nb=ag.bank+uc;
-  try{
-    await atPatch(T_PLR,ag.id,{[P_BK]:nb});
-    ag.bank=nb; renderLB(); fillSels();
-    showMsg(msg,`✅ ${pts} pts = +${fu(uc)} UC pour ${ag.name} → ${fu(nb)} UC`,true);
-    document.getElementById('q-pt').value='';
-  }catch(e){showMsg(msg,'❌ '+e.message,false);}
-}
-
-/* ════════ UTILS ════════ */
-function fu(n){n=Number(n)||0;if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M';if(n>=1000)return Math.round(n/1000)+'K';return n.toLocaleString('fr-FR');}
-function fillSels(){['a-ag','r-ag','q-ag'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fu(p.bank)} UC</option>`).join('');});}
-function showMsg(el,txt,ok){el.className='rm '+(ok?'ok':'er');el.textContent=txt;setTimeout(()=>el.className='rm',5000);}
-let tt;
-function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='on '+type;clearTimeout(tt);tt=setTimeout(()=>t.className='',3500);}
-function sw(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('sec-'+id).classList.add('on');btn.classList.add('on');if(id==='adm'&&document.getElementById('adm-panel').style.display!=='none')loadMissions();}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeMo();});
-
-loadAll();
 </script>
+
 </body>
 </html>
