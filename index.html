@@ -3,1198 +3,611 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VossoBanque — Vosso</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>VossoBanque</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ─── RESET & TOKENS ─────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #0a0a0f;
-  --bg2: #111118;
-  --bg3: #18181f;
-  --bg4: #21212b;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.13);
-  --gold: #f0c040;
-  --gold2: #ffd770;
-  --purple: #8b5cf6;
-  --purple2: #a78bfa;
-  --green: #34d399;
-  --red: #f87171;
-  --text: #f0f0f8;
-  --text2: #9090a8;
-  --text3: #5a5a70;
-  --radius: 14px;
-  --radius-sm: 8px;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#08080e;--bg2:#10101a;--bg3:#161620;--bg4:#1e1e2a;--bg5:#252535;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --gold:#f0c040;--gold2:#ffd770;
+  --purple:#8b5cf6;--purple2:#a78bfa;
+  --green:#34d399;--red:#f87171;
+  --text:#eeeef8;--text2:#8888a8;--text3:#4a4a6a;
+  --r:12px;--r-sm:8px;--r-lg:16px;
+  --font:'Syne',sans-serif;--body:'DM Sans',sans-serif;
 }
-
-/* ─── CONFIG — à remplir ─────────────────────────── */
-/* IMPORTANT : remplace YOUR_AIRTABLE_API_KEY et les IDs */
-
-html, body { height: 100%; }
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ─── BACKGROUND AMBIANCE ─────────────────────────── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 600px 400px at 20% -10%, rgba(139,92,246,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 400px 300px at 80% 90%, rgba(240,192,64,0.08) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ─── LAYOUT ─────────────────────────────────────── */
-#app { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
-
-/* ─── HEADER ─────────────────────────────────────── */
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  background: rgba(10,10,15,0.8);
-  backdrop-filter: blur(12px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-.logo-icon {
-  width: 36px; height: 36px;
-  background: linear-gradient(135deg, var(--purple), var(--gold));
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-}
-.logo span { color: var(--gold); }
-
-/* ─── NAV TABS ─────────────────────────────────────── */
-nav {
-  display: flex;
-  gap: 4px;
-  background: var(--bg3);
-  border-radius: 50px;
-  padding: 3px;
-}
-.nav-btn {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 6px 16px;
-  border: none;
-  border-radius: 50px;
-  background: transparent;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.nav-btn.active {
-  background: var(--bg);
-  color: var(--text);
-}
-.nav-btn.admin-btn { color: var(--gold); }
-.nav-btn.admin-btn.active { background: rgba(240,192,64,0.15); color: var(--gold2); }
-
-/* ─── MAIN CONTENT ─────────────────────────────────── */
-main { flex: 1; padding: 1.5rem; max-width: 900px; width: 100%; margin: 0 auto; }
-
-/* ─── SECTION TITLE ─────────────────────────────────── */
-.section-header {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.25rem;
-}
-.section-sub { font-size: 13px; color: var(--text2); margin-bottom: 1.5rem; }
-
-/* ─── LEADERBOARD ─────────────────────────────────── */
-.leaderboard { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
-
-.player-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-  transition: border-color 0.2s, transform 0.15s;
-  cursor: default;
-}
-.player-card:hover { border-color: var(--border2); transform: translateX(3px); }
-.player-card.first { border-color: rgba(240,192,64,0.3); background: rgba(240,192,64,0.04); }
-.player-card.first:hover { border-color: rgba(240,192,64,0.5); }
-
-.rank-badge {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 800;
-  min-width: 32px;
-  text-align: center;
-  color: var(--text3);
-}
-.rank-badge.gold { color: var(--gold); font-size: 1.4rem; }
-.rank-badge.silver { color: #c0c0d0; }
-.rank-badge.bronze { color: #cd7f32; }
-
-.player-avatar {
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--border2);
-  flex-shrink: 0;
-}
-.player-avatar-ph {
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  border: 2px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.player-info { flex: 1; min-width: 0; }
-.player-name {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text);
-}
-.player-level {
-  font-size: 11px;
-  color: var(--text2);
-  margin-top: 2px;
-}
-.player-level .level-badge {
-  display: inline-block;
-  background: rgba(139,92,246,0.2);
-  color: var(--purple2);
-  border-radius: 4px;
-  padding: 1px 7px;
-  font-size: 10px;
-  font-weight: 500;
-}
-
-.bar-section { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-.bar-bg {
-  height: 5px;
-  background: var(--bg4);
-  border-radius: 3px;
-  overflow: hidden;
-}
-.bar-fill {
-  height: 100%;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--purple), var(--gold));
-  transition: width 0.8s cubic-bezier(.4,0,.2,1);
-}
-
-.player-bank {
-  text-align: right;
-  flex-shrink: 0;
-}
-.bank-amount {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-.bank-label { font-size: 10px; color: var(--text3); margin-top: 1px; }
-
-/* ─── BOUTIQUE ─────────────────────────────────────── */
-.shop-filters {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 1.25rem;
-  flex-wrap: wrap;
-}
-.filter-btn {
-  font-size: 12px;
-  padding: 5px 14px;
-  border-radius: 50px;
-  border: 1px solid var(--border2);
-  background: transparent;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--font-body);
-}
-.filter-btn.active, .filter-btn:hover {
-  background: var(--purple);
-  color: #fff;
-  border-color: var(--purple);
-}
-
-.shop-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
-}
-
-.shop-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
-}
-.shop-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-
-.shop-img-wrap {
-  height: 130px;
-  background: var(--bg3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  position: relative;
-  overflow: hidden;
-}
-.shop-img-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
-}
-
-.shop-cat-tag {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 10px;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 50px;
-  z-index: 1;
-}
-.cat-up { background: rgba(139,92,246,0.8); color: #fff; }
-.cat-deco { background: rgba(240,192,64,0.8); color: #000; }
-.cat-cash { background: rgba(248,113,113,0.8); color: #fff; }
-.cat-wellness { background: rgba(52,211,153,0.8); color: #000; }
-.cat-terrain { background: rgba(34,197,94,0.8); color: #fff; }
-.cat-meuble { background: rgba(251,146,60,0.8); color: #fff; }
-
-.shop-body { padding: 0.85rem 1rem; }
-.shop-name {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 5px;
-  line-height: 1.3;
-}
-.shop-desc {
-  font-size: 11px;
-  color: var(--text2);
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-.shop-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.shop-price {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-.shop-stock { font-size: 10px; color: var(--text3); margin-top: 1px; }
-.buy-btn {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 5px 12px;
-  border: 1px solid var(--purple);
-  border-radius: 50px;
-  background: transparent;
-  color: var(--purple2);
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--font-body);
-}
-.buy-btn:hover { background: var(--purple); color: #fff; }
-.buy-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-/* ─── ADMIN PANEL ─────────────────────────────────── */
-.admin-lock {
-  max-width: 380px;
-  margin: 4rem auto;
-  text-align: center;
-}
-.admin-lock .lock-icon { font-size: 3rem; margin-bottom: 1rem; }
-.admin-lock h2 {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.admin-lock p { color: var(--text2); font-size: 13px; margin-bottom: 1.5rem; }
-
-.input-row {
-  display: flex;
-  gap: 8px;
-}
-input[type="password"], input[type="number"], input[type="text"], select {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 14px;
-  padding: 10px 14px;
-  outline: none;
-  transition: border-color 0.2s;
-  width: 100%;
-}
-input:focus, select:focus { border-color: var(--purple); }
-select option { background: var(--bg3); }
-
-.btn-primary {
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 700;
-  padding: 10px 24px;
-  background: linear-gradient(135deg, var(--purple), #6d28d9);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s;
-  white-space: nowrap;
-}
-.btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
-.btn-primary:active { transform: scale(0.98); }
-
-.btn-gold {
-  background: linear-gradient(135deg, var(--gold), #d97706);
-  color: #000;
-}
-
-.admin-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-@media (max-width: 600px) { .admin-grid { grid-template-columns: 1fr; } }
-
-.admin-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
-}
-.admin-card h3 {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--gold2);
-}
-.admin-card label {
-  display: block;
-  font-size: 11px;
-  color: var(--text2);
-  margin-bottom: 5px;
-  margin-top: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.admin-card label:first-of-type { margin-top: 0; }
-
-.result-msg {
-  margin-top: 10px;
-  font-size: 13px;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  display: none;
-}
-.result-msg.ok { background: rgba(52,211,153,0.15); color: var(--green); display: block; }
-.result-msg.err { background: rgba(248,113,113,0.15); color: var(--red); display: block; }
-
-/* ─── CONFIG BOX ─────────────────────────────────── */
-.config-box {
-  background: rgba(240,192,64,0.06);
-  border: 1px solid rgba(240,192,64,0.2);
-  border-radius: var(--radius);
-  padding: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-.config-box h3 { font-family: var(--font-display); font-weight: 700; color: var(--gold2); margin-bottom: 0.75rem; }
-.config-box p { font-size: 12px; color: var(--text2); margin-bottom: 0.75rem; line-height: 1.6; }
-.config-row { display: flex; gap: 8px; margin-bottom: 8px; }
-.config-row input { font-size: 12px; padding: 8px 12px; font-family: 'Courier New', monospace; }
-
-/* ─── TOAST ───────────────────────────────────────── */
-#toast {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-size: 13px;
-  color: var(--text);
-  z-index: 999;
-  transition: transform 0.3s ease;
-  white-space: nowrap;
-}
-#toast.show { transform: translateX(-50%) translateY(0); }
-#toast.success { border-color: rgba(52,211,153,0.4); color: var(--green); }
-#toast.error { border-color: rgba(248,113,113,0.4); color: var(--red); }
-
-/* ─── LOADING ─────────────────────────────────────── */
-.loading {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 4rem 2rem; gap: 1rem;
-}
-.spinner {
-  width: 36px; height: 36px;
-  border: 3px solid var(--border2);
-  border-top-color: var(--purple);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ─── STAT ROW ─────────────────────────────────────── */
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 1.5rem;
-}
-.stat-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 1rem;
-}
-.stat-label { font-size: 11px; color: var(--text2); margin-bottom: 4px; }
-.stat-value { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; }
-
-/* ─── BUY MODAL ──────────────────────────────────── */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(6px);
-  z-index: 500;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.2s;
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius);
-  padding: 1.75rem;
-  max-width: 420px;
-  width: 90%;
-  transform: scale(0.95);
-  transition: transform 0.2s;
-}
-.modal-overlay.open .modal { transform: scale(1); }
-.modal h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
-.modal p { font-size: 13px; color: var(--text2); margin-bottom: 1.25rem; line-height: 1.6; }
-.modal-price {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--gold);
-  margin-bottom: 1rem;
-}
-.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
-.btn-cancel {
-  font-family: var(--font-body);
-  font-size: 13px;
-  padding: 9px 18px;
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--text2);
-  cursor: pointer;
-}
-.btn-cancel:hover { border-color: var(--text2); color: var(--text); }
-
-/* ─── SECTION VISIBILITY ──────────────────────────── */
-.section { display: none; }
-.section.active { display: block; }
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 700px 500px at 10% -5%,rgba(139,92,246,.1) 0%,transparent 65%),radial-gradient(ellipse 500px 400px at 90% 95%,rgba(240,192,64,.07) 0%,transparent 60%);pointer-events:none;z-index:0}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);background:rgba(8,8,14,.85);backdrop-filter:blur(16px);position:sticky;top:0;z-index:200}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--font);font-size:1.3rem;font-weight:800;letter-spacing:-.02em;color:var(--text);text-decoration:none}
+.logo-ico{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--gold));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.logo em{color:var(--gold);font-style:normal}
+nav{display:flex;gap:3px;background:var(--bg3);border-radius:50px;padding:3px;border:1px solid var(--border)}
+.nb{font-family:var(--body);font-size:12px;font-weight:500;padding:5px 14px;border-radius:50px;border:none;background:transparent;color:var(--text2);cursor:pointer;transition:all .2s;white-space:nowrap}
+.nb.on{background:var(--bg5);color:var(--text)}
+.nb.adm{color:var(--gold)}.nb.adm.on{background:rgba(240,192,64,.15);color:var(--gold2)}
+main{flex:1;padding:1.25rem;max-width:920px;width:100%;margin:0 auto}
+.sec{display:none}.sec.on{display:block}
+.sh{font-family:var(--font);font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.2rem}
+.ss{font-size:12px;color:var(--text2);margin-bottom:1.25rem}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1.25rem}
+.scard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:.85rem 1rem}
+.scard-l{font-size:11px;color:var(--text2);margin-bottom:3px}
+.scard-v{font-family:var(--font);font-size:1.3rem;font-weight:700}
+.lb{display:flex;flex-direction:column;gap:8px}
+.pc{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:.9rem 1.1rem;transition:border-color .2s,transform .15s}
+.pc:hover{border-color:var(--border2);transform:translateX(4px)}
+.pc.top1{border-color:rgba(240,192,64,.3);background:rgba(240,192,64,.03)}
+.rnk{font-family:var(--font);font-size:1rem;font-weight:800;min-width:28px;text-align:center;color:var(--text3)}
+.rnk.g{font-size:1.3rem;color:var(--gold)}.rnk.s{color:#b0b0c8}.rnk.b{color:#cd7f32}
+.avp{width:48px;height:48px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:17px;font-weight:700;flex-shrink:0}
+.pi{flex:1;min-width:0}
+.pn{font-family:var(--font);font-size:.95rem;font-weight:700}
+.pl{font-size:11px;color:var(--text2);margin-top:2px}
+.bw{flex:1;display:flex;flex-direction:column;gap:4px}
+.bb{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden}
+.bf{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width .9s cubic-bezier(.4,0,.2,1)}
+.bank{text-align:right;flex-shrink:0}
+.ba{font-family:var(--font);font-size:1.05rem;font-weight:700;color:var(--gold)}
+.bl{font-size:10px;color:var(--text3);margin-top:1px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.1rem}
+.fb{font-size:12px;padding:5px 13px;border-radius:50px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s;font-family:var(--body)}
+.fb.on,.fb:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.sc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s;display:flex;flex-direction:column}
+.sc:hover{border-color:var(--border2);transform:translateY(-2px)}
+.simg{height:120px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:2.8rem}
+.simg img{width:100%;height:100%;object-fit:contain;padding:10px}
+.stag{position:absolute;top:7px;right:7px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:50px}
+.t-Up{background:rgba(139,92,246,.8);color:#fff}
+.t-Décoration{background:rgba(240,192,64,.8);color:#000}
+.t-CASH{background:rgba(244,114,182,.8);color:#fff}
+.t-wellness{background:rgba(52,211,153,.8);color:#000}
+.sbody{padding:.75rem .9rem;flex:1;display:flex;flex-direction:column}
+.sn{font-family:var(--font);font-size:.85rem;font-weight:700;margin-bottom:4px;line-height:1.3}
+.sd{font-size:10px;color:var(--text2);line-height:1.5;margin-bottom:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sf{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;gap:6px}
+.sp{font-family:var(--font);font-size:.95rem;font-weight:700;color:var(--gold)}
+.sg-lbl{font-size:10px;color:var(--green);margin-top:1px}
+.sk{font-size:10px;color:var(--text3);margin-top:1px}
+.bbtn{font-size:11px;font-weight:600;padding:5px 11px;border:1px solid var(--purple);border-radius:50px;background:transparent;color:var(--purple2);cursor:pointer;transition:all .2s;font-family:var(--body);flex-shrink:0}
+.bbtn:hover{background:var(--purple);color:#fff}
+.bbtn:disabled{opacity:.35;cursor:not-allowed}
+.alock{max-width:360px;margin:3.5rem auto;text-align:center}
+.alock .lic{font-size:3rem;margin-bottom:1rem}
+.alock h2{font-family:var(--font);font-size:1.35rem;font-weight:700;margin-bottom:.4rem}
+.alock p{color:var(--text2);font-size:13px;margin-bottom:1.25rem}
+.row{display:flex;gap:8px}
+input,select{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);color:var(--text);font-family:var(--body);font-size:13px;padding:9px 13px;outline:none;transition:border-color .2s;width:100%}
+input:focus,select:focus{border-color:var(--purple)}
+select option{background:var(--bg3)}
+.btn{font-family:var(--font);font-size:13px;font-weight:700;padding:9px 22px;background:linear-gradient(135deg,var(--purple),#6d28d9);color:#fff;border:none;border-radius:var(--r-sm);cursor:pointer;transition:opacity .2s,transform .15s;white-space:nowrap}
+.btn:hover{opacity:.88;transform:scale(1.02)}
+.btn:active{transform:scale(.98)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#d97706);color:#000}
+.btn-red{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
+.btn-green{background:linear-gradient(135deg,#059669,#065f46);color:#fff}
+.btn-sm{font-size:11px;padding:5px 12px;border-radius:50px}
+.acfg{background:rgba(240,192,64,.06);border:1px solid rgba(240,192,64,.2);border-radius:var(--r);padding:1.1rem;margin-bottom:1.25rem}
+.acfg h3{font-family:var(--font);font-weight:700;color:var(--gold2);margin-bottom:.5rem;font-size:.95rem}
+.acfg p{font-size:11px;color:var(--text2);margin-bottom:.65rem;line-height:1.6}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:580px){.agrid{grid-template-columns:1fr}}
+.acard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem}
+.acard h3{font-family:var(--font);font-size:.9rem;font-weight:700;color:var(--gold2);margin-bottom:.9rem}
+label{display:block;font-size:10px;color:var(--text2);margin-bottom:4px;margin-top:10px;text-transform:uppercase;letter-spacing:.05em}
+label:first-of-type{margin-top:0}
+.rmsg{margin-top:8px;font-size:12px;padding:7px 11px;border-radius:var(--r-sm);display:none}
+.rmsg.ok{background:rgba(52,211,153,.12);color:var(--green);display:block}
+.rmsg.err{background:rgba(248,113,113,.12);color:var(--red);display:block}
+.mtable{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.mhead{display:grid;grid-template-columns:1fr 110px 110px 90px;gap:8px;padding:.6rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border);font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+.mrow{display:grid;grid-template-columns:1fr 110px 110px 90px;gap:8px;padding:.75rem 1rem;border-bottom:1px solid var(--border);align-items:center}
+.mrow:last-child{border-bottom:none}
+.mrow:hover{background:var(--bg3)}
+.mrow .mi{font-size:12px;font-weight:500}
+.mrow .mb{font-size:12px;color:var(--text2)}
+.mrow .mg{font-size:12px;font-weight:600;color:var(--green)}
+.empty-s{text-align:center;padding:2.5rem;color:var(--text2);font-size:13px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-lg);padding:1.65rem;max-width:400px;width:92%;transform:scale(.95);transition:transform .2s}
+.overlay.open .modal{transform:scale(1)}
+.modal h3{font-family:var(--font);font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+.modal-desc{font-size:12px;color:var(--text2);margin-bottom:.9rem;line-height:1.6}
+.modal-price{font-family:var(--font);font-size:1.4rem;font-weight:800;color:var(--gold);margin-bottom:.3rem}
+.modal-gain{font-size:12px;color:var(--green);margin-bottom:.9rem}
+.ma{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
+.btn-cancel{font-family:var(--body);font-size:12px;padding:8px 16px;border:1px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);cursor:pointer}
+.btn-cancel:hover{border-color:var(--text2);color:var(--text)}
+#toast{position:fixed;bottom:1.75rem;left:50%;transform:translateX(-50%) translateY(70px);background:var(--bg3);border:1px solid var(--border2);border-radius:50px;padding:9px 18px;font-size:12px;color:var(--text);z-index:999;transition:transform .3s ease;white-space:nowrap}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.ok{border-color:rgba(52,211,153,.4);color:var(--green)}
+#toast.err{border-color:rgba(248,113,113,.4);color:var(--red)}
+.loader{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem;gap:.75rem}
+.spin{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader span{font-size:12px;color:var(--text2)}
 </style>
 </head>
 <body>
-
 <div id="app">
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      <div class="logo-icon">🏦</div>
-      Vosso<span>Banque</span>
+
+<header>
+  <div class="logo">
+    <div class="logo-ico">🏦</div>
+    Vosso<em>Banque</em>
+  </div>
+  <nav>
+    <button class="nb on" onclick="show('lb',this)">🏆 Classement</button>
+    <button class="nb" onclick="show('shop',this)">🛍️ Boutique</button>
+    <button class="nb adm" onclick="show('admin',this)">⚙️ Admin</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- CLASSEMENT -->
+  <div id="sec-lb" class="sec on">
+    <div class="sh">Classement 🏆</div>
+    <div class="ss">Soldes UpCoins en temps réel</div>
+    <div class="stats">
+      <div class="scard"><div class="scard-l">Joueurs</div><div class="scard-v" id="s-count">—</div></div>
+      <div class="scard"><div class="scard-l">Total distribué</div><div class="scard-v" id="s-total" style="color:var(--gold)">—</div></div>
+      <div class="scard"><div class="scard-l">Leader</div><div class="scard-v" id="s-lead" style="font-size:1rem">—</div></div>
     </div>
-    <nav>
-      <button class="nav-btn active" onclick="showSection('leaderboard', this)">🏆 Classement</button>
-      <button class="nav-btn" onclick="showSection('boutique', this)">🛍️ Boutique</button>
-      <button class="nav-btn admin-btn" onclick="showSection('admin', this)">⚙️ Admin</button>
-    </nav>
-  </header>
+    <div class="lb" id="lb-list"><div class="loader"><div class="spin"></div><span>Chargement…</span></div></div>
+  </div>
 
-  <main>
-
-    <!-- ═══════════════════════════════════ CLASSEMENT ═══ -->
-    <div id="sec-leaderboard" class="section active">
-      <div class="section-header">Classement 🏆</div>
-      <p class="section-sub">Solde UpCoins des agents — mis à jour en temps réel</p>
-
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-label">Total agents</div>
-          <div class="stat-value" id="stat-agents">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">UpCoins distribués</div>
-          <div class="stat-value" id="stat-total" style="color:var(--gold)">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Leader du jour</div>
-          <div class="stat-value" id="stat-leader" style="font-size:1rem">—</div>
-        </div>
-      </div>
-
-      <div class="leaderboard" id="leaderboard-list">
-        <div class="loading"><div class="spinner"></div><span style="color:var(--text2);font-size:13px">Chargement...</span></div>
-      </div>
+  <!-- BOUTIQUE -->
+  <div id="sec-shop" class="sec">
+    <div class="sh">Boutique 🛍️</div>
+    <div class="ss">Achète avec tes UpCoins · Articles "Up" = missions avec gain si validées par l'admin</div>
+    <div class="filters">
+      <button class="fb on" onclick="fshop('all',this)">Tout</button>
+      <button class="fb" onclick="fshop('Up',this)">⚡ Missions Up</button>
+      <button class="fb" onclick="fshop('Décoration',this)">🎨 Déco</button>
+      <button class="fb" onclick="fshop('CASH',this)">💸 Cash</button>
+      <button class="fb" onclick="fshop('wellness',this)">🌱 Wellness</button>
     </div>
+    <div class="sgrid" id="shop-grid"><div class="loader"><div class="spin"></div><span>Chargement boutique…</span></div></div>
+  </div>
 
-    <!-- ════════════════════════════════════ BOUTIQUE ═══ -->
-    <div id="sec-boutique" class="section">
-      <div class="section-header">Boutique 🛍️</div>
-      <p class="section-sub">Dépense tes UpCoins pour des objets, terrains et meubles Work Adventure</p>
-
-      <div class="shop-filters">
-        <button class="filter-btn active" onclick="filterShop('all', this)">Tout</button>
-        <button class="filter-btn" onclick="filterShop('Terrain', this)">🌿 Terrains</button>
-        <button class="filter-btn" onclick="filterShop('Meuble', this)">🪑 Meubles</button>
-        <button class="filter-btn" onclick="filterShop('Décoration', this)">🎨 Déco</button>
-        <button class="filter-btn" onclick="filterShop('Up', this)">⚡ Power-ups</button>
-        <button class="filter-btn" onclick="filterShop('CASH', this)">💸 Cash</button>
-        <button class="filter-btn" onclick="filterShop('wellness', this)">🌱 Wellness</button>
-      </div>
-
-      <div class="shop-grid" id="shop-grid">
-        <div class="loading"><div class="spinner"></div><span style="color:var(--text2);font-size:13px">Chargement de la boutique...</span></div>
-      </div>
+  <!-- ADMIN -->
+  <div id="sec-admin" class="sec">
+    <div class="acfg" id="cfg-box">
+      <h3>⚙️ Configuration API</h3>
+      <p>Entre ta clé API Airtable — sauvegardée dans ton navigateur, une seule fois.</p>
+      <input type="text" id="cfg-key" placeholder="Clé API Airtable (pat…)" style="margin-bottom:8px" />
+      <button class="btn btn-gold" onclick="saveCfg()" style="width:100%">Sauvegarder</button>
     </div>
-
-    <!-- ══════════════════════════════════════ ADMIN ═══ -->
-    <div id="sec-admin" class="section">
-
-      <!-- Config box (visible si pas encore configuré) -->
-      <div class="config-box" id="config-box">
-        <h3>⚙️ Configuration initiale</h3>
-        <p>Entre ta clé API Airtable et les IDs de tes tables. Cette configuration est sauvegardée dans ton navigateur (localStorage). Tu n'as besoin de la faire qu'une seule fois.</p>
-        <div class="config-row">
-          <input type="text" id="cfg-apikey" placeholder="Clé API Airtable (patxxxxxxxxxxxxxxxxxxxxxxx)" />
+    <div id="a-lock">
+      <div class="alock">
+        <div class="lic">🔐</div>
+        <h2>Accès Admin</h2>
+        <p>Zone réservée. Entre le mot de passe pour gérer les UpCoins et valider les missions.</p>
+        <div class="row">
+          <input type="password" id="a-pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')unlock()" />
+          <button class="btn" onclick="unlock()">Entrer</button>
         </div>
-        <div class="config-row">
-          <input type="text" id="cfg-base-gestion" placeholder="Base ID Gestion (appxxxxxxxxxxxxxxx)" />
-          <input type="text" id="cfg-base-anim" placeholder="Base ID Animations (appxxxxxxxxxxxxxxx)" />
-        </div>
-        <div class="config-row">
-          <input type="text" id="cfg-table-agents" placeholder="Table ID Carte Agent (tblxxxxxxxxxxxxxxx)" />
-          <input type="text" id="cfg-table-boutique" placeholder="Table ID Boutique Animations (tblxxxxxxxxxxxxxxx)" />
-        </div>
-        <button class="btn-primary btn-gold" onclick="saveConfig()" style="margin-top:10px">Sauvegarder la config</button>
-      </div>
-
-      <!-- Verrou admin -->
-      <div id="admin-lock-screen">
-        <div class="admin-lock">
-          <div class="lock-icon">🔐</div>
-          <h2>Accès Admin</h2>
-          <p>Entre le mot de passe admin pour gérer les UpCoins de tes agents.</p>
-          <div class="input-row">
-            <input type="password" id="admin-pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkAdmin()" />
-            <button class="btn-primary" onclick="checkAdmin()">Entrer</button>
-          </div>
-          <p id="admin-err" style="color:var(--red);font-size:12px;margin-top:10px;display:none">Mot de passe incorrect.</p>
-        </div>
-      </div>
-
-      <!-- Panel admin déverrouillé -->
-      <div id="admin-panel" style="display:none">
-        <div class="section-header">Admin ⚙️</div>
-        <p class="section-sub" style="margin-bottom:1.5rem">Gère les UpCoins de tes agents manuellement</p>
-
-        <div class="admin-grid">
-          <!-- Ajouter des UpCoins -->
-          <div class="admin-card">
-            <h3>➕ Ajouter des UpCoins</h3>
-            <label>Agent</label>
-            <select id="add-agent"></select>
-            <label>Montant à ajouter</label>
-            <input type="number" id="add-amount" placeholder="ex: 5000" min="0" step="500" />
-            <label>Motif (optionnel)</label>
-            <input type="text" id="add-reason" placeholder="ex: 3 ventes aujourd'hui" />
-            <button class="btn-primary" style="margin-top:14px;width:100%" onclick="addCoins()">Ajouter les UpCoins</button>
-            <div class="result-msg" id="add-msg"></div>
-          </div>
-
-          <!-- Retirer des UpCoins -->
-          <div class="admin-card">
-            <h3>➖ Retirer des UpCoins</h3>
-            <label>Agent</label>
-            <select id="remove-agent"></select>
-            <label>Montant à retirer</label>
-            <input type="number" id="remove-amount" placeholder="ex: 2000" min="0" step="500" />
-            <label>Motif (optionnel)</label>
-            <input type="text" id="remove-reason" placeholder="ex: achat boutique" />
-            <button class="btn-primary" style="margin-top:14px;width:100%;background:linear-gradient(135deg,#dc2626,#991b1b)" onclick="removeCoins()">Retirer les UpCoins</button>
-            <div class="result-msg" id="remove-msg"></div>
-          </div>
-
-          <!-- Attribution rapide -->
-          <div class="admin-card" style="grid-column:1/-1">
-            <h3>⚡ Attribution rapide — Points du jour</h3>
-            <p style="font-size:12px;color:var(--text2);margin-bottom:1rem">Sélectionne un agent et un nombre de points scorés aujourd'hui. Le système convertit automatiquement en UpCoins (1 pt = 2 000 UC).</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end">
-              <div>
-                <label>Agent</label>
-                <select id="quick-agent"></select>
-              </div>
-              <div>
-                <label>Points scorés</label>
-                <input type="number" id="quick-pts" placeholder="ex: 4" min="0" step="1" />
-              </div>
-              <button class="btn-primary btn-gold" onclick="quickAdd()" style="padding:10px 20px">Attribuer</button>
-            </div>
-            <div class="result-msg" id="quick-msg"></div>
-          </div>
-        </div>
-
-        <button onclick="logout()" style="margin-top:1.5rem;font-size:12px;color:var(--text3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
+        <p id="a-err" style="color:var(--red);font-size:12px;margin-top:10px;display:none">Mot de passe incorrect.</p>
       </div>
     </div>
+    <div id="a-panel" style="display:none">
+      <div class="sh">Admin ⚙️</div>
+      <div class="ss" style="margin-bottom:1.5rem">Gestion des UpCoins et validation des missions</div>
+      <div class="agrid" style="margin-bottom:1.25rem">
+        <div class="acard">
+          <h3>➕ Ajouter des UpCoins</h3>
+          <label>Agent</label><select id="add-ag"></select>
+          <label>Montant</label><input type="number" id="add-amt" placeholder="ex: 5000" min="0" step="500" />
+          <label>Motif</label><input type="text" id="add-rsn" placeholder="ex: 3 ventes aujourd'hui" />
+          <button class="btn" style="margin-top:12px;width:100%" onclick="doAdd()">Ajouter</button>
+          <div class="rmsg" id="add-msg"></div>
+        </div>
+        <div class="acard">
+          <h3>➖ Retirer des UpCoins</h3>
+          <label>Agent</label><select id="rem-ag"></select>
+          <label>Montant</label><input type="number" id="rem-amt" placeholder="ex: 2000" min="0" step="500" />
+          <button class="btn btn-red" style="margin-top:12px;width:100%" onclick="doRem()">Retirer</button>
+          <div class="rmsg" id="rem-msg"></div>
+        </div>
+        <div class="acard" style="grid-column:1/-1">
+          <h3>⚡ Attribution rapide — Points du jour</h3>
+          <p style="font-size:11px;color:var(--text2);margin-bottom:.85rem">1 point = <strong style="color:var(--gold)" id="pt-rate">2 000</strong> UpCoins</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end">
+            <div><label>Agent</label><select id="qk-ag"></select></div>
+            <div><label>Points scorés</label><input type="number" id="qk-pts" placeholder="ex: 4" min="0" step=".5" /></div>
+            <button class="btn btn-gold" onclick="doQuick()" style="padding:9px 18px">Attribuer</button>
+          </div>
+          <div class="rmsg" id="qk-msg"></div>
+        </div>
+      </div>
 
-  </main>
+      <div class="sh" style="font-size:1.1rem;margin-bottom:.4rem">🎯 Missions en attente</div>
+      <div class="ss" style="margin-bottom:.85rem">Articles "Up" achetés — ✅ valider si mission réussie (crédite le gain) · ❌ rejeter si échouée</div>
+      <div id="missions-wrap"><div class="loader"><div class="spin"></div><span>Chargement…</span></div></div>
+
+      <button onclick="logout()" style="margin-top:1.5rem;font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
+    </div>
+  </div>
+
+</main>
 </div>
 
-<!-- MODAL ACHAT -->
-<div class="modal-overlay" id="buy-modal">
+<!-- MODAL -->
+<div class="overlay" id="buy-modal">
   <div class="modal">
-    <h3 id="modal-name">Nom de l'article</h3>
-    <p id="modal-desc">Description de l'article.</p>
-    <div class="modal-price" id="modal-price">0 UC</div>
-    <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Qui achète ?</label>
-    <select id="modal-buyer" style="margin-bottom:1rem"></select>
-    <div class="modal-actions">
+    <h3 id="m-name">Article</h3>
+    <p class="modal-desc" id="m-desc"></p>
+    <div class="modal-price" id="m-price">0 UC</div>
+    <div class="modal-gain" id="m-gain" style="display:none"></div>
+    <label>Qui achète ?</label>
+    <select id="m-buyer" style="margin-bottom:0"></select>
+    <div class="ma">
       <button class="btn-cancel" onclick="closeModal()">Annuler</button>
-      <button class="btn-primary btn-gold" onclick="confirmBuy()">Confirmer l'achat</button>
+      <button class="btn btn-gold" onclick="confirmBuy()">Confirmer l'achat</button>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
-<div id="toast">Message</div>
+<div id="toast">—</div>
 
 <script>
-/* ══════════════════════════════════════════════════════
-   CONFIG — À ADAPTER
-   ══════════════════════════════════════════════════════ */
-const ADMIN_PASSWORD = 'vosso2024'; // ← change ça
+/* ══════════ CONFIG ══════════ */
+const ADMIN_PWD  = 'vosso2024';   // ← modifie ici
+const PT_TO_UC   = 2000;          // ← 1 pt = X UpCoins
+const BASE       = 'app2mJ7oSODZd9OoU';
+const T_PLAYERS  = 'tbl0Kl91e57KCdkiy';
+const T_SHOP     = 'tblELehPqsb0ATygV';
+const T_TRANS    = 'tblfooPjqvLZ3YSsD';
 
-// Ces valeurs peuvent être surchargées via le panneau config
-let CFG = {
-  apiKey: '',
-  baseGestion: 'appqM8BH4tHnDITGj',
-  baseAnim: 'app2mJ7oSODZd9OoU',
-  tableAgents: 'tbl7IrtGncEI8oAUf',   // Carte Agent (base Gestion)
-  tableBoutique: 'tblELehPqsb0ATygV', // Boutique (base Animations)
-};
+/* IDs champs Joueurs */
+const P_NAME = 'fldj63VB2omDb3k5L';
+const P_BANK = 'fldH20mY6pJEJaXUA';
+const P_CODE = 'fld0VgreDsvD7931Q';
 
-// Catalogue boutique — mix Animations + nouveaux
-const SHOP_EXTRA = [
-  { name: '🌿 Parcelle de Jardin 30m²', desc: 'Agrandis ton espace Work Adventure avec un jardin de 30m². Plantes, potager, coins verts à personnaliser.', price: 200000, stock: 50, cat: 'Terrain', emoji: '🌿' },
-  { name: '🏡 Maison de Bureau', desc: 'Un vrai bureau indépendant sur la carte Work Adventure. Ton espace, tes règles.', price: 800000, stock: 5, cat: 'Terrain', emoji: '🏡' },
-  { name: '🏕️ Extension de Bureau 5m²', desc: 'Étends ton bureau existant de 5m², parquet inclus. Plus d\'espace = plus de power.', price: 500000, stock: 5, cat: 'Terrain', emoji: '🏕️' },
-  { name: '🪑 Chaise Gaming', desc: 'La chaise ultime pour les sessions de call intense. Ergonomique et stylée.', price: 15000, stock: 20, cat: 'Meuble', emoji: '🪑' },
-  { name: '🛋️ Canapé Lounge', desc: 'Un canapé pour accueillir tes collègues dans ton bureau Work Adventure.', price: 30000, stock: 15, cat: 'Meuble', emoji: '🛋️' },
-  { name: '🖥️ Setup Double Écran', desc: 'Deux écrans pour doubler ta productivité dans Work Adventure.', price: 45000, stock: 10, cat: 'Meuble', emoji: '🖥️' },
-  { name: '🪴 Plante Monstera', desc: 'Une grande monstera pour donner vie à ton bureau Work Adventure.', price: 3000, stock: 100, cat: 'Décoration', emoji: '🪴' },
-  { name: '🎮 Arcade Cabinet', desc: 'Une borne d\'arcade rétro à exposer dans ton bureau. Pour le style.', price: 80000, stock: 8, cat: 'Décoration', emoji: '🎮' },
-];
+/* IDs champs Boutique */
+const S_NAME  = 'fldGcw1fYjAI5UM6q';
+const S_DESC  = 'fldKui2kVVpD0Qgof';
+const S_PRICE = 'fldYxeEBNDYze6OPR';
+const S_STOCK = 'fldFO979kDrfGyWCn';
+const S_CAT   = 'fldGd086FFywN1nKA';
+const S_IMG   = 'fldBeGjvXujte9fHV';
+// ⚠️ REMPLACE PAR L'ID RÉEL DE TON CHAMP "Gain UC" :
+const S_GAIN  = 'fldPpWZno4GftCWNS'; // placeholder — va dans Airtable > Boutique > Gain UC > copy field ID
 
-const PT_TO_UC = 2000; // 1 point = 2 000 UpCoins
+/* IDs champs Transactions */
+const TR_BUYER  = 'fldd9s39ZYZhCbzcz';
+const TR_ART    = 'fldf9zRqjYWJDCmuw';
+const TR_AMT    = 'fldAoYG01C9c0qE80';
+const TR_STATUS = 'flduJZSrIrglzLvvp';
+const TR_GAIN   = 'fldGLc3RMIdrsI8FQ'; // on stocke le gain UC dans ce champ (réutilisé)
 
-/* ══════════════════════════════════════════════════════
-   STATE
-   ══════════════════════════════════════════════════════ */
-let agents = [];
-let shopItems = [];
-let currentBuyItem = null;
-let adminUnlocked = false;
+/* ══════════ STATE ══════════ */
+let apiKey = '';
+let players = [], shop = [], pending = [], curItem = null;
 
-/* ══════════════════════════════════════════════════════
-   INIT
-   ══════════════════════════════════════════════════════ */
-function loadConfig() {
-  const saved = localStorage.getItem('vossobanque_cfg');
-  if (saved) {
-    try { CFG = { ...CFG, ...JSON.parse(saved) }; } catch(e) {}
-  }
-  if (CFG.apiKey) {
-    document.getElementById('config-box').style.display = 'none';
-  } else {
-    // Pré-remplir les champs
-    document.getElementById('cfg-base-gestion').value = CFG.baseGestion;
-    document.getElementById('cfg-base-anim').value = CFG.baseAnim;
-    document.getElementById('cfg-table-agents').value = CFG.tableAgents;
-    document.getElementById('cfg-table-boutique').value = CFG.tableBoutique;
-  }
-}
-
-function saveConfig() {
-  CFG.apiKey = document.getElementById('cfg-apikey').value.trim();
-  CFG.baseGestion = document.getElementById('cfg-base-gestion').value.trim();
-  CFG.baseAnim = document.getElementById('cfg-base-anim').value.trim();
-  CFG.tableAgents = document.getElementById('cfg-table-agents').value.trim();
-  CFG.tableBoutique = document.getElementById('cfg-table-boutique').value.trim();
-  localStorage.setItem('vossobanque_cfg', JSON.stringify(CFG));
-  document.getElementById('config-box').style.display = 'none';
-  toast('✅ Configuration sauvegardée !', 'success');
+/* ══════════ INIT ══════════ */
+(function(){
+  try { const c = JSON.parse(localStorage.getItem('vb2')||'{}'); apiKey = c.k||''; } catch(e){}
+  if (apiKey) document.getElementById('cfg-box').style.display = 'none';
+  document.getElementById('pt-rate').textContent = PT_TO_UC.toLocaleString('fr-FR');
   loadAll();
+})();
+
+function saveCfg(){
+  apiKey = document.getElementById('cfg-key').value.trim();
+  localStorage.setItem('vb2', JSON.stringify({k:apiKey}));
+  document.getElementById('cfg-box').style.display = 'none';
+  toast('✅ Clé API sauvegardée','ok'); loadAll();
 }
 
-/* ══════════════════════════════════════════════════════
-   AIRTABLE API
-   ══════════════════════════════════════════════════════ */
-async function airtableGet(baseId, tableId, fields = [], filter = '') {
-  if (!CFG.apiKey) return null;
-  const params = new URLSearchParams();
-  fields.forEach(f => params.append('fields[]', f));
-  if (filter) params.set('filterByFormula', filter);
-  const url = `https://api.airtable.com/v0/${baseId}/${tableId}?${params}`;
-  const r = await fetch(url, { headers: { Authorization: `Bearer ${CFG.apiKey}` } });
-  if (!r.ok) throw new Error(await r.text());
-  const data = await r.json();
-  return data.records;
+/* ══════════ API ══════════ */
+async function atGet(table, fields=[], formula=''){
+  if(!apiKey) return null;
+  const p = new URLSearchParams();
+  fields.forEach(f=>p.append('fields[]',f));
+  if(formula) p.set('filterByFormula',formula);
+  p.set('pageSize','100');
+  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${table}?${p}`,{headers:{Authorization:`Bearer ${apiKey}`}});
+  if(!r.ok) throw new Error(await r.text());
+  return (await r.json()).records;
 }
-
-async function airtablePatch(baseId, tableId, recordId, fields) {
-  if (!CFG.apiKey) throw new Error('Pas de clé API configurée');
-  const r = await fetch(`https://api.airtable.com/v0/${baseId}/${tableId}/${recordId}`, {
-    method: 'PATCH',
-    headers: {
-      Authorization: `Bearer ${CFG.apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ fields }),
-  });
-  if (!r.ok) throw new Error(await r.text());
+async function atPatch(table,id,fields){
+  if(!apiKey) throw new Error('Pas de clé API');
+  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${table}/${id}`,{method:'PATCH',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({fields})});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function atCreate(table,fields){
+  if(!apiKey) throw new Error('Pas de clé API');
+  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${table}`,{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({fields})});
+  if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
 
-/* ══════════════════════════════════════════════════════
-   LOAD AGENTS
-   ══════════════════════════════════════════════════════ */
-async function loadAgents() {
-  try {
-    const records = await airtableGet(
-      CFG.baseGestion,
-      CFG.tableAgents,
-      ['Name', 'Level', 'Up Banque', 'Portrait', 'Étoiles (score total)']
-    );
-    if (!records) return useFallbackAgents();
+/* ══════════ LOAD ══════════ */
+async function loadAll(){ await Promise.all([loadPlayers(), loadShop()]); }
 
-    agents = records.map(r => ({
-      id: r.id,
-      name: r.fields['Name'] || '?',
-      level: r.fields['Level']?.name || '',
-      bank: r.fields['Up Banque'] || 0,
-      avatar: r.fields['Portrait']?.[0]?.thumbnails?.large?.url || null,
-      stars: r.fields['Étoiles (score total)'] || 0,
-    })).sort((a, b) => b.bank - a.bank);
-
-    renderLeaderboard();
-    fillSelects();
-  } catch(e) {
-    console.warn('Airtable error, fallback:', e);
-    useFallbackAgents();
-  }
+async function loadPlayers(){
+  try{
+    const recs = await atGet(T_PLAYERS,[P_NAME,P_BANK,P_CODE]);
+    if(!recs) return fallback();
+    players = recs.map(r=>({id:r.id,name:r.fields[P_NAME]||'?',bank:r.fields[P_BANK]||0,code:r.fields[P_CODE]||''})).sort((a,b)=>b.bank-a.bank);
+    renderLB(); fillSels();
+  } catch(e){ console.warn(e); fallback(); }
 }
 
-function useFallbackAgents() {
-  agents = [
-    { id: 'recLT4fmGg2mbGLep', name: 'Mickaël', level: 'Operator', bank: 200000, avatar: null, stars: 29 },
-    { id: 'recZuFaqgU6inmdn1', name: 'Sujin', level: 'Agent Vosso', bank: 500000, avatar: null, stars: 47 },
-    { id: 'rec4KyGf3wLS0Gj2p', name: 'Pascal', level: 'Agent Vosso', bank: 500000, avatar: null, stars: 51 },
-    { id: 'recJRhj05TeD9nK43', name: 'Steve', level: '', bank: 100000, avatar: null, stars: 0 },
-  ].sort((a, b) => b.bank - a.bank);
-  renderLeaderboard();
-  fillSelects();
+function fallback(){
+  players=[
+    {id:'recvWiViUeeQ8dodS',name:'Steve', bank:898000,code:'159753'},
+    {id:'recKVJM1uSPW1a9va',name:'Audrey',bank:300000,code:'1003'},
+    {id:'rec2HpwYd0FQfTYGD',name:'Jenkys',bank:207965,code:'1325'},
+    {id:'recwySKwhhSJ4SS1s',name:'Moussa',bank:50000, code:'1212'},
+    {id:'recym7Su5G7whh4VV',name:'Pierre',bank:30000, code:'2402'},
+    {id:'recctFqnzaU8uH1wr',name:'Léa',   bank:20000, code:'4321'},
+    {id:'recbKIuPjxWIeleKq',name:'Henri', bank:15000, code:'1234'},
+  ].sort((a,b)=>b.bank-a.bank);
+  renderLB(); fillSels();
 }
 
-/* ══════════════════════════════════════════════════════
-   RENDER LEADERBOARD
-   ══════════════════════════════════════════════════════ */
-const AVATAR_COLORS = [
-  ['#7F77DD','#EEEDFE'], ['#1D9E75','#E1F5EE'], ['#D85A30','#FAECE7'],
-  ['#3D8EF0','#E6F1FB'], ['#d97706','#FEF9C3'], ['#9333ea','#F3E8FF'],
-];
-
-function renderLeaderboard() {
-  const list = document.getElementById('leaderboard-list');
-  const maxBank = agents[0]?.bank || 1;
-  const totalUC = agents.reduce((s, a) => s + a.bank, 0);
-
-  document.getElementById('stat-agents').textContent = agents.length;
-  document.getElementById('stat-total').textContent = fmtUC(totalUC);
-  document.getElementById('stat-leader').textContent = agents[0]?.name || '—';
-
-  const ranks = ['🥇', '🥈', '🥉'];
-  const rankClasses = ['gold', 'silver', 'bronze'];
-
-  list.innerHTML = agents.map((a, i) => {
-    const pct = Math.round((a.bank / maxBank) * 100);
-    const [fg, bg] = AVATAR_COLORS[i % AVATAR_COLORS.length];
-    const avatarHTML = a.avatar
-      ? `<img class="player-avatar" src="${a.avatar}" alt="${a.name}" loading="lazy" />`
-      : `<div class="player-avatar-ph" style="background:${bg};color:${fg}">${a.name[0]}</div>`;
-    const rankBadge = i < 3
-      ? `<div class="rank-badge ${rankClasses[i]}">${ranks[i]}</div>`
-      : `<div class="rank-badge">${i + 1}</div>`;
-
-    return `
-      <div class="player-card ${i === 0 ? 'first' : ''}">
-        ${rankBadge}
-        ${avatarHTML}
-        <div class="player-info">
-          <div class="player-name">${a.name}</div>
-          <div class="player-level">
-            ${a.level ? `<span class="level-badge">${a.level}</span>` : ''}
-            ${a.stars ? ` ⭐ ${a.stars} étoiles` : ''}
-          </div>
-        </div>
-        <div class="bar-section">
-          <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
-        </div>
-        <div class="player-bank">
-          <div class="bank-amount">${fmtUC(a.bank)}</div>
-          <div class="bank-label">UpCoins</div>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-/* ══════════════════════════════════════════════════════
-   LOAD BOUTIQUE
-   ══════════════════════════════════════════════════════ */
-const CAT_ICONS = {
-  'Up': '⚡', 'Décoration': '🎨', 'CASH': '💸', 'wellness': '🌱',
-  'Terrain': '🌿', 'Meuble': '🪑', 'default': '📦'
-};
-const CAT_CLASS = {
-  'Up': 'cat-up', 'Décoration': 'cat-deco', 'CASH': 'cat-cash',
-  'wellness': 'cat-wellness', 'Terrain': 'cat-terrain', 'Meuble': 'cat-meuble',
-};
-
-async function loadShop() {
-  try {
-    const records = await airtableGet(
-      CFG.baseAnim,
-      CFG.tableBoutique,
-      ["Nom de l'article", 'Description', 'Prix', 'Stock disponible', 'Catégorie', 'En Stock']
-    );
-    if (records) {
-      shopItems = records.map(r => ({
-        id: r.id,
-        name: r.fields["Nom de l'article"] || '?',
-        desc: r.fields['Description'] || '',
-        price: r.fields['Prix'] || 0,
-        stock: r.fields['Stock disponible'] || 0,
-        cat: r.fields['Catégorie']?.name || '',
-        available: r.fields['En Stock'] === 'Disponible',
-      }));
-    }
-  } catch(e) {
-    console.warn('Shop load fallback:', e);
-    shopItems = [];
-  }
-  // Ajouter les articles extras
-  SHOP_EXTRA.forEach(item => {
-    shopItems.push({ ...item, id: null, available: item.stock > 0 });
-  });
-
-  shopItems.sort((a, b) => a.price - b.price);
+async function loadShop(){
+  try{
+    const recs = await atGet(T_SHOP,[S_NAME,S_DESC,S_PRICE,S_STOCK,S_CAT,S_IMG,S_GAIN]);
+    if(recs) shop = recs.map(r=>({
+      id:r.id,
+      name: r.fields[S_NAME]||'?',
+      desc: r.fields[S_DESC]||'',
+      price:r.fields[S_PRICE]||0,
+      stock:r.fields[S_STOCK]||0,
+      cat:  r.fields[S_CAT]?.name||'',
+      img:  r.fields[S_IMG]?.[0]?.thumbnails?.large?.url||null,
+      gain: r.fields[S_GAIN]||0,
+      ok:   (r.fields[S_STOCK]||0)>0,
+    })).sort((a,b)=>a.price-b.price);
+  } catch(e){ console.warn(e); shop=[]; }
   renderShop('all');
 }
 
-function renderShop(filter) {
-  const grid = document.getElementById('shop-grid');
-  const items = filter === 'all' ? shopItems : shopItems.filter(i => i.cat === filter);
+async function loadPending(){
+  const w = document.getElementById('missions-wrap');
+  w.innerHTML='<div class="loader"><div class="spin"></div><span>Chargement missions…</span></div>';
+  try{
+    const recs = await atGet(T_TRANS,[TR_BUYER,TR_ART,TR_AMT,TR_STATUS,TR_GAIN,F_DATE='fldrELQs39RXvvyvo'],`{${TR_STATUS}}="En attente mission"`);
+    pending = recs||[];
+    renderPending();
+  } catch(e){ w.innerHTML='<p class="empty-s">Erreur — vérifie la clé API</p>'; }
+}
 
-  if (!items.length) {
-    grid.innerHTML = '<p style="color:var(--text2);font-size:13px;padding:1rem">Aucun article dans cette catégorie.</p>';
-    return;
-  }
-
-  grid.innerHTML = items.map((item, idx) => {
-    const catClass = CAT_CLASS[item.cat] || 'cat-up';
-    const icon = item.emoji || CAT_ICONS[item.cat] || CAT_ICONS.default;
-    const dataIdx = shopItems.indexOf(item);
-    return `
-      <div class="shop-card">
-        <div class="shop-img-wrap">
-          <span style="position:relative;z-index:1">${icon}</span>
-          ${item.cat ? `<span class="shop-cat-tag ${catClass}">${item.cat}</span>` : ''}
-        </div>
-        <div class="shop-body">
-          <div class="shop-name">${item.name}</div>
-          <div class="shop-desc">${item.desc}</div>
-          <div class="shop-footer">
-            <div>
-              <div class="shop-price">${fmtUC(item.price)} UC</div>
-              <div class="shop-stock">${item.available ? `${item.stock} en stock` : '❌ Rupture'}</div>
-            </div>
-            <button class="buy-btn" ${!item.available ? 'disabled' : ''} onclick="openBuyModal(${dataIdx})">Acheter</button>
-          </div>
-        </div>
-      </div>`;
+/* ══════════ RENDER LB ══════════ */
+const AVC=[['#8b5cf6','#EEEDFE'],['#1D9E75','#E1F5EE'],['#D85A30','#FAECE7'],['#3D8EF0','#E6F1FB'],['#d97706','#FEF9C3'],['#ec4899','#FCE7F3'],['#0ea5e9','#E0F2FE']];
+function renderLB(){
+  const max=players[0]?.bank||1, total=players.reduce((s,p)=>s+p.bank,0);
+  document.getElementById('s-count').textContent=players.length;
+  document.getElementById('s-total').textContent=fuc(total);
+  document.getElementById('s-lead').textContent=players[0]?.name||'—';
+  const rnks=['🥇','🥈','🥉'],rc=['g','s','b'];
+  document.getElementById('lb-list').innerHTML=players.map((p,i)=>{
+    const pct=Math.round(p.bank/max*100);
+    const [fg,bg]=AVC[i%AVC.length];
+    return `<div class="pc ${i===0?'top1':''}">
+      <div class="rnk ${i<3?rc[i]:''}">${i<3?rnks[i]:i+1}</div>
+      <div class="avp" style="background:${bg};color:${fg}">${p.name[0]}</div>
+      <div class="pi"><div class="pn">${p.name}</div><div class="pl">Code : ${p.code}</div></div>
+      <div class="bw"><div class="bb"><div class="bf" style="width:${pct}%"></div></div></div>
+      <div class="bank"><div class="ba">${fuc(p.bank)}</div><div class="bl">UpCoins</div></div>
+    </div>`;
   }).join('');
 }
 
-function filterShop(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderShop(cat);
+/* ══════════ RENDER SHOP ══════════ */
+let curF='all';
+function fshop(f,btn){
+  curF=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderShop(f);
+}
+const ICONS={Up:'⚡',Décoration:'🎨',CASH:'💸',wellness:'🌱',default:'📦'};
+function renderShop(f){
+  const grid=document.getElementById('shop-grid');
+  const items=f==='all'?shop:shop.filter(i=>i.cat===f);
+  if(!items.length){grid.innerHTML='<p style="color:var(--text2);font-size:12px;padding:.5rem">Aucun article.</p>';return;}
+  grid.innerHTML=items.map(item=>{
+    const ri=shop.indexOf(item);
+    const icon=ICONS[item.cat]||ICONS.default;
+    const imgH=item.img?`<img src="${item.img}" alt="" />`:`<span>${icon}</span>`;
+    const gainH=item.gain?`<div class="sg-lbl">🎯 Gain si mission : +${fuc(item.gain)} UC</div>`:'';
+    const catKey=item.cat.replace(/ /g,'_');
+    return `<div class="sc">
+      <div class="simg">${imgH}${item.cat?`<span class="stag t-${catKey}">${item.cat}</span>`:''}</div>
+      <div class="sbody">
+        <div class="sn">${item.name}</div>
+        <div class="sd">${item.desc}</div>
+        <div class="sf">
+          <div><div class="sp">${fuc(item.price)} UC</div>${gainH}<div class="sk">${item.ok?item.stock+' en stock':'❌ Rupture'}</div></div>
+          <button class="bbtn" ${!item.ok?'disabled':''} onclick="openBuy(${ri})">Acheter</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-/* ══════════════════════════════════════════════════════
-   BUY MODAL
-   ══════════════════════════════════════════════════════ */
-function openBuyModal(idx) {
-  currentBuyItem = shopItems[idx];
-  document.getElementById('modal-name').textContent = currentBuyItem.name;
-  document.getElementById('modal-desc').textContent = currentBuyItem.desc;
-  document.getElementById('modal-price').textContent = fmtUC(currentBuyItem.price) + ' UpCoins';
+/* ══════════ RENDER MISSIONS ══════════ */
+function renderPending(){
+  const w=document.getElementById('missions-wrap');
+  if(!pending.length){w.innerHTML='<div class="empty-s">✅ Aucune mission en attente</div>';return;}
+  w.innerHTML=`<div class="mtable">
+    <div class="mhead"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
+    ${pending.map(m=>{
+      const gain=Number(m.fields[TR_GAIN]||0);
+      const buyer=m.fields[TR_BUYER]||'?';
+      const art=m.fields[TR_ART]||'?';
+      return `<div class="mrow">
+        <span class="mi">${art}</span>
+        <span class="mb">${buyer}</span>
+        <span class="mg">${gain?'+'+fuc(gain)+' UC':'—'}</span>
+        <span style="display:flex;gap:4px">
+          <button class="btn btn-green btn-sm" onclick="valMission('${m.id}','${buyer}',${gain})">✅ Valider</button>
+          <button class="btn btn-red btn-sm" onclick="rejMission('${m.id}')">❌</button>
+        </span>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
 
-  const sel = document.getElementById('modal-buyer');
-  sel.innerHTML = agents.map(a =>
-    `<option value="${a.id}">${a.name} — ${fmtUC(a.bank)} UC</option>`
-  ).join('');
-
+/* ══════════ BUY ══════════ */
+function openBuy(idx){
+  curItem=shop[idx];
+  document.getElementById('m-name').textContent=curItem.name;
+  document.getElementById('m-desc').textContent=curItem.desc;
+  document.getElementById('m-price').textContent=fuc(curItem.price)+' UpCoins';
+  const ge=document.getElementById('m-gain');
+  if(curItem.gain){ge.textContent=`🎯 Gain si mission validée : +${fuc(curItem.gain)} UC`;ge.style.display='block';}
+  else ge.style.display='none';
+  document.getElementById('m-buyer').innerHTML=players.map(p=>`<option value="${p.id}|${p.code}">${p.name} — ${fuc(p.bank)} UC</option>`).join('');
   document.getElementById('buy-modal').classList.add('open');
 }
+function closeModal(){document.getElementById('buy-modal').classList.remove('open');curItem=null;}
 
-function closeModal() {
-  document.getElementById('buy-modal').classList.remove('open');
-  currentBuyItem = null;
-}
-
-async function confirmBuy() {
-  if (!currentBuyItem) return;
-  const agentId = document.getElementById('modal-buyer').value;
-  const agent = agents.find(a => a.id === agentId);
-  if (!agent) return;
-
-  if (agent.bank < currentBuyItem.price) {
-    toast('❌ Solde insuffisant !', 'error');
-    closeModal();
-    return;
-  }
-
-  const newBank = agent.bank - currentBuyItem.price;
-  try {
-    if (CFG.apiKey) {
-      await airtablePatch(CFG.baseGestion, CFG.tableAgents, agentId, { 'Up Banque': newBank });
+async function confirmBuy(){
+  if(!curItem) return;
+  const [aid,acode]=document.getElementById('m-buyer').value.split('|');
+  const ag=players.find(p=>p.id===aid);
+  if(!ag) return;
+  if(ag.bank<curItem.price){toast('❌ Solde insuffisant !','err');closeModal();return;}
+  const nb=ag.bank-curItem.price;
+  const isMission=curItem.cat==='Up';
+  try{
+    if(apiKey){
+      await atPatch(T_PLAYERS,aid,{[P_BANK]:nb});
+      await atPatch(T_SHOP,curItem.id,{[S_STOCK]:curItem.stock-1});
+      await atCreate(T_TRANS,{
+        [TR_BUYER]:acode,
+        [TR_ART]:curItem.name,
+        [TR_AMT]:curItem.price,
+        [TR_STATUS]:isMission?'En attente mission':'Validé',
+        [TR_GAIN]:String(curItem.gain||0),
+      });
     }
-    agent.bank = newBank;
-    renderLeaderboard();
-    fillSelects();
-    closeModal();
-    toast(`✅ Achat réussi ! Il reste ${fmtUC(newBank)} UC à ${agent.name}`, 'success');
-  } catch(e) {
-    toast('❌ Erreur lors de l\'achat : ' + e.message, 'error');
-  }
+    ag.bank=nb; curItem.stock-=1; if(curItem.stock<=0)curItem.ok=false;
+    renderLB(); fillSels(); renderShop(curF); closeModal();
+    toast(isMission?`✅ Acheté ! Mission en attente d'admin. Solde : ${fuc(nb)} UC`:`✅ Achat réussi ! Solde : ${fuc(nb)} UC`,'ok');
+  } catch(e){toast('❌ '+e.message,'err');}
 }
 
-/* ══════════════════════════════════════════════════════
-   ADMIN
-   ══════════════════════════════════════════════════════ */
-function checkAdmin() {
-  const pwd = document.getElementById('admin-pwd').value;
-  if (pwd === ADMIN_PASSWORD) {
-    adminUnlocked = true;
-    document.getElementById('admin-lock-screen').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
-  } else {
-    document.getElementById('admin-err').style.display = 'block';
-  }
+/* ══════════ MISSIONS ══════════ */
+async function valMission(txId,buyerCode,gain){
+  const ag=players.find(p=>p.code===buyerCode.trim());
+  try{
+    if(apiKey){
+      await atPatch(T_TRANS,txId,{[TR_STATUS]:'Mission réussie ✅'});
+      if(ag&&gain>0){const nb=ag.bank+gain;await atPatch(T_PLAYERS,ag.id,{[P_BANK]:nb});ag.bank=nb;}
+    } else if(ag&&gain>0) ag.bank+=gain;
+    pending=pending.filter(m=>m.id!==txId);
+    renderPending(); renderLB(); fillSels();
+    toast(`✅ Mission validée !${ag&&gain>0?' +'+fuc(gain)+' UC → '+ag.name:''}`, 'ok');
+  } catch(e){toast('❌ '+e.message,'err');}
 }
 
-function logout() {
-  adminUnlocked = false;
-  document.getElementById('admin-lock-screen').style.display = 'block';
-  document.getElementById('admin-panel').style.display = 'none';
-  document.getElementById('admin-pwd').value = '';
+async function rejMission(txId){
+  try{
+    if(apiKey) await atPatch(T_TRANS,txId,{[TR_STATUS]:'Mission échouée ❌'});
+    pending=pending.filter(m=>m.id!==txId);
+    renderPending();
+    toast('Mission rejetée — pas de gain crédité','err');
+  } catch(e){toast('❌ '+e.message,'err');}
 }
 
-function fillSelects() {
-  const selects = ['add-agent', 'remove-agent', 'quick-agent', 'modal-buyer'];
-  selects.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.innerHTML = agents.map(a =>
-      `<option value="${a.id}">${a.name} — ${fmtUC(a.bank)} UC</option>`
-    ).join('');
-  });
+/* ══════════ ADMIN ══════════ */
+function unlock(){
+  if(document.getElementById('a-pwd').value===ADMIN_PWD){
+    document.getElementById('a-lock').style.display='none';
+    document.getElementById('a-panel').style.display='block';
+    loadPending();
+  } else document.getElementById('a-err').style.display='block';
+}
+function logout(){
+  document.getElementById('a-lock').style.display='block';
+  document.getElementById('a-panel').style.display='none';
+  document.getElementById('a-pwd').value='';
 }
 
-async function addCoins() {
-  const agentId = document.getElementById('add-agent').value;
-  const amount = parseInt(document.getElementById('add-amount').value);
-  const msg = document.getElementById('add-msg');
-
-  if (!amount || amount <= 0) { showMsg(msg, 'Montant invalide.', false); return; }
-  const agent = agents.find(a => a.id === agentId);
-  if (!agent) return;
-
-  const newBank = agent.bank + amount;
-  try {
-    if (CFG.apiKey) {
-      await airtablePatch(CFG.baseGestion, CFG.tableAgents, agentId, { 'Up Banque': newBank });
-    }
-    agent.bank = newBank;
-    renderLeaderboard(); fillSelects();
-    showMsg(msg, `✅ ${fmtUC(amount)} UC ajoutés à ${agent.name}. Nouveau solde : ${fmtUC(newBank)} UC`, true);
-    document.getElementById('add-amount').value = '';
-    document.getElementById('add-reason').value = '';
-  } catch(e) {
-    showMsg(msg, '❌ Erreur : ' + e.message, false);
-  }
+async function doAdd(){
+  const ag=players.find(p=>p.id===document.getElementById('add-ag').value);
+  const amt=parseInt(document.getElementById('add-amt').value);
+  const msg=document.getElementById('add-msg');
+  if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
+  const nb=ag.bank+amt;
+  try{
+    if(apiKey) await atPatch(T_PLAYERS,ag.id,{[P_BANK]:nb});
+    ag.bank=nb; renderLB(); fillSels();
+    showMsg(msg,`✅ +${fuc(amt)} UC à ${ag.name} → ${fuc(nb)} UC`,true);
+    document.getElementById('add-amt').value='';
+  } catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
 
-async function removeCoins() {
-  const agentId = document.getElementById('remove-agent').value;
-  const amount = parseInt(document.getElementById('remove-amount').value);
-  const msg = document.getElementById('remove-msg');
-
-  if (!amount || amount <= 0) { showMsg(msg, 'Montant invalide.', false); return; }
-  const agent = agents.find(a => a.id === agentId);
-  if (!agent) return;
-
-  const newBank = Math.max(0, agent.bank - amount);
-  try {
-    if (CFG.apiKey) {
-      await airtablePatch(CFG.baseGestion, CFG.tableAgents, agentId, { 'Up Banque': newBank });
-    }
-    agent.bank = newBank;
-    renderLeaderboard(); fillSelects();
-    showMsg(msg, `✅ ${fmtUC(amount)} UC retirés à ${agent.name}. Nouveau solde : ${fmtUC(newBank)} UC`, true);
-    document.getElementById('remove-amount').value = '';
-  } catch(e) {
-    showMsg(msg, '❌ Erreur : ' + e.message, false);
-  }
+async function doRem(){
+  const ag=players.find(p=>p.id===document.getElementById('rem-ag').value);
+  const amt=parseInt(document.getElementById('rem-amt').value);
+  const msg=document.getElementById('rem-msg');
+  if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
+  const nb=Math.max(0,ag.bank-amt);
+  try{
+    if(apiKey) await atPatch(T_PLAYERS,ag.id,{[P_BANK]:nb});
+    ag.bank=nb; renderLB(); fillSels();
+    showMsg(msg,`✅ -${fuc(amt)} UC à ${ag.name} → ${fuc(nb)} UC`,true);
+    document.getElementById('rem-amt').value='';
+  } catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
 
-async function quickAdd() {
-  const agentId = document.getElementById('quick-agent').value;
-  const pts = parseFloat(document.getElementById('quick-pts').value);
-  const msg = document.getElementById('quick-msg');
-
-  if (!pts || pts < 0) { showMsg(msg, 'Nombre de points invalide.', false); return; }
-  const agent = agents.find(a => a.id === agentId);
-  if (!agent) return;
-
-  const uc = Math.round(pts * PT_TO_UC);
-  const newBank = agent.bank + uc;
-  try {
-    if (CFG.apiKey) {
-      await airtablePatch(CFG.baseGestion, CFG.tableAgents, agentId, { 'Up Banque': newBank });
-    }
-    agent.bank = newBank;
-    renderLeaderboard(); fillSelects();
-    showMsg(msg, `✅ ${pts} pts → ${fmtUC(uc)} UC ajoutés à ${agent.name}. Nouveau solde : ${fmtUC(newBank)} UC`, true);
-    document.getElementById('quick-pts').value = '';
-  } catch(e) {
-    showMsg(msg, '❌ Erreur : ' + e.message, false);
-  }
+async function doQuick(){
+  const ag=players.find(p=>p.id===document.getElementById('qk-ag').value);
+  const pts=parseFloat(document.getElementById('qk-pts').value);
+  const msg=document.getElementById('qk-msg');
+  if(!ag||isNaN(pts)||pts<=0){showMsg(msg,'Valeur invalide',false);return;}
+  const uc=Math.round(pts*PT_TO_UC), nb=ag.bank+uc;
+  try{
+    if(apiKey) await atPatch(T_PLAYERS,ag.id,{[P_BANK]:nb});
+    ag.bank=nb; renderLB(); fillSels();
+    showMsg(msg,`✅ ${pts} pts → +${fuc(uc)} UC pour ${ag.name} → ${fuc(nb)} UC`,true);
+    document.getElementById('qk-pts').value='';
+  } catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
 
-/* ══════════════════════════════════════════════════════
-   UTILS
-   ══════════════════════════════════════════════════════ */
-function fmtUC(n) {
-  if (n >= 1000000) return (n/1000000).toFixed(1).replace('.0','') + 'M';
-  if (n >= 1000) return Math.round(n/1000) + 'K';
+/* ══════════ UTILS ══════════ */
+function fuc(n){
+  if(n>=1000000) return (n/1000000).toFixed(1).replace('.0','')+'M';
+  if(n>=1000) return Math.round(n/1000)+'K';
   return n.toLocaleString('fr-FR');
 }
-
-function showMsg(el, txt, ok) {
-  el.className = 'result-msg ' + (ok ? 'ok' : 'err');
-  el.textContent = txt;
-  setTimeout(() => { el.className = 'result-msg'; }, 5000);
+function fillSels(){
+  ['add-ag','rem-ag','qk-ag'].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fuc(p.bank)} UC</option>`).join('');
+  });
 }
-
-let toastTimer;
-function toast(msg, type = '') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'show ' + type;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.className = ''; }, 3500);
+function showMsg(el,txt,ok){
+  el.className='rmsg '+(ok?'ok':'err'); el.textContent=txt;
+  setTimeout(()=>el.className='rmsg',5000);
 }
-
-function showSection(name, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('sec-' + name).classList.add('active');
-  btn.classList.add('active');
+let toastT;
+function toast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='show '+type;
+  clearTimeout(toastT); toastT=setTimeout(()=>t.className='',3500);
 }
-
-/* ══════════════════════════════════════════════════════
-   LOAD ALL
-   ══════════════════════════════════════════════════════ */
-async function loadAll() {
-  await Promise.all([loadAgents(), loadShop()]);
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  btn.classList.add('on');
+  if(id==='admin'&&document.getElementById('a-panel').style.display!=='none') loadPending();
 }
-
-loadConfig();
-loadAll();
-
-// Fermer modal si click outside
-document.getElementById('buy-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+document.getElementById('buy-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 </script>
 </body>
 </html>
