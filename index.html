@@ -332,7 +332,7 @@ let players = [], shop = [], pending = [], cur = null, curF = 'all';
 
 /* ════════════════ INIT ═════════════ */
 (function(){
-  try{ const c=JSON.parse(localStorage.getItem('vb3')||'{}'); key=c.k||''; }catch(e){}
+  try{ const c=JSON.parse(localStorage.getItem('vb2')||'{}'); key=c.k||''; }catch(e){}
   if(key) document.getElementById('cfg').style.display='none';
   document.getElementById('pt-r').textContent = PT_UC.toLocaleString('fr-FR');
   loadAll();
@@ -340,7 +340,7 @@ let players = [], shop = [], pending = [], cur = null, curF = 'all';
 
 function saveCfg(){
   key = document.getElementById('cfg-k').value.trim();
-  localStorage.setItem('vb3', JSON.stringify({k:key}));
+  localStorage.setItem('vb2', JSON.stringify({k:key}));
   document.getElementById('cfg').style.display='none';
   toast('✅ Clé API sauvegardée','ok');
   loadAll();
