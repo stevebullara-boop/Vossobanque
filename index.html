@@ -18,9 +18,9 @@ html,body{min-height:100%;background:var(--bg);color:var(--t1);font-family:var(-
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% -5%,rgba(139,92,246,.09) 0%,transparent 65%),radial-gradient(ellipse 50% 35% at 88% 98%,rgba(240,192,64,.06) 0%,transparent 60%);pointer-events:none;z-index:0}
 #app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
 header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:1px solid var(--b1);background:rgba(9,9,15,.88);backdrop-filter:blur(14px);position:sticky;top:0;z-index:100}
-.logo{display:flex;align-items:center;gap:9px;font-family:var(--fs);font-size:1.25rem;font-weight:800;letter-spacing:-.02em;color:var(--t1)}
-.logo-i{width:33px;height:33px;border-radius:9px;background:linear-gradient(135deg,var(--pu),var(--gold));display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.logo em{color:var(--gold);font-style:normal}
+.logo{   display:flex;   align-items:center;   gap:10px;   font-family:var(--fs);   font-size:1.28rem;   font-weight:800;   letter-spacing:-.02em;   color:var(--t1); }
+.logo-i{   width:36px;   height:36px;   border-radius:11px;   background:linear-gradient(135deg,var(--pu),#6d28d9);   display:flex;   align-items:center;   justify-content:center;   font-size:17px;   flex-shrink:0;   box-shadow:0 0 18px rgba(139,92,246,.28); }
+.logo em{color:var(--pu2);font-style:normal}
 nav{display:flex;gap:2px;background:var(--bg3);border-radius:50px;padding:3px;border:1px solid var(--b1)}
 .nb{font-family:var(--fb);font-size:12px;font-weight:500;padding:5px 14px;border-radius:50px;border:none;background:transparent;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap}
 .nb.on{background:var(--bg4);color:var(--t1)}
@@ -53,7 +53,7 @@ main{flex:1;padding:1.25rem;max-width:900px;width:100%;margin:0 auto}
 .fb{font-size:12px;padding:5px 12px;border-radius:50px;border:1px solid var(--b2);background:transparent;color:var(--t2);cursor:pointer;transition:all .18s;font-family:var(--fb)}
 .fb.on,.fb:hover{background:var(--pu);color:#fff;border-color:var(--pu)}
 .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:9px}
-.sc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s,transform .18s}
+.sc{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));   border:1px solid var(--b1);   border-radius:var(--r);   overflow:hidden;   display:flex;   flex-direction:column;   transition:border-color .18s,transform .18s,box-shadow .18s;   box-shadow:0 8px 24px rgba(0,0,0,.18); } .sc:hover{   border-color:var(--b2);   transform:translateY(-3px);   box-shadow:0 14px 30px rgba(0,0,0,.28); }
 .sc:hover{border-color:var(--b2);transform:translateY(-2px)}
 .si{height:115px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:2.6rem}
 .si img{width:100%;height:100%;object-fit:contain;padding:10px}
@@ -66,7 +66,7 @@ main{flex:1;padding:1.25rem;max-width:900px;width:100%;margin:0 auto}
 .sn{font-family:var(--fs);font-size:.82rem;font-weight:700;margin-bottom:3px;line-height:1.3;color:var(--t1)}
 .sd{font-size:10px;color:var(--t2);line-height:1.45;margin-bottom:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .sf{display:flex;align-items:flex-end;justify-content:space-between;margin-top:.55rem;gap:5px}
-.sp{font-family:var(--fs);font-size:.9rem;font-weight:800;color:var(--gold)}
+.price{font-family:var(--fs);font-size:.9rem;font-weight:800;color:var(--gold)}
 .sgn{font-size:10px;color:var(--gr);margin-top:1px}
 .sst{font-size:10px;color:var(--t3);margin-top:1px}
 .bbt{font-size:11px;font-weight:500;padding:5px 11px;border:1px solid var(--pu);border-radius:50px;background:transparent;color:var(--pu2);cursor:pointer;transition:all .18s;font-family:var(--fb);flex-shrink:0}
@@ -118,7 +118,7 @@ label:first-of-type{margin-top:0}
 #toast.ok{border-color:rgba(52,211,153,.38);color:var(--gr)}
 #toast.er{border-color:rgba(248,113,113,.38);color:var(--rd)}
 .ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;gap:.65rem}
-.sp{width:30px;height:30px;border:3px solid var(--b2);border-top-color:var(--pu);border-radius:50%;animation:spin .7s linear infinite}
+.spinner{width:30px;height:30px;border:3px solid var(--b2);border-top-color:var(--pu);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ld span{font-size:12px;color:var(--t2)}
 </style>
@@ -143,7 +143,7 @@ label:first-of-type{margin-top:0}
       <div class="mc"><div class="ml">Total UpCoins</div><div class="mv" id="s-t" style="color:var(--gold)">—</div></div>
       <div class="mc"><div class="ml">Leader</div><div class="mv" id="s-l" style="font-size:1rem">—</div></div>
     </div>
-    <div class="lb" id="lb"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
+    <div class="lb" id="lb"><div class="ld"><div class="spinner"></div><span>Chargement…</span></div></div>
   </div>
 
   <div id="sec-shop" class="sec">
@@ -156,7 +156,7 @@ label:first-of-type{margin-top:0}
       <button class="fb" onclick="fs('CASH',this)">💸 Cash</button>
       <button class="fb" onclick="fs('wellness',this)">🌱 Wellness</button>
     </div>
-    <div class="sg" id="shop"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
+    <div class="sg" id="shop"><div class="ld"><div class="spinner"></div><span>Chargement…</span></div></div>
   </div>
 
   <div id="sec-adm" class="sec">
@@ -204,7 +204,7 @@ label:first-of-type{margin-top:0}
       </div>
       <div class="ph" style="font-size:1.1rem;margin-bottom:.3rem">🎯 Missions en attente</div>
       <div class="ps" style="margin-bottom:.8rem">Articles "Up" achetés — ✅ valider si réussie · ❌ rejeter si échouée</div>
-      <div id="mis-wrap"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
+      <div id="mis-wrap"><div class="ld"><div class="spinner"></div><span>Chargement…</span></div></div>
       <button onclick="doLogout()" style="margin-top:1.5rem;font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
     </div>
   </div>
@@ -275,7 +275,7 @@ async function loadAll(){
 }
 
 async function loadPlayers(){
-  document.getElementById('lb').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
+  document.getElementById('lb').innerHTML='<div class="ld"><div class="spinner"></div><span>Chargement…</span></div>';
   try{
     const recs = await atGet(T_PLR);
     players = recs.map(r=>{
@@ -294,7 +294,7 @@ async function loadPlayers(){
 }
 
 async function loadShop(){
-  document.getElementById('shop').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement boutique…</span></div>';
+  document.getElementById('shop').innerHTML='<div class="ld"><div class="spinner"></div><span>Chargement boutique…</span></div>';
   try{
     const recs = await atGet(T_SHOP);
     shop = recs.map(r=>{
@@ -329,7 +329,7 @@ async function loadShop(){
 
 async function loadMissions(){
   const w=document.getElementById('mis-wrap');
-  w.innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
+  w.innerHTML='<div class="ld"><div class="spinner"></div><span>Chargement…</span></div>';
   try{
     const recs = await atGet(T_TRX, [], "AND({Erreur}='En attente mission')");
     pending = recs || [];
@@ -404,7 +404,7 @@ function renderShop(f){
         <div class="sd">${item.desc}</div>
         <div class="sf">
           <div>
-            <div class="sp">${fu(item.price)} UC</div>
+            <div class="price">${fu(item.price)} UC</div>
             ${item.gain?`<div class="sgn">🎯 +${fu(item.gain)} UC si mission</div>`:''}
             <div class="sst">${item.ok?item.stock+' en stock':'❌ Rupture'}</div>
           </div>
