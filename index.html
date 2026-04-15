@@ -4,132 +4,159 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VossoBanque</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#08080e;--bg2:#10101a;--bg3:#161620;--bg4:#1e1e2a;--bg5:#252535;
-  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --bg:#09090f;--bg2:#111119;--bg3:#17171f;--bg4:#1f1f28;--bg5:#27273200;
+  --b1:rgba(255,255,255,.06);--b2:rgba(255,255,255,.11);--b3:rgba(255,255,255,.18);
   --gold:#f0c040;--gold2:#ffd770;
-  --purple:#8b5cf6;--purple2:#a78bfa;
-  --green:#34d399;--red:#f87171;
-  --text:#eeeef8;--text2:#8888a8;--text3:#4a4a6a;
-  --r:12px;--r-sm:8px;--r-lg:16px;
-  --font:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+  --pu:#8b5cf6;--pu2:#a78bfa;
+  --gr:#34d399;--rd:#f87171;
+  --t1:#eeeef8;--t2:#8080a0;--t3:#46465a;
+  --r:12px;--rs:8px;--rl:16px;
+  --fs:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 700px 500px at 10% -5%,rgba(139,92,246,.1) 0%,transparent 65%),radial-gradient(ellipse 500px 400px at 90% 95%,rgba(240,192,64,.07) 0%,transparent 60%);pointer-events:none;z-index:0}
-#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);background:rgba(8,8,14,.85);backdrop-filter:blur(16px);position:sticky;top:0;z-index:200}
-.logo{display:flex;align-items:center;gap:10px;font-family:var(--font);font-size:1.3rem;font-weight:800;letter-spacing:-.02em;color:var(--text);text-decoration:none}
-.logo-ico{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--gold));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+html,body{min-height:100%;background:var(--bg);color:var(--t1);font-family:var(--fb);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% -5%,rgba(139,92,246,.09) 0%,transparent 65%),radial-gradient(ellipse 50% 35% at 88% 98%,rgba(240,192,64,.06) 0%,transparent 60%);pointer-events:none;z-index:0}
+#app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:1px solid var(--b1);background:rgba(9,9,15,.88);backdrop-filter:blur(14px);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--fs);font-size:1.25rem;font-weight:800;letter-spacing:-.02em;color:var(--t1);text-decoration:none}
+.logo-i{width:33px;height:33px;border-radius:9px;background:linear-gradient(135deg,var(--pu),var(--gold));display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .logo em{color:var(--gold);font-style:normal}
-nav{display:flex;gap:3px;background:var(--bg3);border-radius:50px;padding:3px;border:1px solid var(--border)}
-.nb{font-family:var(--body);font-size:12px;font-weight:500;padding:5px 14px;border-radius:50px;border:none;background:transparent;color:var(--text2);cursor:pointer;transition:all .2s;white-space:nowrap}
-.nb.on{background:var(--bg5);color:var(--text)}
-.nb.adm{color:var(--gold)}.nb.adm.on{background:rgba(240,192,64,.15);color:var(--gold2)}
-main{flex:1;padding:1.25rem;max-width:920px;width:100%;margin:0 auto}
+nav{display:flex;gap:2px;background:var(--bg3);border-radius:50px;padding:3px;border:1px solid var(--b1)}
+.nb{font-family:var(--fb);font-size:12px;font-weight:500;padding:5px 14px;border-radius:50px;border:none;background:transparent;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap}
+.nb.on{background:var(--bg4);color:var(--t1)}
+.nb.adm{color:var(--gold)}.nb.adm.on{background:rgba(240,192,64,.13);color:var(--gold2)}
+
+/* MAIN */
+main{flex:1;padding:1.25rem;max-width:900px;width:100%;margin:0 auto}
 .sec{display:none}.sec.on{display:block}
-.sh{font-family:var(--font);font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.2rem}
-.ss{font-size:12px;color:var(--text2);margin-bottom:1.25rem}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1.25rem}
-.scard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:.85rem 1rem}
-.scard-l{font-size:11px;color:var(--text2);margin-bottom:3px}
-.scard-v{font-family:var(--font);font-size:1.3rem;font-weight:700}
-.lb{display:flex;flex-direction:column;gap:8px}
-.pc{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:.9rem 1.1rem;transition:border-color .2s,transform .15s}
-.pc:hover{border-color:var(--border2);transform:translateX(4px)}
-.pc.top1{border-color:rgba(240,192,64,.3);background:rgba(240,192,64,.03)}
-.rnk{font-family:var(--font);font-size:1rem;font-weight:800;min-width:28px;text-align:center;color:var(--text3)}
-.rnk.g{font-size:1.3rem;color:var(--gold)}.rnk.s{color:#b0b0c8}.rnk.b{color:#cd7f32}
-.avp{width:48px;height:48px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:17px;font-weight:700;flex-shrink:0}
+.ph{font-family:var(--fs);font-size:1.45rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.2rem}
+.ps{font-size:12px;color:var(--t2);margin-bottom:1.2rem}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1.2rem}
+.mc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--rs);padding:.8rem 1rem}
+.ml{font-size:11px;color:var(--t2);margin-bottom:3px}
+.mv{font-family:var(--fs);font-size:1.3rem;font-weight:800}
+.ms{font-size:10px;color:var(--t3);margin-top:2px}
+
+/* LEADERBOARD */
+.lb{display:flex;flex-direction:column;gap:7px}
+.pc{display:flex;align-items:center;gap:11px;background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);padding:.85rem 1.1rem;transition:border-color .18s,transform .15s}
+.pc:hover{border-color:var(--b2);transform:translateX(3px)}
+.pc.g1{border-color:rgba(240,192,64,.28);background:rgba(240,192,64,.03)}
+.rk{font-family:var(--fs);font-weight:800;min-width:26px;text-align:center;color:var(--t3);font-size:.95rem}
+.rk.r1{font-size:1.25rem;color:var(--gold)}.rk.r2{color:#b0b0c8}.rk.r3{color:#cd7f32}
+.av{width:46px;height:46px;border-radius:50%;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-family:var(--fs);font-size:16px;font-weight:800;flex-shrink:0}
 .pi{flex:1;min-width:0}
-.pn{font-family:var(--font);font-size:.95rem;font-weight:700}
-.pl{font-size:11px;color:var(--text2);margin-top:2px}
+.pn{font-family:var(--fs);font-size:.95rem;font-weight:700;color:var(--t1)}
+.pc2{font-size:11px;color:var(--t2);margin-top:1px}
 .bw{flex:1;display:flex;flex-direction:column;gap:4px}
 .bb{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden}
-.bf{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width .9s cubic-bezier(.4,0,.2,1)}
-.bank{text-align:right;flex-shrink:0}
-.ba{font-family:var(--font);font-size:1.05rem;font-weight:700;color:var(--gold)}
-.bl{font-size:10px;color:var(--text3);margin-top:1px}
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.1rem}
-.fb{font-size:12px;padding:5px 13px;border-radius:50px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s;font-family:var(--body)}
-.fb.on,.fb:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
-.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
-.sc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s;display:flex;flex-direction:column}
-.sc:hover{border-color:var(--border2);transform:translateY(-2px)}
-.simg{height:120px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:2.8rem}
-.simg img{width:100%;height:100%;object-fit:contain;padding:10px}
-.stag{position:absolute;top:7px;right:7px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:50px}
-.t-Up{background:rgba(139,92,246,.8);color:#fff}
-.t-Décoration{background:rgba(240,192,64,.8);color:#000}
-.t-CASH{background:rgba(244,114,182,.8);color:#fff}
-.t-wellness{background:rgba(52,211,153,.8);color:#000}
-.sbody{padding:.75rem .9rem;flex:1;display:flex;flex-direction:column}
-.sn{font-family:var(--font);font-size:.85rem;font-weight:700;margin-bottom:4px;line-height:1.3}
-.sd{font-size:10px;color:var(--text2);line-height:1.5;margin-bottom:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.sf{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;gap:6px}
-.sp{font-family:var(--font);font-size:.95rem;font-weight:700;color:var(--gold)}
-.sg-lbl{font-size:10px;color:var(--green);margin-top:1px}
-.sk{font-size:10px;color:var(--text3);margin-top:1px}
-.bbtn{font-size:11px;font-weight:600;padding:5px 11px;border:1px solid var(--purple);border-radius:50px;background:transparent;color:var(--purple2);cursor:pointer;transition:all .2s;font-family:var(--body);flex-shrink:0}
-.bbtn:hover{background:var(--purple);color:#fff}
-.bbtn:disabled{opacity:.35;cursor:not-allowed}
-.alock{max-width:360px;margin:3.5rem auto;text-align:center}
-.alock .lic{font-size:3rem;margin-bottom:1rem}
-.alock h2{font-family:var(--font);font-size:1.35rem;font-weight:700;margin-bottom:.4rem}
-.alock p{color:var(--text2);font-size:13px;margin-bottom:1.25rem}
-.row{display:flex;gap:8px}
-input,select{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);color:var(--text);font-family:var(--body);font-size:13px;padding:9px 13px;outline:none;transition:border-color .2s;width:100%}
-input:focus,select:focus{border-color:var(--purple)}
+.bf{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--pu),var(--gold))}
+.bk{text-align:right;flex-shrink:0}
+.ba{font-family:var(--fs);font-size:1rem;font-weight:800;color:var(--gold)}
+.bl{font-size:10px;color:var(--t3);margin-top:1px}
+
+/* SHOP */
+.filt{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1rem}
+.fb{font-size:12px;padding:5px 12px;border-radius:50px;border:1px solid var(--b2);background:transparent;color:var(--t2);cursor:pointer;transition:all .18s;font-family:var(--fb)}
+.fb.on,.fb:hover{background:var(--pu);color:#fff;border-color:var(--pu)}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:9px}
+.sc{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s,transform .18s}
+.sc:hover{border-color:var(--b2);transform:translateY(-2px)}
+.si{height:115px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:2.6rem}
+.si img{width:100%;height:100%;object-fit:contain;padding:10px}
+.stg{position:absolute;top:7px;right:7px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px}
+.tUp{background:rgba(139,92,246,.8);color:#fff}
+.tDecoration{background:rgba(240,192,64,.82);color:#000}
+.tCASH{background:rgba(244,114,182,.82);color:#fff}
+.twellness{background:rgba(52,211,153,.82);color:#000}
+.sb{padding:.7rem .85rem;flex:1;display:flex;flex-direction:column}
+.sn{font-family:var(--fs);font-size:.82rem;font-weight:700;margin-bottom:3px;line-height:1.3;color:var(--t1)}
+.sd{font-size:10px;color:var(--t2);line-height:1.45;margin-bottom:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sf{display:flex;align-items:flex-end;justify-content:space-between;margin-top:.55rem;gap:5px}
+.sp{font-family:var(--fs);font-size:.9rem;font-weight:800;color:var(--gold)}
+.sgn{font-size:10px;color:var(--gr);margin-top:1px}
+.sst{font-size:10px;color:var(--t3);margin-top:1px}
+.bbt{font-size:11px;font-weight:500;padding:5px 11px;border:1px solid var(--pu);border-radius:50px;background:transparent;color:var(--pu2);cursor:pointer;transition:all .18s;font-family:var(--fb);flex-shrink:0}
+.bbt:hover{background:var(--pu);color:#fff}
+.bbt:disabled{opacity:.3;cursor:not-allowed;border-color:var(--b2);color:var(--t3)}
+
+/* ADMIN */
+.alck{max-width:340px;margin:3rem auto;text-align:center}
+.alck .ic{font-size:2.8rem;margin-bottom:.9rem}
+.alck h2{font-family:var(--fs);font-size:1.3rem;font-weight:800;margin-bottom:.35rem}
+.alck p{color:var(--t2);font-size:13px;margin-bottom:1.1rem}
+.row{display:flex;gap:7px}
+input,select{background:var(--bg3);border:1px solid var(--b2);border-radius:var(--rs);color:var(--t1);font-family:var(--fb);font-size:13px;padding:9px 12px;outline:none;transition:border-color .18s;width:100%}
+input:focus,select:focus{border-color:var(--pu)}
 select option{background:var(--bg3)}
-.btn{font-family:var(--font);font-size:13px;font-weight:700;padding:9px 22px;background:linear-gradient(135deg,var(--purple),#6d28d9);color:#fff;border:none;border-radius:var(--r-sm);cursor:pointer;transition:opacity .2s,transform .15s;white-space:nowrap}
-.btn:hover{opacity:.88;transform:scale(1.02)}
-.btn:active{transform:scale(.98)}
-.btn-gold{background:linear-gradient(135deg,var(--gold),#d97706);color:#000}
-.btn-red{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
-.btn-green{background:linear-gradient(135deg,#059669,#065f46);color:#fff}
-.btn-sm{font-size:11px;padding:5px 12px;border-radius:50px}
-.acfg{background:rgba(240,192,64,.06);border:1px solid rgba(240,192,64,.2);border-radius:var(--r);padding:1.1rem;margin-bottom:1.25rem}
-.acfg h3{font-family:var(--font);font-weight:700;color:var(--gold2);margin-bottom:.5rem;font-size:.95rem}
-.acfg p{font-size:11px;color:var(--text2);margin-bottom:.65rem;line-height:1.6}
-.agrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-@media(max-width:580px){.agrid{grid-template-columns:1fr}}
-.acard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem}
-.acard h3{font-family:var(--font);font-size:.9rem;font-weight:700;color:var(--gold2);margin-bottom:.9rem}
-label{display:block;font-size:10px;color:var(--text2);margin-bottom:4px;margin-top:10px;text-transform:uppercase;letter-spacing:.05em}
+.btn{font-family:var(--fs);font-size:13px;font-weight:700;padding:9px 20px;background:linear-gradient(135deg,var(--pu),#6d28d9);color:#fff;border:none;border-radius:var(--rs);cursor:pointer;transition:opacity .18s,transform .15s;white-space:nowrap}
+.btn:hover{opacity:.87;transform:scale(1.02)}
+.btn:active{transform:scale(.97)}
+.btn-g{background:linear-gradient(135deg,var(--gold),#d97706);color:#000}
+.btn-r{background:linear-gradient(135deg,#dc2626,#991b1b)}
+.btn-gr{background:linear-gradient(135deg,#059669,#065f46)}
+.btn-sm{font-size:11px;padding:5px 11px;border-radius:50px}
+.cfg-box{background:rgba(240,192,64,.05);border:1px solid rgba(240,192,64,.18);border-radius:var(--r);padding:1rem;margin-bottom:1.2rem}
+.cfg-box h3{font-family:var(--fs);font-weight:800;color:var(--gold2);margin-bottom:.4rem;font-size:.9rem}
+.cfg-box p{font-size:11px;color:var(--t2);margin-bottom:.6rem;line-height:1.6}
+.agr{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+@media(max-width:560px){.agr{grid-template-columns:1fr}}
+.acd{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);padding:1rem}
+.acd h3{font-family:var(--fs);font-size:.88rem;font-weight:800;color:var(--gold2);margin-bottom:.8rem}
+label{display:block;font-size:10px;color:var(--t2);margin-bottom:3px;margin-top:9px;text-transform:uppercase;letter-spacing:.05em}
 label:first-of-type{margin-top:0}
-.rmsg{margin-top:8px;font-size:12px;padding:7px 11px;border-radius:var(--r-sm);display:none}
-.rmsg.ok{background:rgba(52,211,153,.12);color:var(--green);display:block}
-.rmsg.err{background:rgba(248,113,113,.12);color:var(--red);display:block}
-.mtable{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
-.mhead{display:grid;grid-template-columns:1fr 110px 110px 90px;gap:8px;padding:.6rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border);font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
-.mrow{display:grid;grid-template-columns:1fr 110px 110px 90px;gap:8px;padding:.75rem 1rem;border-bottom:1px solid var(--border);align-items:center}
-.mrow:last-child{border-bottom:none}
-.mrow:hover{background:var(--bg3)}
-.mrow .mi{font-size:12px;font-weight:500}
-.mrow .mb{font-size:12px;color:var(--text2)}
-.mrow .mg{font-size:12px;font-weight:600;color:var(--green)}
-.empty-s{text-align:center;padding:2.5rem;color:var(--text2);font-size:13px}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
-.overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-lg);padding:1.65rem;max-width:400px;width:92%;transform:scale(.95);transition:transform .2s}
-.overlay.open .modal{transform:scale(1)}
-.modal h3{font-family:var(--font);font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
-.modal-desc{font-size:12px;color:var(--text2);margin-bottom:.9rem;line-height:1.6}
-.modal-price{font-family:var(--font);font-size:1.4rem;font-weight:800;color:var(--gold);margin-bottom:.3rem}
-.modal-gain{font-size:12px;color:var(--green);margin-bottom:.9rem}
-.ma{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
-.btn-cancel{font-family:var(--body);font-size:12px;padding:8px 16px;border:1px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);cursor:pointer}
-.btn-cancel:hover{border-color:var(--text2);color:var(--text)}
-#toast{position:fixed;bottom:1.75rem;left:50%;transform:translateX(-50%) translateY(70px);background:var(--bg3);border:1px solid var(--border2);border-radius:50px;padding:9px 18px;font-size:12px;color:var(--text);z-index:999;transition:transform .3s ease;white-space:nowrap}
-#toast.show{transform:translateX(-50%) translateY(0)}
-#toast.ok{border-color:rgba(52,211,153,.4);color:var(--green)}
-#toast.err{border-color:rgba(248,113,113,.4);color:var(--red)}
-.loader{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem;gap:.75rem}
-.spin{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite}
+.rm{margin-top:7px;font-size:12px;padding:7px 10px;border-radius:var(--rs);display:none}
+.rm.ok{background:rgba(52,211,153,.1);color:var(--gr);display:block}
+.rm.er{background:rgba(248,113,113,.1);color:var(--rd);display:block}
+
+/* MISSIONS */
+.mtb{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden}
+.mh{display:grid;grid-template-columns:1fr 100px 110px 120px;gap:8px;padding:.55rem 1rem;background:var(--bg3);border-bottom:1px solid var(--b1);font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.05em}
+.mr{display:grid;grid-template-columns:1fr 100px 110px 120px;gap:8px;padding:.7rem 1rem;border-bottom:1px solid var(--b1);align-items:center;transition:background .15s}
+.mr:last-child{border-bottom:none}
+.mr:hover{background:var(--bg3)}
+.mi{font-size:12px;font-weight:500;color:var(--t1)}
+.mb2{font-size:12px;color:var(--t2)}
+.mg{font-size:12px;font-weight:700;color:var(--gr)}
+.mact{display:flex;gap:4px}
+.emp{text-align:center;padding:2rem;color:var(--t2);font-size:13px}
+
+/* MODAL */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .18s}
+.ov.on{opacity:1;pointer-events:all}
+.mo{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rl);padding:1.5rem;max-width:390px;width:92%;transform:scale(.95);transition:transform .18s}
+.ov.on .mo{transform:scale(1)}
+.mo h3{font-family:var(--fs);font-size:1.05rem;font-weight:800;margin-bottom:.35rem;color:var(--t1)}
+.mo-d{font-size:12px;color:var(--t2);margin-bottom:.85rem;line-height:1.55}
+.mo-p{font-family:var(--fs);font-size:1.35rem;font-weight:800;color:var(--gold);margin-bottom:.25rem}
+.mo-g{font-size:12px;color:var(--gr);margin-bottom:.85rem}
+.ma{display:flex;gap:7px;justify-content:flex-end;margin-top:.9rem}
+.btn-c{font-family:var(--fb);font-size:12px;padding:8px 15px;border:1px solid var(--b2);border-radius:var(--rs);background:transparent;color:var(--t2);cursor:pointer}
+.btn-c:hover{color:var(--t1);border-color:var(--b3)}
+
+/* TOAST */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(60px);background:var(--bg3);border:1px solid var(--b2);border-radius:50px;padding:8px 16px;font-size:12px;color:var(--t1);z-index:999;transition:transform .28s ease;white-space:nowrap}
+#toast.on{transform:translateX(-50%) translateY(0)}
+#toast.ok{border-color:rgba(52,211,153,.38);color:var(--gr)}
+#toast.er{border-color:rgba(248,113,113,.38);color:var(--rd)}
+
+/* LOADER */
+.ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;gap:.65rem}
+.sp{width:30px;height:30px;border:3px solid var(--b2);border-top-color:var(--pu);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loader span{font-size:12px;color:var(--text2)}
+.ld span{font-size:12px;color:var(--t2)}
+
+@media(max-width:460px){
+  .mh,.mr{grid-template-columns:1fr 80px 90px}
+  .mh span:last-child,.mr .mact{grid-column:1/-1}
+}
 </style>
 </head>
 <body>
@@ -137,13 +164,13 @@ label:first-of-type{margin-top:0}
 
 <header>
   <div class="logo">
-    <div class="logo-ico">🏦</div>
+    <div class="logo-i">🏦</div>
     Vosso<em>Banque</em>
   </div>
   <nav>
-    <button class="nb on" onclick="show('lb',this)">🏆 Classement</button>
-    <button class="nb" onclick="show('shop',this)">🛍️ Boutique</button>
-    <button class="nb adm" onclick="show('admin',this)">⚙️ Admin</button>
+    <button class="nb on" onclick="sw('lb',this)">🏆 Classement</button>
+    <button class="nb" onclick="sw('shop',this)">🛍️ Boutique</button>
+    <button class="nb adm" onclick="sw('adm',this)">⚙️ Admin</button>
   </nav>
 </header>
 
@@ -151,104 +178,113 @@ label:first-of-type{margin-top:0}
 
   <!-- CLASSEMENT -->
   <div id="sec-lb" class="sec on">
-    <div class="sh">Classement 🏆</div>
-    <div class="ss">Soldes UpCoins en temps réel</div>
-    <div class="stats">
-      <div class="scard"><div class="scard-l">Joueurs</div><div class="scard-v" id="s-count">—</div></div>
-      <div class="scard"><div class="scard-l">Total distribué</div><div class="scard-v" id="s-total" style="color:var(--gold)">—</div></div>
-      <div class="scard"><div class="scard-l">Leader</div><div class="scard-v" id="s-lead" style="font-size:1rem">—</div></div>
+    <div class="ph">Classement 🏆</div>
+    <div class="ps">Soldes UpCoins — base Animations · temps réel</div>
+    <div class="metrics">
+      <div class="mc"><div class="ml">Joueurs</div><div class="mv" id="s-n">—</div></div>
+      <div class="mc"><div class="ml">Total UpCoins</div><div class="mv" id="s-t" style="color:var(--gold)">—</div></div>
+      <div class="mc"><div class="ml">Leader</div><div class="mv" id="s-l" style="font-size:1rem">—</div></div>
     </div>
-    <div class="lb" id="lb-list"><div class="loader"><div class="spin"></div><span>Chargement…</span></div></div>
+    <div class="lb" id="lb"></div>
   </div>
 
   <!-- BOUTIQUE -->
   <div id="sec-shop" class="sec">
-    <div class="sh">Boutique 🛍️</div>
-    <div class="ss">Achète avec tes UpCoins · Articles "Up" = missions avec gain si validées par l'admin</div>
-    <div class="filters">
-      <button class="fb on" onclick="fshop('all',this)">Tout</button>
-      <button class="fb" onclick="fshop('Up',this)">⚡ Missions Up</button>
-      <button class="fb" onclick="fshop('Décoration',this)">🎨 Déco</button>
-      <button class="fb" onclick="fshop('CASH',this)">💸 Cash</button>
-      <button class="fb" onclick="fshop('wellness',this)">🌱 Wellness</button>
+    <div class="ph">Boutique 🛍️</div>
+    <div class="ps">Dépense tes UpCoins · Up = missions avec gain si validées · Déco = achat direct</div>
+    <div class="filt">
+      <button class="fb on" onclick="fs('all',this)">Tout</button>
+      <button class="fb" onclick="fs('Up',this)">⚡ Missions Up</button>
+      <button class="fb" onclick="fs('Décoration',this)">🎨 Déco</button>
+      <button class="fb" onclick="fs('CASH',this)">💸 Cash</button>
+      <button class="fb" onclick="fs('wellness',this)">🌱 Wellness</button>
     </div>
-    <div class="sgrid" id="shop-grid"><div class="loader"><div class="spin"></div><span>Chargement boutique…</span></div></div>
+    <div class="sg" id="shop"></div>
   </div>
 
   <!-- ADMIN -->
-  <div id="sec-admin" class="sec">
-    <div class="acfg" id="cfg-box">
-      <h3>⚙️ Configuration API</h3>
-      <p>Entre ta clé API Airtable — sauvegardée dans ton navigateur, une seule fois.</p>
-      <input type="text" id="cfg-key" placeholder="Clé API Airtable (pat…)" style="margin-bottom:8px" />
-      <button class="btn btn-gold" onclick="saveCfg()" style="width:100%">Sauvegarder</button>
+  <div id="sec-adm" class="sec">
+
+    <div class="cfg-box" id="cfg">
+      <h3>⚙️ Clé API Airtable</h3>
+      <p>Entre ta clé API une seule fois — sauvegardée dans ton navigateur.</p>
+      <input type="text" id="cfg-k" placeholder="pat…" style="margin-bottom:7px"/>
+      <button class="btn btn-g" onclick="saveCfg()" style="width:100%">Sauvegarder</button>
     </div>
-    <div id="a-lock">
-      <div class="alock">
-        <div class="lic">🔐</div>
+
+    <div id="adm-lock">
+      <div class="alck">
+        <div class="ic">🔐</div>
         <h2>Accès Admin</h2>
-        <p>Zone réservée. Entre le mot de passe pour gérer les UpCoins et valider les missions.</p>
+        <p>Entre le mot de passe pour gérer les UpCoins et valider les missions.</p>
         <div class="row">
-          <input type="password" id="a-pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')unlock()" />
+          <input type="password" id="pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')unlock()"/>
           <button class="btn" onclick="unlock()">Entrer</button>
         </div>
-        <p id="a-err" style="color:var(--red);font-size:12px;margin-top:10px;display:none">Mot de passe incorrect.</p>
+        <p id="pwd-err" style="color:var(--rd);font-size:12px;margin-top:9px;display:none">Mot de passe incorrect.</p>
       </div>
     </div>
-    <div id="a-panel" style="display:none">
-      <div class="sh">Admin ⚙️</div>
-      <div class="ss" style="margin-bottom:1.5rem">Gestion des UpCoins et validation des missions</div>
-      <div class="agrid" style="margin-bottom:1.25rem">
-        <div class="acard">
+
+    <div id="adm-panel" style="display:none">
+      <div class="ph">Admin ⚙️</div>
+      <div class="ps" style="margin-bottom:1.4rem">Gestion UpCoins + validation des missions</div>
+
+      <div class="agr" style="margin-bottom:1rem">
+
+        <div class="acd">
           <h3>➕ Ajouter des UpCoins</h3>
-          <label>Agent</label><select id="add-ag"></select>
-          <label>Montant</label><input type="number" id="add-amt" placeholder="ex: 5000" min="0" step="500" />
-          <label>Motif</label><input type="text" id="add-rsn" placeholder="ex: 3 ventes aujourd'hui" />
-          <button class="btn" style="margin-top:12px;width:100%" onclick="doAdd()">Ajouter</button>
-          <div class="rmsg" id="add-msg"></div>
+          <label>Agent</label><select id="a-ag"></select>
+          <label>Montant UC</label><input type="number" id="a-am" placeholder="ex: 4000" min="0" step="500"/>
+          <label>Motif (optionnel)</label><input type="text" id="a-mo" placeholder="ex: 4 points ce soir"/>
+          <button class="btn" style="width:100%;margin-top:11px" onclick="doAdd()">Ajouter</button>
+          <div class="rm" id="a-msg"></div>
         </div>
-        <div class="acard">
+
+        <div class="acd">
           <h3>➖ Retirer des UpCoins</h3>
-          <label>Agent</label><select id="rem-ag"></select>
-          <label>Montant</label><input type="number" id="rem-amt" placeholder="ex: 2000" min="0" step="500" />
-          <button class="btn btn-red" style="margin-top:12px;width:100%" onclick="doRem()">Retirer</button>
-          <div class="rmsg" id="rem-msg"></div>
+          <label>Agent</label><select id="r-ag"></select>
+          <label>Montant UC</label><input type="number" id="r-am" placeholder="ex: 2000" min="0" step="500"/>
+          <button class="btn btn-r" style="width:100%;margin-top:11px" onclick="doRem()">Retirer</button>
+          <div class="rm" id="r-msg"></div>
         </div>
-        <div class="acard" style="grid-column:1/-1">
+
+        <div class="acd" style="grid-column:1/-1">
           <h3>⚡ Attribution rapide — Points du jour</h3>
-          <p style="font-size:11px;color:var(--text2);margin-bottom:.85rem">1 point = <strong style="color:var(--gold)" id="pt-rate">2 000</strong> UpCoins</p>
+          <p style="font-size:11px;color:var(--t2);margin-bottom:.8rem">Tu rentres les points du soir → <strong style="color:var(--gold)" id="pt-r">2 000</strong> UpCoins par point</p>
           <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end">
-            <div><label>Agent</label><select id="qk-ag"></select></div>
-            <div><label>Points scorés</label><input type="number" id="qk-pts" placeholder="ex: 4" min="0" step=".5" /></div>
-            <button class="btn btn-gold" onclick="doQuick()" style="padding:9px 18px">Attribuer</button>
+            <div><label>Agent</label><select id="q-ag"></select></div>
+            <div><label>Points scorés</label><input type="number" id="q-pt" placeholder="ex: 6" min="0" step=".5"/></div>
+            <button class="btn btn-g" onclick="doQuick()" style="padding:9px 16px;align-self:end">Attribuer</button>
           </div>
-          <div class="rmsg" id="qk-msg"></div>
+          <div class="rm" id="q-msg"></div>
         </div>
+
       </div>
 
-      <div class="sh" style="font-size:1.1rem;margin-bottom:.4rem">🎯 Missions en attente</div>
-      <div class="ss" style="margin-bottom:.85rem">Articles "Up" achetés — ✅ valider si mission réussie (crédite le gain) · ❌ rejeter si échouée</div>
-      <div id="missions-wrap"><div class="loader"><div class="spin"></div><span>Chargement…</span></div></div>
+      <!-- MISSIONS -->
+      <div class="ph" style="font-size:1.1rem;margin-bottom:.3rem">🎯 Missions en attente</div>
+      <div class="ps" style="margin-bottom:.8rem">Articles "Up" achetés — ✅ valider si mission réussie (crédite le gain) · ❌ rejeter si échouée</div>
+      <div id="mis-wrap"><div class="ld"><div class="sp"></div><span>Chargement…</span></div></div>
 
-      <button onclick="logout()" style="margin-top:1.5rem;font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
+      <button onclick="doLogout()" style="margin-top:1.5rem;font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline">Se déconnecter</button>
     </div>
-  </div>
 
+  </div>
 </main>
 </div>
 
-<!-- MODAL -->
-<div class="overlay" id="buy-modal">
-  <div class="modal">
-    <h3 id="m-name">Article</h3>
-    <p class="modal-desc" id="m-desc"></p>
-    <div class="modal-price" id="m-price">0 UC</div>
-    <div class="modal-gain" id="m-gain" style="display:none"></div>
+<!-- MODAL ACHAT -->
+<div class="ov" id="modal">
+  <div class="mo">
+    <h3 id="mo-n">Article</h3>
+    <div class="mo-d" id="mo-d"></div>
+    <div class="mo-p" id="mo-p">0 UC</div>
+    <div class="mo-g" id="mo-g" style="display:none"></div>
     <label>Qui achète ?</label>
-    <select id="m-buyer" style="margin-bottom:0"></select>
+    <select id="mo-buy" style="margin-bottom:0"></select>
     <div class="ma">
-      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-gold" onclick="confirmBuy()">Confirmer l'achat</button>
+      <button class="btn-c" onclick="closeMo()">Annuler</button>
+      <button class="btn btn-g" onclick="confirmBuy()">Confirmer l'achat</button>
     </div>
   </div>
 </div>
@@ -256,92 +292,110 @@ label:first-of-type{margin-top:0}
 <div id="toast">—</div>
 
 <script>
-/* ══════════ CONFIG ══════════ */
-const ADMIN_PWD  = 'vosso2024';   // ← modifie ici
-const PT_TO_UC   = 2000;          // ← 1 pt = X UpCoins
-const BASE       = 'app2mJ7oSODZd9OoU';
-const T_PLAYERS  = 'tbl0Kl91e57KCdkiy';
-const T_SHOP     = 'tblELehPqsb0ATygV';
-const T_TRANS    = 'tblfooPjqvLZ3YSsD';
+/* ════════════════════════════════════════
+   CONFIG — MODIFIE CES VALEURS SI BESOIN
+════════════════════════════════════════ */
+const ADMIN_PWD = 'Vosso2026@';  // ← ton mot de passe admin
+const PT_UC     = 2000;         // ← UpCoins par point scoré
 
-/* IDs champs Joueurs */
-const P_NAME = 'fldj63VB2omDb3k5L';
-const P_BANK = 'fldH20mY6pJEJaXUA';
-const P_CODE = 'fld0VgreDsvD7931Q';
+/* BASE & TABLES — tout sur Animations */
+const BASE   = 'app2mJ7oSODZd9OoU';
+const T_PLR  = 'tbl0Kl91e57KCdkiy';  // Table des Joueurs
+const T_SHOP = 'tblELehPqsb0ATygV';  // Boutique
+const T_TRX  = 'tblfooPjqvLZ3YSsD';  // Transactions
 
-/* IDs champs Boutique */
-const S_NAME  = 'fldGcw1fYjAI5UM6q';
-const S_DESC  = 'fldKui2kVVpD0Qgof';
-const S_PRICE = 'fldYxeEBNDYze6OPR';
-const S_STOCK = 'fldFO979kDrfGyWCn';
-const S_CAT   = 'fldGd086FFywN1nKA';
-const S_IMG   = 'fldBeGjvXujte9fHV';
-// ⚠️ REMPLACE PAR L'ID RÉEL DE TON CHAMP "Gain UC" :
-const S_GAIN  = 'fld88HWNS5jk3BiT9'; // placeholder — va dans Airtable > Boutique > Gain UC > copy field ID
+/* Champs Joueurs */
+const P_NM = 'fldj63VB2omDb3k5L';  // Nom du joueur
+const P_BK = 'fldH20mY6pJEJaXUA';  // Solde en banque
+const P_CD = 'fld0VgreDsvD7931Q';  // Code
 
-/* IDs champs Transactions */
-const TR_BUYER  = 'fldd9s39ZYZhCbzcz';
-const TR_ART    = 'fldf9zRqjYWJDCmuw';
-const TR_AMT    = 'fldAoYG01C9c0qE80';
-const TR_STATUS = 'flduJZSrIrglzLvvp';
-const TR_GAIN   = 'fldGLc3RMIdrsI8FQ'; // on stocke le gain UC dans ce champ (réutilisé)
+/* Champs Boutique */
+const S_NM  = 'fldGcw1fYjAI5UM6q';  // Nom de l'article
+const S_DS  = 'fldKui2kVVpD0Qgof';  // Description
+const S_PR  = 'fldYxeEBNDYze6OPR';  // Prix
+const S_ST  = 'fldFO979kDrfGyWCn';  // Stock disponible
+const S_CT  = 'fldGd086FFywN1nKA';  // Catégorie
+const S_IM  = 'fldBeGjvXujte9fHV';  // Image
+// ⚠️ Remplace par l'ID réel de ton champ "Gain UC" dans Airtable :
+const S_GN  = 'fld88HWNS5jk3BiT9';  // Gain UC (copie l'ID depuis Airtable)
 
-/* ══════════ STATE ══════════ */
-let apiKey = '';
-let players = [], shop = [], pending = [], curItem = null;
+/* Champs Transactions */
+const TR_BY = 'fldd9s39ZYZhCbzcz';  // Code acheteur
+const TR_AR = 'fldf9zRqjYWJDCmuw';  // Nom article
+const TR_AM = 'fldAoYG01C9c0qE80';  // Montant
+const TR_ST = 'flduJZSrIrglzLvvp';  // Statut
+const TR_GN = 'fldGLc3RMIdrsI8FQ';  // Gain stocké (réutilise ce champ)
 
-/* ══════════ INIT ══════════ */
+/* ════════════════ STATE ═════════════ */
+let key = '';
+let players = [], shop = [], pending = [], cur = null, curF = 'all';
+
+/* ════════════════ INIT ═════════════ */
 (function(){
-  try { const c = JSON.parse(localStorage.getItem('vb2')||'{}'); apiKey = c.k||''; } catch(e){}
-  if (apiKey) document.getElementById('cfg-box').style.display = 'none';
-  document.getElementById('pt-rate').textContent = PT_TO_UC.toLocaleString('fr-FR');
+  try{ const c=JSON.parse(localStorage.getItem('vb3')||'{}'); key=c.k||''; }catch(e){}
+  if(key) document.getElementById('cfg').style.display='none';
+  document.getElementById('pt-r').textContent = PT_UC.toLocaleString('fr-FR');
   loadAll();
 })();
 
 function saveCfg(){
-  apiKey = document.getElementById('cfg-key').value.trim();
-  localStorage.setItem('vb2', JSON.stringify({k:apiKey}));
-  document.getElementById('cfg-box').style.display = 'none';
-  toast('✅ Clé API sauvegardée','ok'); loadAll();
+  key = document.getElementById('cfg-k').value.trim();
+  localStorage.setItem('vb3', JSON.stringify({k:key}));
+  document.getElementById('cfg').style.display='none';
+  toast('✅ Clé API sauvegardée','ok');
+  loadAll();
 }
 
-/* ══════════ API ══════════ */
-async function atGet(table, fields=[], formula=''){
-  if(!apiKey) return null;
+/* ════════════════ API ══════════════ */
+async function atGet(tbl, flds=[], formula=''){
+  if(!key) return null;
   const p = new URLSearchParams();
-  fields.forEach(f=>p.append('fields[]',f));
-  if(formula) p.set('filterByFormula',formula);
+  flds.forEach(f=>p.append('fields[]',f));
+  if(formula) p.set('filterByFormula', formula);
   p.set('pageSize','100');
-  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${table}?${p}`,{headers:{Authorization:`Bearer ${apiKey}`}});
+  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${tbl}?${p}`,
+    {headers:{Authorization:`Bearer ${key}`}});
   if(!r.ok) throw new Error(await r.text());
   return (await r.json()).records;
 }
-async function atPatch(table,id,fields){
-  if(!apiKey) throw new Error('Pas de clé API');
-  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${table}/${id}`,{method:'PATCH',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({fields})});
+async function atPatch(tbl,id,flds){
+  if(!key) throw new Error('Pas de clé API');
+  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${tbl}/${id}`,{
+    method:'PATCH',
+    headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json'},
+    body:JSON.stringify({fields:flds})
+  });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
-async function atCreate(table,fields){
-  if(!apiKey) throw new Error('Pas de clé API');
-  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${table}`,{method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},body:JSON.stringify({fields})});
+async function atPost(tbl,flds){
+  if(!key) throw new Error('Pas de clé API');
+  const r = await fetch(`https://api.airtable.com/v0/${BASE}/${tbl}`,{
+    method:'POST',
+    headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json'},
+    body:JSON.stringify({fields:flds})
+  });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
 
-/* ══════════ LOAD ══════════ */
+/* ════════════════ LOAD ═════════════ */
 async function loadAll(){ await Promise.all([loadPlayers(), loadShop()]); }
 
 async function loadPlayers(){
+  document.getElementById('lb').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
   try{
-    const recs = await atGet(T_PLAYERS,[P_NAME,P_BANK,P_CODE]);
-    if(!recs) return fallback();
-    players = recs.map(r=>({id:r.id,name:r.fields[P_NAME]||'?',bank:r.fields[P_BANK]||0,code:r.fields[P_CODE]||''})).sort((a,b)=>b.bank-a.bank);
+    const recs = await atGet(T_PLR,[P_NM,P_BK,P_CD]);
+    if(!recs){ useFallback(); return; }
+    players = recs.map(r=>({
+      id:r.id, name:r.fields[P_NM]||'?',
+      bank:r.fields[P_BK]||0, code:r.fields[P_CD]||''
+    })).sort((a,b)=>b.bank-a.bank);
     renderLB(); fillSels();
-  } catch(e){ console.warn(e); fallback(); }
+  }catch(e){ console.warn(e); useFallback(); }
 }
 
-function fallback(){
+function useFallback(){
   players=[
     {id:'recvWiViUeeQ8dodS',name:'Steve', bank:898000,code:'159753'},
     {id:'recKVJM1uSPW1a9va',name:'Audrey',bank:300000,code:'1003'},
@@ -355,259 +409,264 @@ function fallback(){
 }
 
 async function loadShop(){
+  document.getElementById('shop').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement boutique…</span></div>';
   try{
-    const recs = await atGet(T_SHOP,[S_NAME,S_DESC,S_PRICE,S_STOCK,S_CAT,S_IMG,S_GAIN]);
+    const recs = await atGet(T_SHOP,[S_NM,S_DS,S_PR,S_ST,S_CT,S_IM,S_GN]);
     if(recs) shop = recs.map(r=>({
       id:r.id,
-      name: r.fields[S_NAME]||'?',
-      desc: r.fields[S_DESC]||'',
-      price:r.fields[S_PRICE]||0,
-      stock:r.fields[S_STOCK]||0,
-      cat:  r.fields[S_CAT]?.name||'',
-      img:  r.fields[S_IMG]?.[0]?.thumbnails?.large?.url||null,
-      gain: r.fields[S_GAIN]||0,
-      ok:   (r.fields[S_STOCK]||0)>0,
+      name: r.fields[S_NM]||'?',
+      desc: r.fields[S_DS]||'',
+      price:r.fields[S_PR]||0,
+      stock:r.fields[S_ST]||0,
+      cat:  r.fields[S_CT]?.name||'',
+      img:  r.fields[S_IM]?.[0]?.thumbnails?.large?.url||null,
+      gain: Number(r.fields[S_GN])||0,
+      ok:   (r.fields[S_ST]||0)>0,
     })).sort((a,b)=>a.price-b.price);
-  } catch(e){ console.warn(e); shop=[]; }
-  renderShop('all');
+  }catch(e){ console.warn(e); shop=[]; }
+  renderShop(curF);
 }
 
-async function loadPending(){
-  const w = document.getElementById('missions-wrap');
-  w.innerHTML='<div class="loader"><div class="spin"></div><span>Chargement missions…</span></div>';
+async function loadMissions(){
+  const w=document.getElementById('mis-wrap');
+  w.innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
   try{
-    const recs = await atGet(T_TRANS,[TR_BUYER,TR_ART,TR_AMT,TR_STATUS,TR_GAIN,F_DATE='fldrELQs39RXvvyvo'],`{${TR_STATUS}}="En attente mission"`);
+    const recs = await atGet(T_TRX,[TR_BY,TR_AR,TR_AM,TR_ST,TR_GN,'fldrELQs39RXvvyvo'],
+      `{${TR_ST}}="En attente mission"`);
     pending = recs||[];
-    renderPending();
-  } catch(e){ w.innerHTML='<p class="empty-s">Erreur — vérifie la clé API</p>'; }
+    renderMissions();
+  }catch(e){ w.innerHTML='<p class="emp">Erreur — vérifie la clé API</p>'; }
 }
 
-/* ══════════ RENDER LB ══════════ */
-const AVC=[['#8b5cf6','#EEEDFE'],['#1D9E75','#E1F5EE'],['#D85A30','#FAECE7'],['#3D8EF0','#E6F1FB'],['#d97706','#FEF9C3'],['#ec4899','#FCE7F3'],['#0ea5e9','#E0F2FE']];
+/* ═══════════════ RENDER LB ═════════ */
+const AC=[['#8b5cf6','#EEEDFE'],['#1D9E75','#E1F5EE'],['#D85A30','#FAECE7'],
+          ['#3D8EF0','#E6F1FB'],['#d97706','#FEF9C3'],['#ec4899','#FCE7F3'],['#0ea5e9','#E0F2FE']];
 function renderLB(){
-  const max=players[0]?.bank||1, total=players.reduce((s,p)=>s+p.bank,0);
-  document.getElementById('s-count').textContent=players.length;
-  document.getElementById('s-total').textContent=fuc(total);
-  document.getElementById('s-lead').textContent=players[0]?.name||'—';
-  const rnks=['🥇','🥈','🥉'],rc=['g','s','b'];
-  document.getElementById('lb-list').innerHTML=players.map((p,i)=>{
+  const max=players[0]?.bank||1;
+  const tot=players.reduce((s,p)=>s+p.bank,0);
+  document.getElementById('s-n').textContent=players.length;
+  document.getElementById('s-t').textContent=fu(tot);
+  document.getElementById('s-l').textContent=players[0]?.name||'—';
+  const em=['🥇','🥈','🥉'],rc=['r1','r2','r3'];
+  document.getElementById('lb').innerHTML=players.map((p,i)=>{
     const pct=Math.round(p.bank/max*100);
-    const [fg,bg]=AVC[i%AVC.length];
-    return `<div class="pc ${i===0?'top1':''}">
-      <div class="rnk ${i<3?rc[i]:''}">${i<3?rnks[i]:i+1}</div>
-      <div class="avp" style="background:${bg};color:${fg}">${p.name[0]}</div>
-      <div class="pi"><div class="pn">${p.name}</div><div class="pl">Code : ${p.code}</div></div>
+    const [fg,bg]=AC[i%AC.length];
+    return `<div class="pc ${i===0?'g1':''}">
+      <div class="rk ${i<3?rc[i]:''}">${i<3?em[i]:i+1}</div>
+      <div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div>
+      <div class="pi"><div class="pn">${p.name}</div><div class="pc2">Code : ${p.code}</div></div>
       <div class="bw"><div class="bb"><div class="bf" style="width:${pct}%"></div></div></div>
-      <div class="bank"><div class="ba">${fuc(p.bank)}</div><div class="bl">UpCoins</div></div>
+      <div class="bk"><div class="ba">${fu(p.bank)}</div><div class="bl">UpCoins</div></div>
     </div>`;
   }).join('');
 }
 
-/* ══════════ RENDER SHOP ══════════ */
-let curF='all';
-function fshop(f,btn){
+/* ═══════════════ RENDER SHOP ════════ */
+const IC={Up:'⚡',Décoration:'🎨',CASH:'💸',wellness:'🌱',default:'📦'};
+function fs(f,btn){
   curF=f;
   document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   renderShop(f);
 }
-const ICONS={Up:'⚡',Décoration:'🎨',CASH:'💸',wellness:'🌱',default:'📦'};
 function renderShop(f){
-  const grid=document.getElementById('shop-grid');
+  const el=document.getElementById('shop');
   const items=f==='all'?shop:shop.filter(i=>i.cat===f);
-  if(!items.length){grid.innerHTML='<p style="color:var(--text2);font-size:12px;padding:.5rem">Aucun article.</p>';return;}
-  grid.innerHTML=items.map(item=>{
+  if(!items.length){el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article.</p>';return;}
+  el.innerHTML=items.map(item=>{
     const ri=shop.indexOf(item);
-    const icon=ICONS[item.cat]||ICONS.default;
-    const imgH=item.img?`<img src="${item.img}" alt="" />`:`<span>${icon}</span>`;
-    const gainH=item.gain?`<div class="sg-lbl">🎯 Gain si mission : +${fuc(item.gain)} UC</div>`:'';
-    const catKey=item.cat.replace(/ /g,'_');
+    const icon=IC[item.cat]||IC.default;
+    const imgH=item.img?`<img src="${item.img}" alt=""/>`:`<span>${icon}</span>`;
+    const gainH=item.gain?`<div class="sgn">🎯 Gain si mission : +${fu(item.gain)} UC</div>`:'';
+    const catCls='t'+(item.cat||'').replace(/[^a-zA-Z]/g,'');
     return `<div class="sc">
-      <div class="simg">${imgH}${item.cat?`<span class="stag t-${catKey}">${item.cat}</span>`:''}</div>
-      <div class="sbody">
+      <div class="si">${imgH}${item.cat?`<span class="stg ${catCls}">${item.cat}</span>`:''}</div>
+      <div class="sb">
         <div class="sn">${item.name}</div>
         <div class="sd">${item.desc}</div>
         <div class="sf">
-          <div><div class="sp">${fuc(item.price)} UC</div>${gainH}<div class="sk">${item.ok?item.stock+' en stock':'❌ Rupture'}</div></div>
-          <button class="bbtn" ${!item.ok?'disabled':''} onclick="openBuy(${ri})">Acheter</button>
+          <div>
+            <div class="sp">${fu(item.price)} UC</div>
+            ${gainH}
+            <div class="sst">${item.ok?item.stock+' en stock':'❌ Rupture'}</div>
+          </div>
+          <button class="bbt" ${!item.ok?'disabled':''} onclick="openMo(${ri})">Acheter</button>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-/* ══════════ RENDER MISSIONS ══════════ */
-function renderPending(){
-  const w=document.getElementById('missions-wrap');
-  if(!pending.length){w.innerHTML='<div class="empty-s">✅ Aucune mission en attente</div>';return;}
-  w.innerHTML=`<div class="mtable">
-    <div class="mhead"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
+/* ═══════════════ RENDER MISSIONS ════ */
+function renderMissions(){
+  const w=document.getElementById('mis-wrap');
+  if(!pending.length){w.innerHTML='<div class="emp">✅ Aucune mission en attente</div>';return;}
+  w.innerHTML=`<div class="mtb">
+    <div class="mh"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
     ${pending.map(m=>{
-      const gain=Number(m.fields[TR_GAIN]||0);
-      const buyer=m.fields[TR_BUYER]||'?';
-      const art=m.fields[TR_ART]||'?';
-      return `<div class="mrow">
+      const gain=Number(m.fields[TR_GN]||0);
+      const buyer=m.fields[TR_BY]||'?';
+      const art=m.fields[TR_AR]||'?';
+      return `<div class="mr">
         <span class="mi">${art}</span>
-        <span class="mb">${buyer}</span>
-        <span class="mg">${gain?'+'+fuc(gain)+' UC':'—'}</span>
-        <span style="display:flex;gap:4px">
-          <button class="btn btn-green btn-sm" onclick="valMission('${m.id}','${buyer}',${gain})">✅ Valider</button>
-          <button class="btn btn-red btn-sm" onclick="rejMission('${m.id}')">❌</button>
-        </span>
+        <span class="mb2">${buyer}</span>
+        <span class="mg">${gain?'+'+fu(gain)+' UC':'—'}</span>
+        <div class="mact">
+          <button class="btn btn-gr btn-sm" onclick="valMis('${m.id}','${buyer}',${gain})">✅ Valider</button>
+          <button class="btn btn-r btn-sm" onclick="rejMis('${m.id}')">❌</button>
+        </div>
       </div>`;
     }).join('')}
   </div>`;
 }
 
-/* ══════════ BUY ══════════ */
-function openBuy(idx){
-  curItem=shop[idx];
-  document.getElementById('m-name').textContent=curItem.name;
-  document.getElementById('m-desc').textContent=curItem.desc;
-  document.getElementById('m-price').textContent=fuc(curItem.price)+' UpCoins';
-  const ge=document.getElementById('m-gain');
-  if(curItem.gain){ge.textContent=`🎯 Gain si mission validée : +${fuc(curItem.gain)} UC`;ge.style.display='block';}
+/* ═══════════════ BUY ════════════════ */
+function openMo(idx){
+  cur=shop[idx];
+  document.getElementById('mo-n').textContent=cur.name;
+  document.getElementById('mo-d').textContent=cur.desc;
+  document.getElementById('mo-p').textContent=fu(cur.price)+' UpCoins';
+  const ge=document.getElementById('mo-g');
+  if(cur.gain){ge.textContent='🎯 Gain si mission validée : +'+fu(cur.gain)+' UC';ge.style.display='block';}
   else ge.style.display='none';
-  document.getElementById('m-buyer').innerHTML=players.map(p=>`<option value="${p.id}|${p.code}">${p.name} — ${fuc(p.bank)} UC</option>`).join('');
-  document.getElementById('buy-modal').classList.add('open');
+  document.getElementById('mo-buy').innerHTML=
+    players.map(p=>`<option value="${p.id}|${p.code}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
+  document.getElementById('modal').classList.add('on');
 }
-function closeModal(){document.getElementById('buy-modal').classList.remove('open');curItem=null;}
+function closeMo(){document.getElementById('modal').classList.remove('on');cur=null;}
 
 async function confirmBuy(){
-  if(!curItem) return;
-  const [aid,acode]=document.getElementById('m-buyer').value.split('|');
+  if(!cur) return;
+  const [aid,acode]=document.getElementById('mo-buy').value.split('|');
   const ag=players.find(p=>p.id===aid);
   if(!ag) return;
-  if(ag.bank<curItem.price){toast('❌ Solde insuffisant !','err');closeModal();return;}
-  const nb=ag.bank-curItem.price;
-  const isMission=curItem.cat==='Up';
+  if(ag.bank<cur.price){toast('❌ Solde insuffisant','er');closeMo();return;}
+  const nb=ag.bank-cur.price;
+  const isMis=cur.cat==='Up';
   try{
-    if(apiKey){
-      await atPatch(T_PLAYERS,aid,{[P_BANK]:nb});
-      await atPatch(T_SHOP,curItem.id,{[S_STOCK]:curItem.stock-1});
-      await atCreate(T_TRANS,{
-        [TR_BUYER]:acode,
-        [TR_ART]:curItem.name,
-        [TR_AMT]:curItem.price,
-        [TR_STATUS]:isMission?'En attente mission':'Validé',
-        [TR_GAIN]:String(curItem.gain||0),
+    if(key){
+      await atPatch(T_PLR,aid,{[P_BK]:nb});
+      await atPatch(T_SHOP,cur.id,{[S_ST]:cur.stock-1});
+      await atPost(T_TRX,{
+        [TR_BY]:acode,
+        [TR_AR]:cur.name,
+        [TR_AM]:cur.price,
+        [TR_ST]:isMis?'En attente mission':'Validé',
+        [TR_GN]:String(cur.gain||0),
       });
     }
-    ag.bank=nb; curItem.stock-=1; if(curItem.stock<=0)curItem.ok=false;
-    renderLB(); fillSels(); renderShop(curF); closeModal();
-    toast(isMission?`✅ Acheté ! Mission en attente d'admin. Solde : ${fuc(nb)} UC`:`✅ Achat réussi ! Solde : ${fuc(nb)} UC`,'ok');
-  } catch(e){toast('❌ '+e.message,'err');}
+    ag.bank=nb; cur.stock-=1; if(cur.stock<=0)cur.ok=false;
+    renderLB(); fillSels(); renderShop(curF); closeMo();
+    toast(isMis?`✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC`:`✅ Achat OK ! Solde : ${fu(nb)} UC`,'ok');
+  }catch(e){toast('❌ '+e.message,'er');}
 }
 
-/* ══════════ MISSIONS ══════════ */
-async function valMission(txId,buyerCode,gain){
-  const ag=players.find(p=>p.code===buyerCode.trim());
+/* ═══════════════ MISSIONS ═══════════ */
+async function valMis(id,buyer,gain){
+  const ag=players.find(p=>p.code===buyer.trim());
   try{
-    if(apiKey){
-      await atPatch(T_TRANS,txId,{[TR_STATUS]:'Mission réussie ✅'});
-      if(ag&&gain>0){const nb=ag.bank+gain;await atPatch(T_PLAYERS,ag.id,{[P_BANK]:nb});ag.bank=nb;}
+    if(key){
+      await atPatch(T_TRX,id,{[TR_ST]:'Mission réussie ✅'});
+      if(ag&&gain>0){const nb=ag.bank+gain;await atPatch(T_PLR,ag.id,{[P_BK]:nb});ag.bank=nb;}
     } else if(ag&&gain>0) ag.bank+=gain;
-    pending=pending.filter(m=>m.id!==txId);
-    renderPending(); renderLB(); fillSels();
-    toast(`✅ Mission validée !${ag&&gain>0?' +'+fuc(gain)+' UC → '+ag.name:''}`, 'ok');
-  } catch(e){toast('❌ '+e.message,'err');}
+    pending=pending.filter(m=>m.id!==id);
+    renderMissions(); renderLB(); fillSels();
+    toast(`✅ Mission validée !${ag&&gain>0?' +'+fu(gain)+' UC → '+ag.name:''}`, 'ok');
+  }catch(e){toast('❌ '+e.message,'er');}
 }
-
-async function rejMission(txId){
+async function rejMis(id){
   try{
-    if(apiKey) await atPatch(T_TRANS,txId,{[TR_STATUS]:'Mission échouée ❌'});
-    pending=pending.filter(m=>m.id!==txId);
-    renderPending();
-    toast('Mission rejetée — pas de gain crédité','err');
-  } catch(e){toast('❌ '+e.message,'err');}
+    if(key) await atPatch(T_TRX,id,{[TR_ST]:'Mission échouée ❌'});
+    pending=pending.filter(m=>m.id!==id);
+    renderMissions();
+    toast('Mission rejetée — pas de gain','er');
+  }catch(e){toast('❌ '+e.message,'er');}
 }
 
-/* ══════════ ADMIN ══════════ */
+/* ═══════════════ ADMIN ACTIONS ══════ */
 function unlock(){
-  if(document.getElementById('a-pwd').value===ADMIN_PWD){
-    document.getElementById('a-lock').style.display='none';
-    document.getElementById('a-panel').style.display='block';
-    loadPending();
-  } else document.getElementById('a-err').style.display='block';
+  if(document.getElementById('pwd').value===ADMIN_PWD){
+    document.getElementById('adm-lock').style.display='none';
+    document.getElementById('adm-panel').style.display='block';
+    loadMissions();
+  } else document.getElementById('pwd-err').style.display='block';
 }
-function logout(){
-  document.getElementById('a-lock').style.display='block';
-  document.getElementById('a-panel').style.display='none';
-  document.getElementById('a-pwd').value='';
+function doLogout(){
+  document.getElementById('adm-lock').style.display='block';
+  document.getElementById('adm-panel').style.display='none';
+  document.getElementById('pwd').value='';
 }
 
 async function doAdd(){
-  const ag=players.find(p=>p.id===document.getElementById('add-ag').value);
-  const amt=parseInt(document.getElementById('add-amt').value);
-  const msg=document.getElementById('add-msg');
+  const ag=players.find(p=>p.id===document.getElementById('a-ag').value);
+  const amt=parseInt(document.getElementById('a-am').value);
+  const msg=document.getElementById('a-msg');
   if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
   const nb=ag.bank+amt;
   try{
-    if(apiKey) await atPatch(T_PLAYERS,ag.id,{[P_BANK]:nb});
+    if(key) await atPatch(T_PLR,ag.id,{[P_BK]:nb});
     ag.bank=nb; renderLB(); fillSels();
-    showMsg(msg,`✅ +${fuc(amt)} UC à ${ag.name} → ${fuc(nb)} UC`,true);
-    document.getElementById('add-amt').value='';
-  } catch(e){showMsg(msg,'❌ '+e.message,false);}
+    showMsg(msg,`✅ +${fu(amt)} UC à ${ag.name} → ${fu(nb)} UC`,true);
+    document.getElementById('a-am').value='';
+  }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
-
 async function doRem(){
-  const ag=players.find(p=>p.id===document.getElementById('rem-ag').value);
-  const amt=parseInt(document.getElementById('rem-amt').value);
-  const msg=document.getElementById('rem-msg');
+  const ag=players.find(p=>p.id===document.getElementById('r-ag').value);
+  const amt=parseInt(document.getElementById('r-am').value);
+  const msg=document.getElementById('r-msg');
   if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
   const nb=Math.max(0,ag.bank-amt);
   try{
-    if(apiKey) await atPatch(T_PLAYERS,ag.id,{[P_BANK]:nb});
+    if(key) await atPatch(T_PLR,ag.id,{[P_BK]:nb});
     ag.bank=nb; renderLB(); fillSels();
-    showMsg(msg,`✅ -${fuc(amt)} UC à ${ag.name} → ${fuc(nb)} UC`,true);
-    document.getElementById('rem-amt').value='';
-  } catch(e){showMsg(msg,'❌ '+e.message,false);}
+    showMsg(msg,`✅ -${fu(amt)} UC à ${ag.name} → ${fu(nb)} UC`,true);
+    document.getElementById('r-am').value='';
+  }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
-
 async function doQuick(){
-  const ag=players.find(p=>p.id===document.getElementById('qk-ag').value);
-  const pts=parseFloat(document.getElementById('qk-pts').value);
-  const msg=document.getElementById('qk-msg');
+  const ag=players.find(p=>p.id===document.getElementById('q-ag').value);
+  const pts=parseFloat(document.getElementById('q-pt').value);
+  const msg=document.getElementById('q-msg');
   if(!ag||isNaN(pts)||pts<=0){showMsg(msg,'Valeur invalide',false);return;}
-  const uc=Math.round(pts*PT_TO_UC), nb=ag.bank+uc;
+  const uc=Math.round(pts*PT_UC), nb=ag.bank+uc;
   try{
-    if(apiKey) await atPatch(T_PLAYERS,ag.id,{[P_BANK]:nb});
+    if(key) await atPatch(T_PLR,ag.id,{[P_BK]:nb});
     ag.bank=nb; renderLB(); fillSels();
-    showMsg(msg,`✅ ${pts} pts → +${fuc(uc)} UC pour ${ag.name} → ${fuc(nb)} UC`,true);
-    document.getElementById('qk-pts').value='';
-  } catch(e){showMsg(msg,'❌ '+e.message,false);}
+    showMsg(msg,`✅ ${pts} pts = +${fu(uc)} UC pour ${ag.name} → ${fu(nb)} UC`,true);
+    document.getElementById('q-pt').value='';
+  }catch(e){showMsg(msg,'❌ '+e.message,false);}
 }
 
-/* ══════════ UTILS ══════════ */
-function fuc(n){
+/* ═══════════════ UTILS ══════════════ */
+function fu(n){
   if(n>=1000000) return (n/1000000).toFixed(1).replace('.0','')+'M';
   if(n>=1000) return Math.round(n/1000)+'K';
-  return n.toLocaleString('fr-FR');
+  return (n||0).toLocaleString('fr-FR');
 }
 function fillSels(){
-  ['add-ag','rem-ag','qk-ag'].forEach(id=>{
+  ['a-ag','r-ag','q-ag'].forEach(id=>{
     const el=document.getElementById(id); if(!el) return;
-    el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fuc(p.bank)} UC</option>`).join('');
+    el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
   });
 }
 function showMsg(el,txt,ok){
-  el.className='rmsg '+(ok?'ok':'err'); el.textContent=txt;
-  setTimeout(()=>el.className='rmsg',5000);
+  el.className='rm '+(ok?'ok':'er'); el.textContent=txt;
+  setTimeout(()=>el.className='rm',5000);
 }
-let toastT;
+let tt;
 function toast(msg,type=''){
   const t=document.getElementById('toast');
-  t.textContent=msg; t.className='show '+type;
-  clearTimeout(toastT); toastT=setTimeout(()=>t.className='',3500);
+  t.textContent=msg; t.className='on '+type;
+  clearTimeout(tt); tt=setTimeout(()=>t.className='',3500);
 }
-function show(id,btn){
+function sw(id,btn){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('sec-'+id).classList.add('on');
   btn.classList.add('on');
-  if(id==='admin'&&document.getElementById('a-panel').style.display!=='none') loadPending();
+  if(id==='adm'&&document.getElementById('adm-panel').style.display!=='none') loadMissions();
 }
-document.getElementById('buy-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeMo();});
 </script>
 </body>
 </html>
