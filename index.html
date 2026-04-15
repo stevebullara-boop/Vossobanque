@@ -561,7 +561,8 @@ async function confirmBuy(){
       [TR_AR]: cur.name,
       [TR_AM]: cur.price,
       [TR_ST]: isMis ? 'En attente mission' : 'Validé',
-      [TR_GN]: String(cur.gain || 0)
+      // Gain UC doit rester un nombre pour respecter le type de champ Airtable
+      [TR_GN]: cur.gain || 0
     });
     ag.bank = nb;
     currentUser.bank = nb;
