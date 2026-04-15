@@ -252,7 +252,8 @@ async function atGet(tbl, fields=[], formula=''){
 
 async function atPatch(tbl, id, fields){
   const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}/${id}`, {
-    method:'PATCH', headers:{'Content-Type':'application/json'},
+    method:'PATCH',
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify({fields})
   });
   if(!r.ok) throw new Error(await r.text());
@@ -261,29 +262,31 @@ async function atPatch(tbl, id, fields){
 
 async function atPost(tbl, fields){
   const r = await fetch(`${PROXY}/v0/${BASE}/${tbl}`, {
-    method:'POST', headers:{'Content-Type':'application/json'},
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify({fields})
   });
   if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
 
-async function loadAll(){ await Promise.all([loadPlayers(), loadShop()]); }
+async function loadAll(){
+  await Promise.all([loadPlayers(), loadShop()]);
+}
 
 async function loadPlayers(){
   document.getElementById('lb').innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
   try{
-    // On demande tous les champs sans filtre pour voir ce qu'on reçoit
     const recs = await atGet(T_PLR);
     players = recs.map(r=>{
       const f = r.fields;
-      // Le proxy retourne les champs par leur nom exact Airtable
-      const name = f['Nom du joueur'] || f['fldj63VB2omDb3k5L'] || Object.values(f)[0] || '?';
-      const bank = f['Solde en banque'] || f['fldH20mY6pJEJaXUA'] || 0;
-      const code = f['Code'] || f['fld0VgreDsvD7931Q'] || '';
+      const name = f['Nom du joueur'] || '?';
+      const bank = f['Solde en banque'] || 0;
+      const code = f['Code'] || '';
       return { id:r.id, name, bank:Number(bank)||0, code };
     }).sort((a,b)=>b.bank-a.bank);
-    renderLB(); fillSels();
+    renderLB();
+    fillSels();
   }catch(e){
     document.getElementById('lb').innerHTML=`<p style="color:var(--rd);padding:1rem;font-size:13px">Erreur : ${e.message}</p>`;
     console.error('loadPlayers error:', e);
@@ -296,18 +299,31 @@ async function loadShop(){
     const recs = await atGet(T_SHOP);
     shop = recs.map(r=>{
       const f = r.fields;
-      const name  = f["Nom de l'article"] || f['fldGcw1fYjAI5UM6q'] || '?';
-      const desc  = f['Description']      || f['fldKui2kVVpD0Qgof'] || '';
-      const price = f['Prix']             || f['fldYxeEBNDYze6OPR'] || 0;
-      const stock = f['Stock disponible'] || f['fldFO979kDrfGyWCn'] || 0;
-      const catRaw= f['Catégorie']        || f['fldGd086FFywN1nKA'] || '';
-      const cat   = typeof catRaw === 'object' ? (catRaw?.name||'') : catRaw;
-      const imgs  = f["Image de l'objet"]|| f['fldBeGjvXujte9fHV'] || [];
+      const name  = f["Nom de l'article"] || '?';
+      const desc  = f['Description'] || '';
+      const price = f['Prix'] || 0;
+      const stock = f['Stock disponible'] || 0;
+      const catRaw = f['Catégorie'] || '';
+      const cat   = typeof catRaw === 'object' ? (catRaw?.name || '') : catRaw;
+      const imgs  = f["Image de l'objet"] || [];
       const img   = Array.isArray(imgs) ? (imgs[0]?.thumbnails?.large?.url || imgs[0]?.url || null) : null;
-      const gain  = Number(f['Gain UC']  || f['fld88HWNS5jk3BiT9'] || 0);
-      return { id:r.id, name, desc, price:Number(price)||0, stock:Number(stock)||0, cat, img, gain, ok:(Number(stock)||0)>0 };
+      const gain  = Number(f['Gain UC'] || 0);
+      return {
+        id:r.id,
+        name,
+        desc,
+        price:Number(price)||0,
+        stock:Number(stock)||0,
+        cat,
+        img,
+        gain,
+        ok:(Number(stock)||0)>0
+      };
     }).sort((a,b)=>a.price-b.price);
-  }catch(e){ console.error('loadShop error:', e); shop=[]; }
+  }catch(e){
+    console.error('loadShop error:', e);
+    shop=[];
+  }
   renderShop(curF);
 }
 
@@ -315,26 +331,42 @@ async function loadMissions(){
   const w=document.getElementById('mis-wrap');
   w.innerHTML='<div class="ld"><div class="sp"></div><span>Chargement…</span></div>';
   try{
-    const recs = await atGet(T_TRX,[],"AND({Erreur}=\"En attente mission\")");
-    pending=recs||[]; renderMissions();
-  }catch(e){ w.innerHTML=`<p class="emp" style="color:var(--rd)">Erreur : ${e.message}</p>`; }
+    const recs = await atGet(T_TRX, [], "AND({Erreur}='En attente mission')");
+    pending = recs || [];
+    renderMissions();
+  }catch(e){
+    w.innerHTML=`<p class="emp" style="color:var(--rd)">Erreur : ${e.message}</p>`;
+  }
 }
 
-const AC=[['#8b5cf6','#2d1f5e'],['#1D9E75','#0d3d2e'],['#D85A30','#4a1f10'],
-          ['#3D8EF0','#0d2e5e'],['#d97706','#4a2f05'],['#ec4899','#4a1230'],['#0ea5e9','#053450']];
+const AC=[
+  ['#8b5cf6','#2d1f5e'],
+  ['#1D9E75','#0d3d2e'],
+  ['#D85A30','#4a1f10'],
+  ['#3D8EF0','#0d2e5e'],
+  ['#d97706','#4a2f05'],
+  ['#ec4899','#4a1230'],
+  ['#0ea5e9','#053450']
+];
 
 function renderLB(){
-  const max=players[0]?.bank||1, tot=players.reduce((s,p)=>s+p.bank,0);
+  const max=players[0]?.bank||1;
+  const tot=players.reduce((s,p)=>s+p.bank,0);
   document.getElementById('s-n').textContent=players.length;
   document.getElementById('s-t').textContent=fu(tot);
   document.getElementById('s-l').textContent=players[0]?.name||'—';
-  const em=['🥇','🥈','🥉'],rc=['r1','r2','r3'];
+  const em=['🥇','🥈','🥉'], rc=['r1','r2','r3'];
+
   document.getElementById('lb').innerHTML=players.map((p,i)=>{
-    const pct=Math.round(p.bank/max*100),[fg,bg]=AC[i%AC.length];
+    const pct=Math.round(p.bank/max*100);
+    const [fg,bg]=AC[i%AC.length];
     return `<div class="pc ${i===0?'g1':''}">
       <div class="rk ${i<3?rc[i]:''}">${i<3?em[i]:i+1}</div>
       <div class="av" style="background:${bg};color:${fg}">${(p.name||'?')[0].toUpperCase()}</div>
-      <div class="pi"><div class="pn">${p.name}</div><div class="pc2">Code : ${p.code}</div></div>
+      <div class="pi">
+        <div class="pn">${p.name}</div>
+        <div class="pc2">Code : ${p.code}</div>
+      </div>
       <div class="bw"><div class="bb"><div class="bf" style="width:${pct}%"></div></div></div>
       <div class="bk"><div class="ba">${fu(p.bank)}</div><div class="bl">UpCoins</div></div>
     </div>`;
@@ -342,20 +374,29 @@ function renderLB(){
 }
 
 const IC={Up:'⚡',Décoration:'🎨',CASH:'💸',wellness:'🌱',default:'📦'};
+
 function fs(f,btn){
   curF=f;
   document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   renderShop(f);
 }
+
 function renderShop(f){
   const el=document.getElementById('shop');
   const items=f==='all'?shop:shop.filter(i=>i.cat===f);
-  if(!items.length){el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article dans cette catégorie.</p>';return;}
+
+  if(!items.length){
+    el.innerHTML='<p style="font-size:12px;color:var(--t2);padding:.5rem">Aucun article dans cette catégorie.</p>';
+    return;
+  }
+
   el.innerHTML=items.map(item=>{
-    const ri=shop.indexOf(item), icon=IC[item.cat]||IC.default;
+    const ri=shop.indexOf(item);
+    const icon=IC[item.cat]||IC.default;
     const imgH=item.img?`<img src="${item.img}" alt=""/>`:`<span>${icon}</span>`;
     const catCls='t'+(item.cat||'').replace(/[^a-zA-Z]/g,'');
+
     return `<div class="sc">
       <div class="si">${imgH}${item.cat?`<span class="stg ${catCls}">${item.cat}</span>`:''}</div>
       <div class="sb">
@@ -376,16 +417,22 @@ function renderShop(f){
 
 function renderMissions(){
   const w=document.getElementById('mis-wrap');
-  if(!pending.length){w.innerHTML='<div class="emp">✅ Aucune mission en attente</div>';return;}
+  if(!pending.length){
+    w.innerHTML='<div class="emp">✅ Aucune mission en attente</div>';
+    return;
+  }
+
   w.innerHTML=`<div class="mtb">
     <div class="mh"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
     ${pending.map(m=>{
       const f=m.fields;
-      const gain=Number(f['Date']||f['fldGLc3RMIdrsI8FQ']||0);
-      const buyer=f["Prénom de L'acheteur"]||f['fldd9s39ZYZhCbzcz']||'?';
-      const art=f['Article']||f['fldf9zRqjYWJDCmuw']||'?';
+      const gain=Number(f['Gain UC']||0);
+      const buyer=f["Prénom de L'acheteur"]||'?';
+      const art=f['Article']||'?';
+
       return `<div class="mr">
-        <span class="mi">${art}</span><span class="mb2">${buyer}</span>
+        <span class="mi">${art}</span>
+        <span class="mb2">${buyer}</span>
         <span class="mg">${gain?'+'+fu(gain)+' UC':'—'}</span>
         <div class="mact">
           <button class="btn btn-gr btn-sm" onclick="valMis('${m.id}','${buyer}',${gain})">✅ Valider</button>
@@ -402,53 +449,96 @@ function openMo(idx){
   document.getElementById('mo-d').textContent=cur.desc;
   document.getElementById('mo-p').textContent=fu(cur.price)+' UpCoins';
   const ge=document.getElementById('mo-g');
-  if(cur.gain){ge.textContent='🎯 Gain si validée : +'+fu(cur.gain)+' UC';ge.style.display='block';}
-  else ge.style.display='none';
+  if(cur.gain){
+    ge.textContent='🎯 Gain si validée : +'+fu(cur.gain)+' UC';
+    ge.style.display='block';
+  } else {
+    ge.style.display='none';
+  }
   document.getElementById('mo-buy').innerHTML=players.map(p=>`<option value="${p.id}|${p.code}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
   document.getElementById('modal').classList.add('on');
 }
-function closeMo(){document.getElementById('modal').classList.remove('on');cur=null;}
+
+function closeMo(){
+  document.getElementById('modal').classList.remove('on');
+  cur=null;
+}
 
 async function confirmBuy(){
   if(!cur)return;
+
   const [aid,acode]=document.getElementById('mo-buy').value.split('|');
   const ag=players.find(p=>p.id===aid);
   if(!ag)return;
-  if(ag.bank<cur.price){toast('❌ Solde insuffisant','er');closeMo();return;}
-  const nb=ag.bank-cur.price, isMis=cur.cat==='Up';
+
+  if(ag.bank<cur.price){
+    toast('❌ Solde insuffisant','er');
+    closeMo();
+    return;
+  }
+
+  const nb=ag.bank-cur.price;
+  const isMis=cur.cat==='Up';
+
   try{
-    await atPatch(T_PLR,aid,{'Solde en banque':nb});
-    await atPatch(T_SHOP,cur.id,{'Stock disponible':cur.stock-1});
-    await atPost(T_TRX,{
+    await atPatch(T_PLR, aid, {'Solde en banque': nb});
+    await atPatch(T_SHOP, cur.id, {'Stock disponible': cur.stock-1});
+    await atPost(T_TRX, {
       "Prénom de L'acheteur": acode,
-      'Article': cur.name,
-      'Montant': cur.price,
-      'Erreur': isMis?'En attente mission':'Validé',
-      'Date': String(cur.gain||0)
+      "Article": cur.name,
+      "Montant": cur.price,
+      "Erreur": isMis ? 'En attente mission' : 'Validé',
+      "Gain UC": cur.gain || 0
     });
-    ag.bank=nb; cur.stock-=1; if(cur.stock<=0)cur.ok=false;
-    renderLB(); fillSels(); renderShop(curF); closeMo();
-    toast(isMis?`✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC`:`✅ Achat OK ! Solde : ${fu(nb)} UC`,'ok');
-  }catch(e){toast('❌ '+e.message,'er');}
+
+    ag.bank=nb;
+    cur.stock-=1;
+    if(cur.stock<=0)cur.ok=false;
+
+    renderLB();
+    fillSels();
+    renderShop(curF);
+    closeMo();
+
+    toast(
+      isMis
+        ? `✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC`
+        : `✅ Achat OK ! Solde : ${fu(nb)} UC`,
+      'ok'
+    );
+  }catch(e){
+    toast('❌ '+e.message,'er');
+  }
 }
 
 async function valMis(id,buyer,gain){
   const ag=players.find(p=>p.code===buyer.trim());
   try{
-    await atPatch(T_TRX,id,{'Erreur':'Mission réussie ✅'});
-    if(ag&&gain>0){const nb=ag.bank+gain;await atPatch(T_PLR,ag.id,{'Solde en banque':nb});ag.bank=nb;}
+    await atPatch(T_TRX, id, {'Erreur':'Mission réussie ✅'});
+    if(ag&&gain>0){
+      const nb=ag.bank+gain;
+      await atPatch(T_PLR, ag.id, {'Solde en banque':nb});
+      ag.bank=nb;
+    }
     pending=pending.filter(m=>m.id!==id);
-    renderMissions(); renderLB(); fillSels();
+    renderMissions();
+    renderLB();
+    fillSels();
     toast(`✅ Mission validée !${ag&&gain>0?' +'+fu(gain)+' UC → '+ag.name:''}`, 'ok');
-  }catch(e){toast('❌ '+e.message,'er');}
+  }catch(e){
+    toast('❌ '+e.message,'er');
+  }
 }
+
 async function rejMis(id){
   try{
-    await atPatch(T_TRX,id,{'Erreur':'Mission échouée ❌'});
+    await atPatch(T_TRX, id, {'Erreur':'Mission échouée ❌'});
     pending=pending.filter(m=>m.id!==id);
     renderMissions();
     toast('Mission rejetée','er');
-  }catch(e){toast('❌ '+e.message,'er');}
+  }catch(e){
+    toast('❌ '+e.message,'er');
+  }
 }
 
 function unlock(){
@@ -456,13 +546,17 @@ function unlock(){
     document.getElementById('adm-lock').style.display='none';
     document.getElementById('adm-panel').style.display='block';
     loadMissions();
-  } else document.getElementById('pwd-err').style.display='block';
+  } else {
+    document.getElementById('pwd-err').style.display='block';
+  }
 }
+
 function doLogout(){
   document.getElementById('adm-lock').style.display='block';
   document.getElementById('adm-panel').style.display='none';
   document.getElementById('pwd').value='';
 }
+
 async function doAdd(){
   const ag=players.find(p=>p.id===document.getElementById('a-ag').value);
   const amt=parseInt(document.getElementById('a-am').value);
@@ -470,12 +564,17 @@ async function doAdd(){
   if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
   const nb=ag.bank+amt;
   try{
-    await atPatch(T_PLR,ag.id,{'Solde en banque':nb});
-    ag.bank=nb; renderLB(); fillSels();
+    await atPatch(T_PLR, ag.id, {'Solde en banque':nb});
+    ag.bank=nb;
+    renderLB();
+    fillSels();
     showMsg(msg,`✅ +${fu(amt)} UC à ${ag.name} → ${fu(nb)} UC`,true);
     document.getElementById('a-am').value='';
-  }catch(e){showMsg(msg,'❌ '+e.message,false);}
+  }catch(e){
+    showMsg(msg,'❌ '+e.message,false);
+  }
 }
+
 async function doRem(){
   const ag=players.find(p=>p.id===document.getElementById('r-ag').value);
   const amt=parseInt(document.getElementById('r-am').value);
@@ -483,12 +582,17 @@ async function doRem(){
   if(!ag||!amt||amt<=0){showMsg(msg,'Montant invalide',false);return;}
   const nb=Math.max(0,ag.bank-amt);
   try{
-    await atPatch(T_PLR,ag.id,{'Solde en banque':nb});
-    ag.bank=nb; renderLB(); fillSels();
+    await atPatch(T_PLR, ag.id, {'Solde en banque':nb});
+    ag.bank=nb;
+    renderLB();
+    fillSels();
     showMsg(msg,`✅ -${fu(amt)} UC à ${ag.name} → ${fu(nb)} UC`,true);
     document.getElementById('r-am').value='';
-  }catch(e){showMsg(msg,'❌ '+e.message,false);}
+  }catch(e){
+    showMsg(msg,'❌ '+e.message,false);
+  }
 }
+
 async function doQuick(){
   const ag=players.find(p=>p.id===document.getElementById('q-ag').value);
   const pts=parseFloat(document.getElementById('q-pt').value);
@@ -496,20 +600,58 @@ async function doQuick(){
   if(!ag||isNaN(pts)||pts<=0){showMsg(msg,'Valeur invalide',false);return;}
   const uc=Math.round(pts*PT_UC),nb=ag.bank+uc;
   try{
-    await atPatch(T_PLR,ag.id,{'Solde en banque':nb});
-    ag.bank=nb; renderLB(); fillSels();
+    await atPatch(T_PLR, ag.id, {'Solde en banque':nb});
+    ag.bank=nb;
+    renderLB();
+    fillSels();
     showMsg(msg,`✅ ${pts} pts = +${fu(uc)} UC pour ${ag.name} → ${fu(nb)} UC`,true);
     document.getElementById('q-pt').value='';
-  }catch(e){showMsg(msg,'❌ '+e.message,false);}
+  }catch(e){
+    showMsg(msg,'❌ '+e.message,false);
+  }
 }
 
-function fu(n){n=Number(n)||0;if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M';if(n>=1000)return Math.round(n/1000)+'K';return n.toLocaleString('fr-FR');}
-function fillSels(){['a-ag','r-ag','q-ag'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fu(p.bank)} UC</option>`).join('');});}
-function showMsg(el,txt,ok){el.className='rm '+(ok?'ok':'er');el.textContent=txt;setTimeout(()=>el.className='rm',5000);}
+function fu(n){
+  n=Number(n)||0;
+  if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M';
+  if(n>=1000)return Math.round(n/1000)+'K';
+  return n.toLocaleString('fr-FR');
+}
+
+function fillSels(){
+  ['a-ag','r-ag','q-ag'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    el.innerHTML=players.map(p=>`<option value="${p.id}">${p.name} — ${fu(p.bank)} UC</option>`).join('');
+  });
+}
+
+function showMsg(el,txt,ok){
+  el.className='rm '+(ok?'ok':'er');
+  el.textContent=txt;
+  setTimeout(()=>el.className='rm',5000);
+}
+
 let tt;
-function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='on '+type;clearTimeout(tt);tt=setTimeout(()=>t.className='',3500);}
-function sw(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('sec-'+id).classList.add('on');btn.classList.add('on');if(id==='adm'&&document.getElementById('adm-panel').style.display!=='none')loadMissions();}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeMo();});
+function toast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='on '+type;
+  clearTimeout(tt);
+  tt=setTimeout(()=>t.className='',3500);
+}
+
+function sw(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  btn.classList.add('on');
+  if(id==='adm'&&document.getElementById('adm-panel').style.display!=='none')loadMissions();
+}
+
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target===this)closeMo();
+});
 
 loadAll();
 </script>
