@@ -454,7 +454,7 @@ function renderLB(){
     return `<div class="pc ${i===0?'g1':''}">
       <div class="rk ${i<3?rc[i]:''}">${i<3?em[i]:i+1}</div>
       <div class="av" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
-      <div class="pi"><div class="pn">${p.name}</div><div class="pc2">Code : ${p.code}</div></div>
+      <div class="pi"><div class="pn">${p.name}</div><div class="pc2"></div></div>
       <div class="bw"><div class="bb"><div class="bf" style="width:${pct}%"></div></div></div>
       <div class="bk"><div class="ba">${fu(p.bank)}</div><div class="bl">UpCoins</div></div>
     </div>`;
