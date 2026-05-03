@@ -502,7 +502,11 @@ function renderMissions(){
   w.innerHTML=`<div class="mtb">
     <div class="mh"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
     ${pending.map(m=>{
-      const gain = Number(m.fields[TR_GN] || 0); const buyerCode = String(m.fields[TR_BY] || '').trim(); const buyerPlayer = players.find(p => String(p.code).trim() === buyerCode); const buyer = buyerPlayer ? buyerPlayer.name : buyerCode || '?'; const art = m.fields[TR_AR] || '?';
+      const gain = Number(m.fields[TR_GN] || 0);
+      const buyerCode = String(m.fields[TR_BY] || '').trim();
+      const buyerPlayer = players.find(p => String(p.code).trim() === buyerCode);
+      const buyer = buyerPlayer ? buyerPlayer.name : buyerCode || '?';
+      const art = m.fields[TR_AR] || '?';
       return `<div class="mr">
         <span class="mi">${art}</span><span class="mb2">${buyer}</span>
         <span class="mg">${gain?'+'+fu(gain)+' UC':'—'}</span>
@@ -573,12 +577,7 @@ async function confirmBuy(){
     document.getElementById('whoami').textContent = `• ${ag.name}`;
     const logoutBtn = document.getElementById('logout-btn');
     if(logoutBtn) logoutBtn.style.display = 'inline';
-    toast(
-      isMis ?
-        `✅ Acheté ! Mission en attente. Solde : ${fu(nb)} UC` :
-        `✅ Achat OK ! Solde : ${fu(nb)} UC`,
-      'ok'
-    );
+   toast(`✅ Achat envoyé en validation. Solde : ${fu(nb)} UC`, 'ok');
   }catch(e){
     toast('❌ '+e.message,'er');
   }
