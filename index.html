@@ -502,12 +502,12 @@ function renderMissions(){
   w.innerHTML=`<div class="mtb">
     <div class="mh"><span>Article</span><span>Acheteur</span><span>Gain potentiel</span><span>Action</span></div>
     ${pending.map(m=>{
-      const gain=Number(m.fields[TR_GN]||0),buyer=m.fields[TR_BY]||'?',art=m.fields[TR_AR]||'?';
+      const gain = Number(m.fields[TR_GN] || 0); const buyerCode = String(m.fields[TR_BY] || '').trim(); const buyerPlayer = players.find(p => String(p.code).trim() === buyerCode); const buyer = buyerPlayer ? buyerPlayer.name : buyerCode || '?'; const art = m.fields[TR_AR] || '?';
       return `<div class="mr">
         <span class="mi">${art}</span><span class="mb2">${buyer}</span>
         <span class="mg">${gain?'+'+fu(gain)+' UC':'—'}</span>
         <div class="mact">
-          <button class="btn btn-gr btn-sm" onclick="valMis('${m.id}','${buyer}',${gain})">✅ Valider</button>
+          <button class="btn btn-gr btn-sm" onclick="valMis('${m.id}','${buyerCode}',${gain})">✅ Valider</button>
           <button class="btn btn-r btn-sm" onclick="rejMis('${m.id}')">❌</button>
         </div>
       </div>`;
