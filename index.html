@@ -305,6 +305,227 @@ label:first-of-type{margin-top:0}
 
 @keyframes spin{to{transform:rotate(360deg)}}
 .ld span{font-size:12px;color:var(--t2)}
+  /* ════════ WOW V1 — CLASSEMENT VOSSOCITY ════════ */
+
+#sec-lb{
+  position:relative;
+}
+
+#sec-lb::before{
+  content:'';
+  position:absolute;
+  inset:-40px -80px auto -80px;
+  height:360px;
+  background:
+    radial-gradient(circle at 18% 20%,rgba(139,92,246,.22),transparent 32%),
+    radial-gradient(circle at 82% 12%,rgba(240,192,64,.16),transparent 30%),
+    linear-gradient(135deg,rgba(255,255,255,.03),transparent 55%);
+  filter:blur(2px);
+  opacity:.9;
+  pointer-events:none;
+  z-index:-1;
+  animation:vaultAura 8s ease-in-out infinite alternate;
+}
+
+#sec-lb::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  opacity:.14;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom,black,transparent 70%);
+}
+
+@keyframes vaultAura{
+  from{transform:translateY(0) scale(1);opacity:.72}
+  to{transform:translateY(18px) scale(1.04);opacity:1}
+}
+
+.metrics .mc{
+  position:relative;
+  overflow:hidden;
+}
+
+.metrics .mc::after{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:70%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+  transform:skewX(-18deg);
+  animation:metricScan 5.5s ease-in-out infinite;
+}
+
+@keyframes metricScan{
+  0%,35%{left:-120%}
+  60%,100%{left:140%}
+}
+
+.podium{
+  perspective:900px;
+}
+
+.pod{
+  isolation:isolate;
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+
+.pod:hover{
+  transform:translateY(-8px) rotateX(2deg);
+  border-color:rgba(240,192,64,.55);
+  box-shadow:0 22px 55px rgba(0,0,0,.38),0 0 34px rgba(139,92,246,.18);
+}
+
+.pod.first:hover{
+  transform:translateY(-16px) rotateX(2deg) scale(1.015);
+  box-shadow:0 28px 70px rgba(0,0,0,.42),0 0 45px rgba(240,192,64,.22);
+}
+
+.pod::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg,transparent 0%,transparent 35%,rgba(255,255,255,.12) 45%,transparent 56%,transparent 100%);
+  transform:translateX(-120%);
+  animation:cardShine 6.8s ease-in-out infinite;
+  z-index:0;
+  pointer-events:none;
+}
+
+.pod.first::after{
+  animation-delay:.5s;
+}
+
+.pod.second::after{
+  animation-delay:1.2s;
+}
+
+.pod.third::after{
+  animation-delay:2s;
+}
+
+@keyframes cardShine{
+  0%,45%{transform:translateX(-130%)}
+  62%,100%{transform:translateX(130%)}
+}
+
+.pod-rank{
+  filter:drop-shadow(0 0 8px rgba(240,192,64,.3));
+  animation:medalPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes medalPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+}
+
+.pod.first .pod-name::after{
+  content:' 👑';
+}
+
+.pod.first .pod-title{
+  color:var(--gold2);
+}
+
+.pod.first .pod-money{
+  text-shadow:0 0 18px rgba(240,192,64,.22);
+}
+
+.pod-money{
+  letter-spacing:.02em;
+}
+
+.pod-label::after{
+  content:' · Coffre UpCoins';
+}
+
+.bb{
+  position:relative;
+}
+
+.bf{
+  position:relative;
+  overflow:hidden;
+  animation:barGrow .9s ease-out both;
+  transform-origin:left center;
+}
+
+.bf::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.36),transparent);
+  transform:translateX(-110%);
+  animation:barLight 2.8s ease-in-out infinite;
+}
+
+@keyframes barGrow{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+
+@keyframes barLight{
+  0%,35%{transform:translateX(-110%)}
+  75%,100%{transform:translateX(110%)}
+}
+
+.pc{
+  position:relative;
+  overflow:hidden;
+}
+
+.pc::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.035),transparent);
+  transform:translateX(-120%);
+  opacity:0;
+  transition:opacity .2s;
+  pointer-events:none;
+}
+
+.pc:hover::after{
+  opacity:1;
+  animation:rowShine 1.1s ease-out;
+}
+
+@keyframes rowShine{
+  from{transform:translateX(-120%)}
+  to{transform:translateX(120%)}
+}
+
+.lb-title{
+  border-top:1px solid var(--b1);
+  padding-top:1rem;
+}
+
+.lb-title span:first-child::before{
+  content:'🏦 ';
+}
+
+.lb-title span:last-child::before{
+  content:'💰 ';
+}
+
+@media(max-width:700px){
+  #sec-lb::before{
+    inset:-30px -30px auto -30px;
+    height:300px;
+  }
+
+  .pod:hover,
+  .pod.first:hover{
+    transform:translateY(-4px);
+  }
+}
 </style>
 </head>
 <body>
@@ -327,7 +548,7 @@ label:first-of-type{margin-top:0}
 
   <div id="sec-lb" class="sec on">
     <div class="ph">Fortune VossoCity 🏦</div>
-    <div class="ps">Soldes UpCoins en temps réel</div>
+    <div class="ps">Le classement des coffres virtuels en UpCoins</div>
     <div class="metrics">
       <div class="mc"><div class="ml">Joueurs</div><div class="mv" id="s-n">—</div></div>
       <div class="mc"><div class="ml">Total UpCoins</div><div class="mv" id="s-t" style="color:var(--gold)">—</div></div>
@@ -574,27 +795,68 @@ function renderLB(){
   document.getElementById('s-t').textContent=fu(tot);
   document.getElementById('s-l').textContent=players[0]?.name||'—';
 
-  const em=['🥇','🥈','🥉'],rc=['r1','r2','r3'];
+  const top = players.slice(0,3);
+  const rest = players.slice(3);
+  const em=['🥇','🥈','🥉'];
 
-  document.getElementById('lb').innerHTML=players.map((p,i)=>{
-    const pct=Math.round(p.bank/max*100),[fg,bg]=AC[i%AC.length];
+  const podiumOrder = [1,0,2];
 
-    return `<div class="pc ${i===0?'g1':''}">
-      <div class="rk ${i<3?rc[i]:''}">${i<3?em[i]:i+1}</div>
-      <div class="av" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
-      <div class="pi">
-        <div class="pn">${p.name}</div>
-        <div class="pc2">${i<3?'Top fortune VossoCity':'Fortune virtuelle VossoCity'}</div>
-      </div>
-      <div class="bw">
-        <div class="bb"><div class="bf" style="width:${pct}%"></div></div>
-      </div>
-      <div class="bk">
-        <div class="ba">${fu(p.bank)}</div>
-        <div class="bl">UpCoins</div>
-      </div>
-    </div>`;
-  }).join('');
+  const podiumHtml = top.length ? `
+    <div class="podium">
+      ${podiumOrder.filter(i=>top[i]).map(i=>{
+        const p = top[i];
+        const [fg,bg]=AC[i%AC.length];
+        const cls = i===0 ? 'first' : i===1 ? 'second' : 'third';
+        const title = i===0
+          ? 'Coffre suprême VossoCity'
+          : i===1
+            ? 'Fortune montante'
+            : 'Chasseur de fortune';
+
+        return `<div class="pod ${cls}">
+          <div>
+            <div class="pod-rank">${em[i]}</div>
+            <div class="pod-avatar" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
+            <div class="pod-name">${p.name}</div>
+            <div class="pod-title">${title}</div>
+          </div>
+          <div>
+            <div class="pod-money">${fu(p.bank)} UC</div>
+            <div class="pod-label">Fortune virtuelle</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  ` : '';
+
+  const restHtml = rest.length ? `
+    <div class="lb-title">
+      <span>Classement général</span>
+      <span>Patrimoine UpCoins</span>
+    </div>
+    ${rest.map((p,idx)=>{
+      const i = idx + 3;
+      const pct=Math.round(p.bank/max*100),[fg,bg]=AC[i%AC.length];
+
+      return `<div class="pc">
+        <div class="rk">${i+1}</div>
+        <div class="av" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
+        <div class="pi">
+          <div class="pn">${p.name}</div>
+          <div class="pc2">Compte VossoCity · Fortune virtuelle</div>
+        </div>
+        <div class="bw">
+          <div class="bb"><div class="bf" style="width:${pct}%"></div></div>
+        </div>
+        <div class="bk">
+          <div class="ba">${fu(p.bank)}</div>
+          <div class="bl">UpCoins</div>
+        </div>
+      </div>`;
+    }).join('')}
+  ` : '';
+
+  document.getElementById('lb').innerHTML = podiumHtml + restHtml;
 }
 /* ════════ RENDER SHOP ════════ */
 const IC={
