@@ -574,53 +574,27 @@ function renderLB(){
   document.getElementById('s-t').textContent=fu(tot);
   document.getElementById('s-l').textContent=players[0]?.name||'—';
 
-  const top = players.slice(0,3);
-  const rest = players.slice(3);
   const em=['🥇','🥈','🥉'],rc=['r1','r2','r3'];
 
-  const podiumOrder = [1,0,2];
-  const podiumHtml = top.length ? `
-    <div class="podium">
-      ${podiumOrder.filter(i=>top[i]).map(i=>{
-        const p = top[i];
-        const [fg,bg]=AC[i%AC.length];
-        const cls = i===0 ? 'first' : i===1 ? 'second' : 'third';
-        const title = i===0 ? 'Grand coffre VossoCity' : i===1 ? 'Fortune montante' : 'Chasseur de fortune';
-        return `<div class="pod ${cls}">
-          <div>
-            <div class="pod-rank">${em[i]}</div>
-            <div class="pod-avatar" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
-            <div class="pod-name">${p.name}</div>
-            <div class="pod-title">${title}</div>
-          </div>
-          <div>
-            <div class="pod-money">${fu(p.bank)} UC</div>
-            <div class="pod-label">Fortune virtuelle</div>
-          </div>
-        </div>`;
-      }).join('')}
-    </div>
-  ` : '';
+  document.getElementById('lb').innerHTML=players.map((p,i)=>{
+    const pct=Math.round(p.bank/max*100),[fg,bg]=AC[i%AC.length];
 
-  const restHtml = rest.length ? `
-    <div class="lb-title">
-      <span>Classement général</span>
-      <span>Patrimoine UpCoins</span>
-    </div>
-    ${rest.map((p,idx)=>{
-      const i = idx + 3;
-      const pct=Math.round(p.bank/max*100),[fg,bg]=AC[i%AC.length];
-      return `<div class="pc">
-        <div class="rk">${i+1}</div>
-        <div class="av" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
-        <div class="pi"><div class="pn">${p.name}</div><div class="pc2">Fortune virtuelle VossoCity</div></div>
-        <div class="bw"><div class="bb"><div class="bf" style="width:${pct}%"></div></div></div>
-        <div class="bk"><div class="ba">${fu(p.bank)}</div><div class="bl">UpCoins</div></div>
-      </div>`;
-    }).join('')}
-  ` : '';
-
-  document.getElementById('lb').innerHTML = podiumHtml + restHtml;
+    return `<div class="pc ${i===0?'g1':''}">
+      <div class="rk ${i<3?rc[i]:''}">${i<3?em[i]:i+1}</div>
+      <div class="av" style="background:${bg};color:${fg}">${p.name[0].toUpperCase()}</div>
+      <div class="pi">
+        <div class="pn">${p.name}</div>
+        <div class="pc2">${i<3?'Top fortune VossoCity':'Fortune virtuelle VossoCity'}</div>
+      </div>
+      <div class="bw">
+        <div class="bb"><div class="bf" style="width:${pct}%"></div></div>
+      </div>
+      <div class="bk">
+        <div class="ba">${fu(p.bank)}</div>
+        <div class="bl">UpCoins</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 /* ════════ RENDER SHOP ════════ */
 const IC={
