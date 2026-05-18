@@ -110,6 +110,7 @@ main{flex:1;padding:1.25rem;max-width:900px;width:100%;margin:0 auto}
 .tPrestigeCity{background:rgba(240,192,64,.88);color:#000}
 .tvnements{background:rgba(239,68,68,.88);color:#fff}
 .tTitresPouvoirs{background:rgba(168,85,247,.88);color:#fff}
+.tLeadMarket{background:rgba(34,197,94,.88);color:#001b0b}
 .sb{padding:.7rem .85rem;flex:1;display:flex;flex-direction:column}
 .sn{font-family:var(--fs);font-size:.82rem;font-weight:700;margin-bottom:3px;line-height:1.3;color:var(--t1)}
 .sd{font-size:10px;color:var(--t2);line-height:1.45;margin-bottom:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -225,14 +226,15 @@ label:first-of-type{margin-top:0}
     <div class="ps">Achète avec tes UpCoins · Up = missions avec gain si validées</div>
     <div class="filt">
   <button class="fb on" onclick="fs('all',this)">Tout</button>
-  <button class="fb" onclick="fs('Boost Solo ⚡',this)">⚡ Boost Solo</button>
-  <button class="fb" onclick="fs('🦠 Paris sociaux',this)">🦠 Paris sociaux</button>
-  <button class="fb" onclick="fs('Cash 💸',this)">💸 Cash</button>
-  <button class="fb" onclick="fs('Mini-Jeux 🎮',this)">🎮 Mini-Jeux</button>
-  <button class="fb" onclick="fs('Power Dealer 📞',this)">📞 Power Dealer</button>
-  <button class="fb" onclick="fs('Prestige City 🏙️',this)">🏙️ Prestige City</button>
-  <button class="fb" onclick="fs('Événements 🔥',this)">🔥 Événements</button>
-  <button class="fb" onclick="fs('Titres & Pouvoirs 👑',this)">👑 Titres & Pouvoirs</button>
+  <button class="fb" onclick="fs('⚡ Boost Solo',this)">⚡ Boost Solo</button>
+  <button class="fb" onclick="fs('🤝 Paris sociaux',this)">🤝 Paris sociaux</button>
+  <button class="fb" onclick="fs('💸 Cash',this)">💸 Cash</button>
+  <button class="fb" onclick="fs('🎮 Mini-Jeux',this)">🎮 Mini-Jeux</button>
+  <button class="fb" onclick="fs('📞 Power Dealer',this)">📞 Power Dealer</button>
+  <button class="fb" onclick="fs('🏙 Prestige City',this)">🏙 Prestige City</button>
+  <button class="fb" onclick="fs('🔥 Événements',this)">🔥 Événements</button>
+  <button class="fb" onclick="fs('🎯 Lead Market',this)">🎯 Lead Market</button>
+  <button class="fb" onclick="fs('👑 Titres & Pouvoirs',this)">👑 Titres & Pouvoirs</button>
 </div>
     <div class="sg" id="shop"><div class="ld"><div class="spinner"></div><span>Chargement…</span></div></div>
   </div>
@@ -471,14 +473,15 @@ function renderLB(){
 
 /* ════════ RENDER SHOP ════════ */
 const IC={
-  'Boost Solo ⚡':'⚡',
-  '🦠 Paris sociaux':'🦠',
-  'Cash 💸':'💸',
-  'Mini-Jeux 🎮':'🎮',
-  'Power Dealer 📞':'📞',
-  'Prestige City 🏙️':'🏙️',
-  'Événements 🔥':'🔥',
-  'Titres & Pouvoirs 👑':'👑',
+  '⚡ Boost Solo':'⚡',
+  '🤝 Paris sociaux':'🤝',
+  '💸 Cash':'💸',
+  '🎮 Mini-Jeux':'🎮',
+  '📞 Power Dealer':'📞',
+  '🏙 Prestige City':'🏙',
+  '🔥 Événements':'🔥',
+  '🎯 Lead Market':'🎯',
+  '👑 Titres & Pouvoirs':'👑',
   default:'📦'
 };function fs(f,btn){
   curF=f;
