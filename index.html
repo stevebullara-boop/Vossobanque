@@ -526,6 +526,212 @@ label:first-of-type{margin-top:0}
     transform:translateY(-4px);
   }
 }
+  /* ════════ MON COFFRE AGENT ════════ */
+
+.agent-hero{
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:1rem;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(139,92,246,.18),transparent 35%),
+    radial-gradient(circle at 85% 10%,rgba(240,192,64,.14),transparent 32%),
+    linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
+  border:1px solid var(--b2);
+  border-radius:18px;
+  padding:1.1rem 1.2rem;
+  margin-bottom:1rem;
+  box-shadow:0 16px 38px rgba(0,0,0,.24);
+}
+
+.agent-hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg,transparent 0%,transparent 38%,rgba(255,255,255,.09) 48%,transparent 58%,transparent 100%);
+  transform:translateX(-120%);
+  animation:cardShine 7s ease-in-out infinite;
+  pointer-events:none;
+}
+
+.agent-kicker{
+  font-size:10px;
+  color:var(--gold2);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:.25rem;
+}
+
+.agent-name{
+  font-family:var(--fs);
+  font-size:1.35rem;
+  font-weight:800;
+}
+
+.agent-sub{
+  font-size:11px;
+  color:var(--t2);
+  margin-top:.15rem;
+}
+
+.agent-balance{
+  text-align:right;
+  position:relative;
+  z-index:1;
+}
+
+.agent-balance div{
+  font-family:var(--fs);
+  font-size:1.6rem;
+  font-weight:800;
+  color:var(--gold);
+  text-shadow:0 0 18px rgba(240,192,64,.18);
+}
+
+.agent-balance span{
+  display:block;
+  font-size:10px;
+  color:var(--t3);
+  margin-top:.1rem;
+}
+
+.vault-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:1rem 0 .7rem;
+  padding-top:.8rem;
+  border-top:1px solid var(--b1);
+  color:var(--t2);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.vault-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.vault-item{
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 110px 120px;
+  gap:10px;
+  align-items:center;
+  background:var(--bg2);
+  border:1px solid var(--b1);
+  border-radius:14px;
+  padding:.85rem 1rem;
+  transition:border-color .18s,transform .15s,box-shadow .18s;
+}
+
+.vault-item:hover{
+  transform:translateX(3px);
+  border-color:var(--b2);
+  box-shadow:0 12px 26px rgba(0,0,0,.22);
+}
+
+.vault-item::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.035),transparent);
+  transform:translateX(-120%);
+  opacity:0;
+  pointer-events:none;
+}
+
+.vault-item:hover::after{
+  opacity:1;
+  animation:rowShine 1.1s ease-out;
+}
+
+.vault-main{
+  min-width:0;
+}
+
+.vault-art{
+  font-family:var(--fs);
+  font-size:.9rem;
+  font-weight:800;
+  color:var(--t1);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.vault-meta{
+  font-size:11px;
+  color:var(--t2);
+  margin-top:2px;
+}
+
+.vault-price{
+  text-align:right;
+  font-family:var(--fs);
+  font-size:.95rem;
+  font-weight:800;
+  color:var(--gold);
+}
+
+.vault-status{
+  justify-self:end;
+  font-size:11px;
+  font-weight:700;
+  padding:5px 10px;
+  border-radius:999px;
+  border:1px solid var(--b2);
+  white-space:nowrap;
+}
+
+.vault-status.wait{
+  color:var(--gold2);
+  background:rgba(240,192,64,.10);
+  border-color:rgba(240,192,64,.28);
+}
+
+.vault-status.ok{
+  color:var(--gr);
+  background:rgba(52,211,153,.10);
+  border-color:rgba(52,211,153,.28);
+}
+
+.vault-status.ko{
+  color:var(--rd);
+  background:rgba(248,113,113,.10);
+  border-color:rgba(248,113,113,.28);
+}
+
+.vault-status.other{
+  color:var(--t2);
+  background:rgba(255,255,255,.04);
+}
+
+@media(max-width:700px){
+  .agent-hero{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .agent-balance{
+    text-align:left;
+  }
+
+  .vault-item{
+    grid-template-columns:1fr;
+  }
+
+  .vault-price,
+  .vault-status{
+    text-align:left;
+    justify-self:start;
+  }
+}
 </style>
 </head>
 <body>
@@ -539,9 +745,10 @@ label:first-of-type{margin-top:0}
   <button id="logout-btn" onclick="logoutAgent()" style="margin-left:10px;font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline;display:none">Déconnexion</button>
 </div>
   <nav>
-    <button class="nb on" onclick="sw('lb',this)">🏆 Classement</button>
-    <button class="nb" onclick="sw('shop',this)">🛍️ Boutique</button>
-    <button class="nb adm" onclick="sw('adm',this)">⚙️ Admin</button>
+  <button class="nb on" onclick="sw('lb',this)">🏆 Classement</button>
+  <button class="nb" onclick="sw('shop',this)">🛍️ Boutique</button>
+  <button class="nb" onclick="sw('agent',this)">👤 Mon coffre</button>
+  <button class="nb adm" onclick="sw('adm',this)">⚙️ Admin</button>
   </nav>
 </header>
 <main>
@@ -574,6 +781,37 @@ label:first-of-type{margin-top:0}
 </div>
     <div class="sg" id="shop"><div class="ld"><div class="spinner"></div><span>Chargement…</span></div></div>
   </div>
+  <div id="sec-agent" class="sec">
+  <div class="ph">Mon coffre 👤</div>
+  <div class="ps">Suivi de tes achats, missions et validations UpCoins</div>
+
+  <div class="agent-hero">
+    <div>
+      <div class="agent-kicker">Compte agent</div>
+      <div class="agent-name" id="my-name">—</div>
+      <div class="agent-sub">Historique personnel VossoBanque</div>
+    </div>
+    <div class="agent-balance">
+      <div id="my-bank">—</div>
+      <span>UpCoins disponibles</span>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="mc"><div class="ml">Achats suivis</div><div class="mv" id="my-trx">—</div></div>
+    <div class="mc"><div class="ml">En attente</div><div class="mv" id="my-pending" style="color:var(--gold)">—</div></div>
+    <div class="mc"><div class="ml">Gains potentiels</div><div class="mv" id="my-gain" style="color:var(--gr)">—</div></div>
+  </div>
+
+  <div class="vault-head">
+    <span>🎒 Mes objets & missions</span>
+    <button class="btn btn-sm" onclick="loadMyTransactions()">Rafraîchir</button>
+  </div>
+
+  <div id="my-vault">
+    <div class="emp">Connecte-toi pour voir ton coffre.</div>
+  </div>
+</div>
 
   <div id="sec-adm" class="sec">
     <div id="adm-lock">
@@ -692,7 +930,7 @@ const TR_ST = 'Erreur';
 const TR_GN = 'Gain UC';
 
 /* ════════ STATE ════════ */
-let players=[], shop=[], pending=[], cur=null, curF='all', currentUser=null;
+let players=[], shop=[], pending=[], myTransactions=[], cur=null, curF='all', currentUser=null;
 
 /* ════════ API via PROXY ════════ */
 async function atGet(tbl, fields=[], formula=''){
@@ -925,7 +1163,112 @@ function renderMissions(){
     }).join('')}
   </div>`;
 }
+/* ════════ MON COFFRE AGENT ════════ */
 
+async function loadMyTransactions(){
+  const wrap = document.getElementById('my-vault');
+  if(!wrap) return;
+
+  if(!currentUser){
+    wrap.innerHTML = '<div class="emp">Connecte-toi pour voir ton coffre.</div>';
+    renderMyVault([]);
+    return;
+  }
+
+  wrap.innerHTML = '<div class="ld"><div class="spinner"></div><span>Chargement de ton coffre…</span></div>';
+
+  try{
+    const recs = await atGet(T_TRX,[TR_BY,TR_AR,TR_AM,TR_ST,TR_GN,'Date de création','Created Time','Acheteur lisible']);
+    const meName = String(currentUser.name || '').trim().toLowerCase();
+    const meCode = String(currentUser.code || '').trim().toLowerCase();
+
+    myTransactions = (recs || []).filter(r=>{
+      const f = r.fields || {};
+      const buyer = String(f[TR_BY] || '').trim().toLowerCase();
+      const buyerReadable = String(f['Acheteur lisible'] || '').trim().toLowerCase();
+
+      return buyer === meName
+          || buyer === meCode
+          || buyerReadable === meName
+          || buyerReadable === meCode;
+    });
+
+    myTransactions.sort((a,b)=>{
+      const da = new Date(a.fields['Date de création'] || a.fields['Created Time'] || 0).getTime();
+      const db = new Date(b.fields['Date de création'] || b.fields['Created Time'] || 0).getTime();
+      return db - da;
+    });
+
+    renderMyVault(myTransactions);
+  }catch(e){
+    wrap.innerHTML = `<p class="emp" style="color:var(--rd)">Erreur coffre : ${e.message}</p>`;
+  }
+}
+
+function renderMyVault(list=myTransactions){
+  const nameEl = document.getElementById('my-name');
+  const bankEl = document.getElementById('my-bank');
+  const trxEl = document.getElementById('my-trx');
+  const pendingEl = document.getElementById('my-pending');
+  const gainEl = document.getElementById('my-gain');
+  const wrap = document.getElementById('my-vault');
+
+  if(!nameEl || !bankEl || !trxEl || !pendingEl || !gainEl || !wrap) return;
+
+  if(!currentUser){
+    nameEl.textContent = '—';
+    bankEl.textContent = '—';
+    trxEl.textContent = '—';
+    pendingEl.textContent = '—';
+    gainEl.textContent = '—';
+    wrap.innerHTML = '<div class="emp">Connecte-toi pour voir ton coffre.</div>';
+    return;
+  }
+
+  nameEl.textContent = currentUser.name;
+  bankEl.textContent = fu(currentUser.bank);
+  trxEl.textContent = list.length;
+
+  const pendingCount = list.filter(r => String(r.fields[TR_ST] || '').toLowerCase().includes('attente')).length;
+  const potentialGain = list.reduce((sum,r)=>{
+    const st = String(r.fields[TR_ST] || '').toLowerCase();
+    const gain = Number(r.fields[TR_GN] || 0);
+    return st.includes('attente') ? sum + gain : sum;
+  },0);
+
+  pendingEl.textContent = pendingCount;
+  gainEl.textContent = fu(potentialGain);
+
+  if(!list.length){
+    wrap.innerHTML = '<div class="emp">Aucun achat trouvé pour ton compte.</div>';
+    return;
+  }
+
+  wrap.innerHTML = `<div class="vault-list">
+    ${list.slice(0,30).map(r=>{
+      const f = r.fields || {};
+      const art = f[TR_AR] || f["Nom de l'article"] || 'Article';
+      const amount = Number(f[TR_AM] || 0);
+      const gain = Number(f[TR_GN] || 0);
+      const status = String(f[TR_ST] || '—');
+      const dateRaw = f['Date de création'] || f['Created Time'] || '';
+      const date = dateRaw ? new Date(dateRaw).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
+
+      const stLow = status.toLowerCase();
+      const statusClass = stLow.includes('attente') ? 'wait' : stLow.includes('réussie') || stLow.includes('valid') ? 'ok' : stLow.includes('échou') || stLow.includes('rejet') ? 'ko' : 'other';
+      const statusIcon = statusClass==='wait' ? '⏳' : statusClass==='ok' ? '✅' : statusClass==='ko' ? '❌' : 'ℹ️';
+
+      return `<div class="vault-item">
+        <div class="vault-main">
+          <div class="vault-art">🎁 ${art}</div>
+          <div class="vault-meta">📅 ${date}${gain?` · 🎯 Gain potentiel +${fu(gain)} UC`:''}</div>
+        </div>
+        <div class="vault-price">-${fu(amount)} UC</div>
+        <div class="vault-status ${statusClass}">${statusIcon} ${status}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
 /* ════════ BUY ════════ */
 
 function openMo(idx){
@@ -984,6 +1327,9 @@ async function confirmBuy(){
     document.getElementById('whoami').textContent = `• ${ag.name}`;
     const logoutBtn = document.getElementById('logout-btn');
     if(logoutBtn) logoutBtn.style.display = 'inline';
+    if(document.getElementById('sec-agent')?.classList.contains('on')){
+  loadMyTransactions();
+}
    toast(`✅ Achat envoyé en validation. Solde : ${fu(nb)} UC`, 'ok');
   }catch(e){
     toast('❌ '+e.message,'er');
@@ -1082,8 +1428,20 @@ function fillSels(){['a-ag','r-ag','q-ag'].forEach(id=>{const el=document.getEle
 function showMsg(el,txt,ok){el.className='rm '+(ok?'ok':'er');el.textContent=txt;setTimeout(()=>el.className='rm',5000);}
 let tt;
 function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='on '+type;clearTimeout(tt);tt=setTimeout(()=>t.className='',3500);}
-function sw(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));document.getElementById('sec-'+id).classList.add('on');btn.classList.add('on');if(id==='adm'&&document.getElementById('adm-panel').style.display!=='none')loadMissions();}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeMo();});
+function sw(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  btn.classList.add('on');
+
+  if(id==='adm' && document.getElementById('adm-panel').style.display!=='none'){
+    loadMissions();
+  }
+
+  if(id==='agent'){
+    loadMyTransactions();
+  }
+}document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeMo();});
 
 /* ════════ AUTH ════════ */
 function normalizeCode(v){
@@ -1118,6 +1476,9 @@ function loginAgent(){
   const logoutBtn = document.getElementById('logout-btn');
   if(logoutBtn) logoutBtn.style.display = 'inline';
   toast(`Connecté : ${me.name}`,'ok');
+  if(document.getElementById('sec-agent')?.classList.contains('on')){
+  loadMyTransactions();
+}
 }
 function logoutAgent(){
   currentUser = null;
@@ -1128,7 +1489,7 @@ function logoutAgent(){
   const logoutBtn = document.getElementById('logout-btn');
   if(logoutBtn) logoutBtn.style.display = 'none';
 }
-
+renderMyVault([]);
 loadAll();
 </script>
 </body>
