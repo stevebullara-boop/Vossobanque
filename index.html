@@ -1318,6 +1318,14 @@ async function confirmBuy(){
       // Gain UC doit rester un nombre pour respecter le type de champ Airtable
       [TR_GN]: cur.gain || 0
     });
+    // Lead Engine — assignation leads si Lead Market (fire & forget)
+    if(cur.cat==='🎯 Lead Market'){
+      fetch('https://automation.vossosales.com/webhook/lead-pack-purchase',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({agent:ag.name,pack:cur.name})
+      }).catch(()=>{});
+    }
     ag.bank = nb;
     currentUser.bank = nb;
     cur.stock -= 1;
